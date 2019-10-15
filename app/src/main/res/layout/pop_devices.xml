@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffff00"
+    tools:context="com.multicriteriasdkdemo.SpalshActivity">
+
+    <LinearLayout
+        android:id="@+id/cmd_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="选择设备类型"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="16pt"/>
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:divider="#ffc6c6c6"
+            android:scrollingCache="false"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

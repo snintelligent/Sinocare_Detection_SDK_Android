@@ -1,0 +1,95 @@
+apply plugin: 'com.android.application'
+// 获取当前系统时间
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd-HH-mm-ss")
+}
+
+//读取配置文件
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    defaultConfig {
+        applicationId "sinocare.multicriteriasdkdemo"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            // 加了其他的文件夹（比如 armeabi-v7a，x86等）可能会出问题
+            abiFilters "armeabi"
+        }
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    /**
+     * 签名设置
+     */
+    signingConfigs {
+        debug {
+            storeFile file('../sinocare-debug.jks')
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+        release {
+            storeFile file('../sinocare-release.jks')
+            keyAlias properties.getProperty('keyAlias')
+            keyPassword properties.getProperty('keyPassword')
+            storePassword properties.getProperty('storePassword')
+        }
+    }
+    sourceSets {
+        main {
+            assets.srcDirs = ['assets']    //资源文件
+            jni.srcDirs 'src/main/jni'     //jni文件
+            jniLibs.srcDirs = ['libs']    //jni库
+        }
+    }
+
+    //编译java版本设置
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        //即使报错也不会停止打包
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def newApkName = applicationId + "-" + variant.versionName + "-${releaseTime()}.apk";
+            outputFileName = new File(newApkName);
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation rootProject.ext.dependencies["support-design"]
+    implementation rootProject.ext.dependencies["support-appcompatV7"]
+    implementation rootProject.ext.dependencies["constraint-layout"]
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation rootProject.ext.dependencies["junit"]
+    androidTestImplementation rootProject.ext.dependencies["test-runner"]
+    androidTestImplementation rootProject.ext.dependencies["espresso"]
+    implementation rootProject.ext.dependencies["rxjava"]
+    implementation rootProject.ext.dependencies["rxandroid"]
+    implementation rootProject.ext.dependencies["rxpermissions"]
+//    implementation (rootProject.ext.dependencies["rxandroidble"]){
+//        exclude module:'rxjava'
+//    }
+    implementation 'com.sinocare.android_lib:multicriteriasdk:1.0.0'
+}

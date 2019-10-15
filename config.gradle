@@ -1,0 +1,32 @@
+ext {
+
+    android_support="27.1.1"
+    android = [
+            compileSdkVersion: 28,
+            buildToolsVersion: "28.0.2",
+            minSdkVersion    : 19,
+            targetSdkVersion : 28
+    ]
+
+    viewDependencies = [
+
+    ]
+
+    dependencies = [
+            "gson"               : "com.google.code.gson:gson:2.7",
+            "retrofit"           : "2.1.0",
+            "rxlifecycle"        : "2.2.2",
+            "fastjson"           : "com.alibaba:fastjson:1.1.58.android",
+            "rxjava"             : "io.reactivex.rxjava2:rxjava:2.2.5",
+            "rxandroid"          : "io.reactivex.rxjava2:rxandroid:2.1.0",
+            "rxandroidble"       : "com.polidea.rxandroidble2:rxandroidble:1.8.1",
+            "rxpermissions"      : "com.github.tbruyelle:rxpermissions:0.10.2",
+            "constraint-layout"  : "com.android.support.constraint:constraint-layout:1.1.3",
+            "junit"              : "junit:junit:4.12",
+            "test-runner"        : "com.android.support.test:runner:1.0.2",
+            "espresso"           : "com.android.support.test.espresso:espresso-core:3.0.2",
+            "support-design"     : "com.android.support:design:${android_support}",
+            "support-appcompatV7": "com.android.support:appcompat-v7:${android_support}",
+
+    ]
+}
