@@ -1,0 +1,1 @@
+多指标设备接入SDK# Sinocare_Detection_SDK_Android
