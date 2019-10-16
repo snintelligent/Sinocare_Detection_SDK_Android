@@ -151,13 +151,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MulticriteriaSDKManager.pause(false);
+        MulticriteriaSDKManager.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        MulticriteriaSDKManager.pause(true);
+        MulticriteriaSDKManager.onPause();
     }
 
     @Override

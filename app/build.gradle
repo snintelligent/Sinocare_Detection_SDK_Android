@@ -91,5 +91,5 @@ dependencies {
 //    implementation (rootProject.ext.dependencies["rxandroidble"]){
 //        exclude module:'rxjava'
 //    }
-    implementation 'com.sinocare.android_lib:multicriteriasdk:1.0.0'
+    implementation 'com.sinocare.android_lib:multicriteriasdk:1.0.1-SNAPSHOT'
 }
