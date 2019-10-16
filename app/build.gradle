@@ -28,23 +28,6 @@ android {
             dirs 'libs'
         }
     }
-    /**
-     * 签名设置
-     */
-    signingConfigs {
-        debug {
-            storeFile file('../sinocare-debug.jks')
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
-        }
-        release {
-            storeFile file('../sinocare-release.jks')
-            keyAlias properties.getProperty('keyAlias')
-            keyPassword properties.getProperty('keyPassword')
-            storePassword properties.getProperty('storePassword')
-        }
-    }
     sourceSets {
         main {
             assets.srcDirs = ['assets']    //资源文件
