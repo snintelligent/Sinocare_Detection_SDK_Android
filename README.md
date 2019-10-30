@@ -172,11 +172,45 @@ public class BoothDeviceConnectState implements Parcelable {
      * 断开连接中
      */
     public static final int DEVICE_STATE_DISCONNECTING = 3;
+   
+    //以下目前只支持安稳air+设备
+     /**
+     * 开始测试
+     */
+    public static final int DEVICE_STATE_START_TEST = 4;
+     /**
+     * 关机
+     */
+    public static final int DEVICE_STATE_SHUTDOWN = 5;
+     /**
+     * 滴血闪烁
+     */
+    public static final int DEVICE_STATE_BLOOD_SPARKLING = 6;
+     /**
+     * 连接成功
+     */
+    public static final int DEVICE_STATE_CONNECTION_SUCCESS = 7;
+     /**
+     * 时间设置成功
+     */
+    public static final int DEVICE_STATE_TIME_SET_SUCCESS = 8;
+      /**
+     * 清除历史数据成功
+     */
+    public static final int DEVICE_STATE_CLEAN_DATA_SUCCESS = 9;
+     /**
+     * 清除历史数据失败
+     */
+    public static final int DEVICE_STATE_CLEAN_DATA_FAIL = 10;
+      /**
+     * 无历史数据
+     */
+    public static final int DEVICE_STATE_NO_DATA = 11;
     }
 ```
 
 ## 3.5 数据结构
-### 3.5.1 ea_12 (血糖和尿酸仪)及 ka_11 （血糖和血酮仪）
+### 3.5.1 ea_12 (血糖和尿酸仪)及 ka_11 （血糖和血酮仪）(安稳air+)
 ```java
 public class SnDataEaka extends BaseDetectionData {
 
@@ -220,9 +254,29 @@ public class SnDataBp extends BaseDetectionData{
      ***************************zzg*******************/
      }
 ```
+## 4 给设备发送指令
+### 4.1 安稳air+
+	 /**
+    	 * 测试连接  对应回调状态码 BoothDeviceConnectState.DEVICE_STATE_CONNECTION_SUCCESS
+     	*/
+	 MulticriteriaSDKManager.exeCmd(snDevice, SnDeviceOrder.TESTCONNECT);
+	
+	  /**
+    	 * 查询历史数据  
+     	*/
+	  MulticriteriaSDKManager.exeCmd(snDevice, SnDeviceOrder.HISTORYDATA);
+ 	 /**
+    	 * 设置时间(自动获取系统时间)  对应回调状态码 BoothDeviceConnectState.DEVICE_STATE_TIME_SET_SUCCESS
+     	*/
+	 MulticriteriaSDKManager.exeCmd(snDevice, SnDeviceOrder.SETTIME);
+	 /**
+    	 * 清除历史数据 对应回调状态码 		BoothDeviceConnectState.DEVICE_STATE_CLEAN_DATA_SUCCESS\
+	 *BoothDeviceConnectState.DEVICE_STATE_CLEAN_DATA_FAIL
+     	 */
+	  MulticriteriaSDKManager.exeCmd(snDevice, SnDeviceOrder.CLEANHISTORYDATA);
 
-## 4 常见错误码
+## 5 常见错误码
 
 
-## 5 常见问题  
+## 6 常见问题  
 
