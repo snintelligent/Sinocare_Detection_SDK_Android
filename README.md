@@ -24,13 +24,13 @@ keytool -v -list -keystore sinocare-debug.jks
 签名算法名称: SHA256withRSA
 
 签名改造：
-1、修改release keystore密码为 android： 
+#1、修改release keystore密码为 android： 
 keytool -storepasswd -keystore  [path]/yourRelase.keystore
 #2、修改别名密码为android：
 keytool -keypasswd -keystore [path]/yourRelase.keystore -alias  your-alias
-3、修改别名为androiddebugkey：
+#3、修改别名为androiddebugkey：
 keytool -changealias -keystore [path]/yourRelase.keystore -alias your_alias -destalias androiddebugkey
-4、重命名yourRelase.keystore为debug.keystore，然后替换默认的debug.keystore
+#4、重命名yourRelase.keystore为debug.keystore，然后替换默认的debug.keystore
 ```
 
 
@@ -371,6 +371,222 @@ public class SnDataBp extends BaseDetectionData{
 	 *BoothDeviceConnectState.DEVICE_STATE_CLEAN_DATA_FAIL
      	 */
 	  MulticriteriaSDKManager.exeCmd(snDevice, SnDeviceOrder.CLEANHISTORYDATA);
+	  
+## 5 生成检测报告
+根据用户检测结果，并带入用户个人信息，生成对应的检测报告及解读；
+返回数据格式：
+``` json
+	{
+		"code":"0", //0: 成功 500: 服务器异常， 401:接口验证不通过，10001:SDK Key不正确，10002:APP包名不正确，10003:APP 签名不正确 		    "msg":"",//状态描述信息
+ 		"data": {
+       			"medicalReportUrl": "https:xxxxx" //返回的结果解读H5地址
+      		}
+	}
+```
+```java
+MulticriteriaSDKManager.generateReport(reportRequest, new BaseCallBack(){
+
+	//注意，这里回调均在子线程，baseHttpResult对象中data字段为JsonElement类型，需要自行解析
+            @Override
+            public void onSuccess(BaseHttpResult baseHttpResult) {
+                // 检测报告结果
+            }
+
+            @Override
+            public void onError(int i, String s) {
+
+            }
+        });
+
+// ReportRequest.java
+public class ReportRequest extends DetectionResultInfo {
+    private String sdkAccessToken;
+
+    private String uid;
+
+    private String name;
+
+    private int sex;
+
+    private String birthday;
+
+    /**
+     * 对外构造方法，默认已经设置好token值了，用户不需要再处理，构造方法中字段为生成检测报告所必须的个人信息字段；
+     * @param uid 用户手机号
+     * @param name 用户姓名
+     * @param sex 性别 1：男，2：女
+     * @param birthday 生日，格式yyyy-MM-dd
+     */
+    public ReportRequest(String uid, String name, int sex, String birthday) {
+        this(AuthUtils.getAccessToken(), uid, name, sex, birthday);
+    }
+    
+    // DetectionResultInfo.java 基本指标类
+    public class DetectionResultInfo implements JsonInterface {
+
+    /**
+     *身高
+     */
+    private String heightResult;
+    /**
+     * 体重
+     */
+    private String weightResult;
+
+    /**
+     * 血糖测试时间段,1:空腹 2:餐后 3:随机 0:其他
+     */
+    private Integer foodStatus = 0;
+
+
+    /**
+     * 血糖
+     */
+    private String glu;
+    /**
+     * 血酮
+     */
+    private String ket;
+    /**
+     * 血尿酸
+     */
+    private String ua;
+    /**
+     * 糖化血红蛋白
+     */
+    private String hbalc;
+    /**
+     * 甘油三脂
+     */
+    private String tg;
+    /**
+     * 总胆固醇
+     */
+    private String chol;
+    /**
+     * 高密度脂蛋白胆固醇
+     */
+    private String hdlc;
+
+    /**
+     * 低密度脂蛋白胆固醇
+     */
+    private String ldlc;
+
+    /**
+     * 总胆/高密
+     */
+    private String tcHdlc;
+    /**
+     *低密度/高密度比值
+     */
+    private String ldlcHdlc;
+
+    /**
+     * 非高密度脂蛋白胆固醇
+     */
+    private String nonHdlc;
+
+    /**
+     * 血压(收缩压/舒张压)例如: 110/89 这里的110是收缩压89是舒张压，必须以“/”相隔
+     */
+    private String bpResult;
+
+    /**
+     * 血氧饱和度
+     */
+    private String spo2;
+    /**
+     * 脉博
+     */
+    private String p;
+    /**
+     * 体温
+     */
+    private String t;
+
+    /**
+     * 尿微量白蛋白
+     */
+    private String malb;
+    /**
+     * 尿肌酐
+     */
+    private String ucr;
+    /**
+     * 尿微量白蛋白/尿肌酐
+     */
+    private String acr;
+    /**
+     * 铁蛋白
+     */
+    private String fer;
+
+    //尿白细胞
+    private String wbc;
+    //尿酮体
+    private String uket;
+    //尿亚硝酸盐
+    private String nit;
+    //尿胆原
+    private String uro;
+    //尿胆红素
+    private String bil;
+    //尿蛋白质
+    private String pro;
+    //尿糖
+    private String uglu;
+    //尿比重
+    private String sg;
+    //隐血
+    private String bld;
+    //酸碱度
+    private String ph;
+    //维生素 C
+    private String vc;
+    //尿肌酐
+    private String cr;
+    //尿钙
+    private String ca;
+    //微白蛋白
+    private String ma;
+
+    /**
+     *  呼气流量峰值，仪器测量原始值
+     */
+    private String pef;
+
+    //呼气流量峰值预计值（计算值，用户自己计算生成）
+    private String pefPredicted;
+
+    /**
+     * 第一秒用力呼气量，仪器测量原始值
+     */
+    private String fev1;
+
+    //第一秒用力呼气量预计值（计算值，用户自己计算生成）
+    private String fev1Predicted;
+
+    /**
+     *    用力肺活量，仪器测量原始值
+     */
+    private String fvc;
+
+    //用力肺活量预计值（计算值，用户自己计算生成）
+    private String fvcPredicted;
+
+    //PEF实际测量值/PEF预计值*100%（计算值，用户自己计算生成）
+    private String pefRate;
+
+    //FEV1实际测量值/FEV1预计值*100%（计算值，用户自己计算生成）
+    private String fev1Rate;
+
+    //FEV1实际测量值/FVC实际测量值*100%（计算值，用户自己计算生成）
+    private String fev1fvcRate;
+    
+    
+    
+```
 
 ## 5 常见错误码
 
