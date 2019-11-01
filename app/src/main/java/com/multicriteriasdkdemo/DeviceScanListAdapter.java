@@ -104,8 +104,8 @@ public class DeviceScanListAdapter extends BaseAdapter {
             for (int j = 0; j < nicknames.length; j++) {
                 String nickname = nicknames[j];
                 if(deviceName.startsWith(nickname) || deviceName.contains(nickname)){
-                    if(snDevice.getType() == SNDevice.DEVICE_KA_11 || snDevice.getType() == SNDevice.DEVICE_EA_12){//名称相同
-                        deviceName = deviceName + "(血酮或者血尿酸)";
+                    if(snDevice.getType() == SNDevice.DEVICE_KA_11 || snDevice.getType() == SNDevice.DEVICE_EA_12 ||snDevice.getType() == SNDevice.DEVICE_EA_18|| snDevice.getType() == SNDevice.DEVICE_UG_11){//名称相同
+                        deviceName = deviceName + "(血酮或者血尿酸或UG-11)";
                         return deviceName;
                     }else {
                         deviceName = deviceName+ "(" + snDevice.getDesc()+ ")";

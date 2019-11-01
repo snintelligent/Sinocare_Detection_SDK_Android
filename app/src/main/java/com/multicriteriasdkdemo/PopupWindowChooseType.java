@@ -55,14 +55,34 @@ public class PopupWindowChooseType extends PopupWindow {
     }
 
     private void initData() {
-        SNDevice snDevice = new SNDevice(SNDevice.DEVICE_EA_12);
-        snDevices.add(snDevice);
-        SNDevice snDevice1 = new SNDevice(SNDevice.DEVICE_KA_11);
-        snDevices.add(snDevice1);
-        SNDevice snDevice2 = new SNDevice(SNDevice.DEVICE_CARDIO_CBEK);
-        snDevices.add(snDevice2);
-        SNDevice snDevice3 = new SNDevice(SNDevice.DEVICE_BLOOD_PRESSURE_MBB_NO_BLE);
-        snDevices.add(snDevice3);
+        snDevices.add(new SNDevice(SNDevice.DEVICE_EA_12));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_KA_11));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_CARDIO_CBEK));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_PCH_100));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_BLOOD_PRESSURE_MBB_NO_BLE));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_BLOOD_PRESSURE_MBB_BLE));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_BLOOD_PRESSURE_YK));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_WL_ONE));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_GOLD_AQ));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_ID_CARD));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_GPRINT));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_TEMP));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_SLX));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_PABA));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_URIT));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_BMI));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_SPO));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_HXJ));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_A4_PRINTER));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_EMP_UI));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_EMP_UI_10C));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_ANWEN_AIR));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_UG_11));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_AILIKANG_FOND_THERMOMETER));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_ICARE));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_ZHEN_RUI));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_EA_18));
+        snDevices.add(new SNDevice(SNDevice.DEVICE_BLOOD_PRESSURE_MBB_NO_BLE_RBP_9804));
     }
 
     /**

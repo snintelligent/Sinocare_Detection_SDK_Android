@@ -39,6 +39,9 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="sino_minute_access_key"
+            android:value="00f97123f8ad39faf6b1c53c6437a69c" />
     </application>
 
 </manifest>
