@@ -377,10 +377,26 @@ public class SnDataBp extends BaseDetectionData{
 返回数据格式：
 ``` json
 	{
-		"code":"0", //0: 成功 500: 服务器异常， 401:接口验证不通过，10001:SDK Key不正确，10002:APP包名不正确，10003:APP 签名不正确 		    "msg":"",//状态描述信息
- 		"data": {
-       			"medicalReportUrl": "https:xxxxx" //返回的结果解读H5地址
-      		}
+	    "code":"0", // 0: 成功 500: 服务器异常， 401:接口验证不通过，10001:SDK Key不正确，10002:APP包名不正确， 10003:APP 签名不正确 		    
+            "msg":"", //状态描述信息
+ 	    "data": {
+                "indexSuggestReports": [
+                   {
+                     "medicalName": "身体质量指数",
+                     "medicalNameShortened": "BMI",
+                     "suggest": "根据您的检测结果分析如下：xxxxxxxx",
+                     "cliSignificance": "身体质量指数的临床意义：xxxxxx"
+                  },
+                  {
+                     "medicalName": "血糖",
+                     "medicalNameShortened": "GLU",
+                     "suggest": "根据您的检测结果分析如下：xxxx",
+                     "cliSignificance": "血糖的临床意义：xxxx"
+                   }
+             ],
+
+       	    "medicalReportUrl": "https:xxxxx" //返回的结果解读H5地址
+      	    }
 	}
 ```
 ```java
