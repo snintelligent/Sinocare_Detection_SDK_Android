@@ -33,6 +33,7 @@ public class SpalshActivity extends AppCompatActivity implements PopupWindowChoo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spalsh);
+        MulticriteriaSDKManager.initAndAuthentication(getApplication(), null);
         initData();
         initPermiss();
     }
