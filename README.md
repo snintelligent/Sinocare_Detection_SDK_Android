@@ -16,7 +16,7 @@ Sinocare_Detection_SDK_Android 主要是通过aar方式提供给第三发软件�
 //获取keystore 指纹命令
 keytool -v -list -keystore sinocare-debug.jks
 
-// keystore指纹命令，这里选取sha1指纹；注意：需要移除分号：
+// keystore指纹命令，这里选取sha1指纹；注意：需要移除冒号：
 证书指纹:
          MD5:  12:F8:35:F3:22:0722:D3:36:22:22:B4:33:0F:9F:05
          SHA1: 72:D2:12:98:33:D3:12:88:E0:CB:6A:2C:77:65:F2:15:25:AE:61:26
@@ -65,7 +65,7 @@ allprojects {
   implementation 'com.sinocare.android_lib:multicriteriasdk:1.0.4'
 ```
 
-## 2.2 配置manifest
+## 2.3 配置manifest
 manifest的配置主要包括添加权限,代码示例如下：
 
 ```powershell
@@ -100,7 +100,16 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 	    
 </application>
 ```
-# 3.接口说明
+## 2.4 混淆说明
+如果app进行混淆，请添加如下混淆配置，确保sdk中关键类不被混淆：
+```xml
+-keep class com.sinocare.multicriteriasdk.utils.NoProguard
+
+-keep class * implements com.sinocare.multicriteriasdk.utils.NoProguard {
+    *;
+}
+```
+# 3. 接口说明
 
 ## 3.1 初始化SDK、鉴权（只有鉴权通过，sdk才可以正常使用）
 ```Java
