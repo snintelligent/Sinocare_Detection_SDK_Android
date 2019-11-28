@@ -620,4 +620,8 @@ public class ReportRequest extends DetectionResultInfo {
 
 ### 6.1 蓝牙设备上显示蓝牙已被连接，但SnCallBack没有回调连接状态，和测量结果；
 首先考虑鉴权是否通过，通过``` AuthUtils.isAuthValid()```查看当时鉴权是否成功，也可以在初始化鉴权过程中监听鉴权状态回调；
+### 6.2 SncallBack 会重复回调多次测量结果；
+ 考虑多次调用了连接startConnect(List<SNDevice> snDevices, SnCallBack snCallBack)，每次都设置了callback；由于Callback是采用添加模式，会添加到列表回调列表里面，多次设置CallBack，导致回调多次；全局只调用一次带callback的连接，其它地方再次连接时不再传入callback，这样可以保证收到数据全局只回调一次;
+ 后续版本会考虑在连接过程中采用单一回调的模式，避免出现多次回调；
+
 
