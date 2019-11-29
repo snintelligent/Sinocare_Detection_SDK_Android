@@ -316,7 +316,7 @@ public class BoothDeviceConnectState implements Parcelable {
 ```
 
 ## 3.5 数据结构
-### 3.5.1 ea_12 (血糖和尿酸仪)及 ka_11 （血糖和血酮仪）(安稳air+)
+### 3.5.1 血糖，血酮，血尿酸测量结果统一采用此类封装，相关设备：安稳+, EA-12，金准+，金准+air ug_11，真睿二代
 ```java
 public class SnDataEaka extends BaseDetectionData {
 
@@ -327,12 +327,12 @@ public class SnDataEaka extends BaseDetectionData {
      *  Unit glucoseUnit;血糖值单位
      *  Unit uaResultUnit;血尿酸单位
      *  Unit ketResultUnit;血酮单位
-     *  boolean Lo; 是否低于最低值
-     *  boolean HI;是否高于最高值
+     *  boolean Lo; 是否低于最低值,低于最低值，仪器上面一般显示低值L
+     *  boolean HI;是否高于最高值，高于最高值，仪器上面一般显示高低H
      ***************************zzg*******************/
      }
 ```
-### 3.5.2 卡迪克（CardioCbek）
+### 3.5.2 脂测量结果统一用此类封装；相关设备：卡迪克，SLX-120（掌越）
 ```java
 public class SnDataCardioCbek extends BaseDetectionData {
 
@@ -343,13 +343,15 @@ public class SnDataCardioCbek extends BaseDetectionData {
      *  String valueHdlChol;  HDL CHOL 高密度
      *  String valueCalcLdl; CALC LDL  低密度
      *  String valueTcHdl; TC/HDL   总胆与高密比值
+     *	String ldlcHdlc;  ldl/hdl  低密与高密比值
+     *  String nonHdlc；            非高密度脂蛋白胆固醇
      *  String glucose;血糖
      *  Unit cardioCbekUnit; 单位
      ***************************zzg*******************/
      }
 
 ```
-### 3.5.3 血压计（Maibobo）
+### 3.5.3 血压结果类；相关设备：三诺蓝牙血压计（誉康、安诺心）， 脉搏波医用血压计RBP_9000，脉搏波BP-88B（臂式ble版），脉搏波RBP-9804（座式）
 ```java
 public class SnDataBp extends BaseDetectionData{
 
@@ -357,8 +359,36 @@ public class SnDataBp extends BaseDetectionData{
      * int bloodMeasureLow :  舒张压
      * int bloodMeasureHigh :  收缩压
      * int checkHeartRate :  心率
+     * Unit unit：统一单位类，血压对应的单位值是 "88"，描述是"mmHg"
+     */
+    
      ***************************zzg*******************/
      }
+```
+### 3.5.4 糖化血红蛋白结果类； 相关设备：相关设备PCH-100
+```java
+public class SnDataPch extends BaseDetectionData 
+
+	/**
+	* String testResult; 糖化结果，单位是 %
+	* Boolean isLo;   是否低于最低值，低于最低值时，设备无法给出测量值，会显示低值标识
+	* Boolean isHI;  是否高于最高值，高于最高值时，设备无法给出测量值，会显示高值标识
+	* Unit unit;     糖化单位描述 %
+	*/
+```
+### 3.5.5 身份证信息类；相关设备：华大互联网HD-100
+``` java
+public class SnDataIdCard extends BaseDetectionData
+
+    /**
+     * String name;   	 姓名
+     * int sex;      	 性别 1：男，2：女
+     * String idCard; 	 身份证号
+     * String address;	 地址
+     * int age;       	 年龄
+     * String birthday;  出生日期；格式 yyyy-MM-dd
+     */
+    
 ```
 ## 4 给设备发送指令
 ### 4.1 安稳air+
