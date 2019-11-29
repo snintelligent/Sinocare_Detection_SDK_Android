@@ -412,6 +412,47 @@ public class SnDataUrit extends BaseDetectionData
      	* String response; 16进制字符串，命令执行后，设备的返回确认指令，比如：指令执行成功或失败；
      	*/
 ```
+
+### 3.5.7 尿生化（微量白蛋白、肌酐、ACR）；相关设备：三诺全自动生化分析仪PABA-100
+```java
+public class SnDataACR extends BaseDetectionData
+/    
+    private 
+    /**
+     * 数据类型： 目前只处理了测量类型的数据，没处理质控数据
+     * 尿微：0x00 0x01;
+     * 尿微质控液：0x00 0x02 （未处理）
+     * 肌酐：0x00 0x03       
+     * 肌酐质控液：0x00 0x04 （未处理）
+     * ACR：0x00 0x05
+     * 质控结论：0x00 0x06
+     * String type;
+     * String uint; 此字段暂未使用
+     * String time; 此字段暂未使用
+     * String device; 此字段暂未使用
+     * String malb; 尿微量白蛋白
+     * String ucr;  尿肌酐
+     * String acr; 微量白蛋白/尿肌酐
+     * boolean malbLow; 尿微量白蛋白是否低于测量范围
+     * boolean malbHi; 尿微量白蛋白是否高于测量范围
+     * boolean ucrLow; 尿肌酐是否低于测量范围
+     * boolean ucrbHi; 尿微量白蛋白是否高于测量范围
+     * boolean acrbLow; ACR是否低于测量范围
+     * boolean acrbHi;	ACR是否高于测量范围
+     */
+```
+
+### 3.5.8 糖化血红蛋白指标；相关设备：手持式胶体金试纸分析仪
+```java
+public class SnDataAnemia extends BaseDetectionData
+
+   /**
+     * String uint; 单位，目前是ng/ml
+     * String fer; 糖化血红蛋白结果
+     */
+ 
+```
+
 ## 4 给设备发送指令
 ### 4.1 安稳air+
 	 /**
