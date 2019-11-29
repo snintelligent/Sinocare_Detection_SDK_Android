@@ -390,6 +390,28 @@ public class SnDataIdCard extends BaseDetectionData
      */
     
 ```
+### 3.5.6 尿14项结果类；相关设备：优利特URIT-31，恩普生半自动尿液分析仪ui，ui-10c,
+```java
+public class SnDataUrit extends BaseDetectionData
+
+	/****
+     	* String leu;	 白细胞
+     	* String ket;    酮体
+     	* String nit;  	 亚硝酸盐
+     	* String uro;	 尿胆原
+     	* String bil; 	 胆红素
+     	* String pro;	 蛋白质
+     	* String glu;  	 葡萄糖
+     	* String sg;	 尿比重
+     	* String bld; 	 隐血
+     	* String ph; 	 酸碱度
+     	* String vc; 	 维生素 C
+     	* String cr;	 肌酐
+     	* String ca; 	尿钙
+     	* String ma; 微白蛋白
+     	* String response; 16进制字符串，命令执行后，设备的返回确认指令，比如：指令执行成功或失败；
+     	*/
+```
 ## 4 给设备发送指令
 ### 4.1 安稳air+
 	 /**
