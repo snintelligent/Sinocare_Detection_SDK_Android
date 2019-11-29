@@ -16,7 +16,7 @@ Sinocare_Detection_SDK_Android 主要是通过aar方式提供给第三发软件�
 //获取keystore 指纹命令
 keytool -v -list -keystore sinocare-debug.jks
 
-// keystore指纹命令，这里选取sha1指纹；注意：需要移除分号：
+// keystore指纹命令，这里选取sha1指纹；注意：需要移除冒号：
 证书指纹:
          MD5:  12:F8:35:F3:22:0722:D3:36:22:22:B4:33:0F:9F:05
          SHA1: 72:D2:12:98:33:D3:12:88:E0:CB:6A:2C:77:65:F2:15:25:AE:61:26
@@ -65,7 +65,7 @@ allprojects {
   implementation 'com.sinocare.android_lib:multicriteriasdk:1.0.4'
 ```
 
-## 2.2 配置manifest
+## 2.3 配置manifest
 manifest的配置主要包括添加权限,代码示例如下：
 
 ```powershell
@@ -100,7 +100,16 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 	    
 </application>
 ```
-# 3.接口说明
+## 2.4 混淆说明
+如果app进行混淆，请添加如下混淆配置，确保sdk中关键类不被混淆：
+```xml
+-keep class com.sinocare.multicriteriasdk.utils.NoProguard
+
+-keep class * implements com.sinocare.multicriteriasdk.utils.NoProguard {
+    *;
+}
+```
+# 3. 接口说明
 
 ## 3.1 初始化SDK、鉴权（只有鉴权通过，sdk才可以正常使用）
 ```Java
@@ -307,7 +316,7 @@ public class BoothDeviceConnectState implements Parcelable {
 ```
 
 ## 3.5 数据结构
-### 3.5.1 ea_12 (血糖和尿酸仪)及 ka_11 （血糖和血酮仪）(安稳air+)
+### 3.5.1 血糖，血酮，血尿酸测量结果统一采用此类封装，相关设备：安稳+, EA-12，金准+，金准+air ug_11，真睿二代
 ```java
 public class SnDataEaka extends BaseDetectionData {
 
@@ -318,12 +327,12 @@ public class SnDataEaka extends BaseDetectionData {
      *  Unit glucoseUnit;血糖值单位
      *  Unit uaResultUnit;血尿酸单位
      *  Unit ketResultUnit;血酮单位
-     *  boolean Lo; 是否低于最低值
-     *  boolean HI;是否高于最高值
+     *  boolean Lo; 是否低于最低值,低于最低值，仪器上面一般显示低值L
+     *  boolean HI;是否高于最高值，高于最高值，仪器上面一般显示高低H
      ***************************zzg*******************/
      }
 ```
-### 3.5.2 卡迪克（CardioCbek）
+### 3.5.2 脂测量结果统一用此类封装；相关设备：卡迪克，SLX-120（掌越）
 ```java
 public class SnDataCardioCbek extends BaseDetectionData {
 
@@ -334,13 +343,15 @@ public class SnDataCardioCbek extends BaseDetectionData {
      *  String valueHdlChol;  HDL CHOL 高密度
      *  String valueCalcLdl; CALC LDL  低密度
      *  String valueTcHdl; TC/HDL   总胆与高密比值
+     *	String ldlcHdlc;  ldl/hdl  低密与高密比值
+     *  String nonHdlc；            非高密度脂蛋白胆固醇
      *  String glucose;血糖
      *  Unit cardioCbekUnit; 单位
      ***************************zzg*******************/
      }
 
 ```
-### 3.5.3 血压计（Maibobo）
+### 3.5.3 血压结果类；相关设备：三诺蓝牙血压计（誉康、安诺心）， 脉搏波医用血压计RBP_9000，脉搏波BP-88B（臂式ble版），脉搏波RBP-9804（座式）
 ```java
 public class SnDataBp extends BaseDetectionData{
 
@@ -348,9 +359,100 @@ public class SnDataBp extends BaseDetectionData{
      * int bloodMeasureLow :  舒张压
      * int bloodMeasureHigh :  收缩压
      * int checkHeartRate :  心率
+     * Unit unit：统一单位类，血压对应的单位值是 "88"，描述是"mmHg"
+     */
+    
      ***************************zzg*******************/
      }
 ```
+### 3.5.4 糖化血红蛋白结果类； 相关设备：相关设备PCH-100
+```java
+public class SnDataPch extends BaseDetectionData 
+
+	/**
+	* String testResult; 糖化结果，单位是 %
+	* Boolean isLo;   是否低于最低值，低于最低值时，设备无法给出测量值，会显示低值标识
+	* Boolean isHI;  是否高于最高值，高于最高值时，设备无法给出测量值，会显示高值标识
+	* Unit unit;     糖化单位描述 %
+	*/
+```
+### 3.5.5 身份证信息类；相关设备：华大互联网HD-100
+``` java
+public class SnDataIdCard extends BaseDetectionData
+
+    /**
+     * String name;   	 姓名
+     * int sex;      	 性别 1：男，2：女
+     * String idCard; 	 身份证号
+     * String address;	 地址
+     * int age;       	 年龄
+     * String birthday;  出生日期；格式 yyyy-MM-dd
+     */
+    
+```
+### 3.5.6 尿14项结果类；相关设备：优利特URIT-31，恩普生半自动尿液分析仪ui，ui-10c,
+```java
+public class SnDataUrit extends BaseDetectionData
+
+	/****
+     	* String leu;	 白细胞
+     	* String ket;    酮体
+     	* String nit;  	 亚硝酸盐
+     	* String uro;	 尿胆原
+     	* String bil; 	 胆红素
+     	* String pro;	 蛋白质
+     	* String glu;  	 葡萄糖
+     	* String sg;	 尿比重
+     	* String bld; 	 隐血
+     	* String ph; 	 酸碱度
+     	* String vc; 	 维生素 C
+     	* String cr;	 肌酐
+     	* String ca; 	尿钙
+     	* String ma; 微白蛋白
+     	* String response; 16进制字符串，命令执行后，设备的返回确认指令，比如：指令执行成功或失败；
+     	*/
+```
+
+### 3.5.7 尿生化（微量白蛋白、肌酐、ACR）；相关设备：三诺全自动生化分析仪PABA-100
+```java
+public class SnDataACR extends BaseDetectionData
+/    
+    private 
+    /**
+     * 数据类型： 目前只处理了测量类型的数据，没处理质控数据
+     * 尿微：0x00 0x01;
+     * 尿微质控液：0x00 0x02 （未处理）
+     * 肌酐：0x00 0x03       
+     * 肌酐质控液：0x00 0x04 （未处理）
+     * ACR：0x00 0x05
+     * 质控结论：0x00 0x06
+     * String type;
+     * String uint; 此字段暂未使用
+     * String time; 此字段暂未使用
+     * String device; 此字段暂未使用
+     * String malb; 尿微量白蛋白
+     * String ucr;  尿肌酐
+     * String acr; 微量白蛋白/尿肌酐
+     * boolean malbLow; 尿微量白蛋白是否低于测量范围
+     * boolean malbHi; 尿微量白蛋白是否高于测量范围
+     * boolean ucrLow; 尿肌酐是否低于测量范围
+     * boolean ucrbHi; 尿微量白蛋白是否高于测量范围
+     * boolean acrbLow; ACR是否低于测量范围
+     * boolean acrbHi;	ACR是否高于测量范围
+     */
+```
+
+### 3.5.8 糖化血红蛋白指标；相关设备：手持式胶体金试纸分析仪
+```java
+public class SnDataAnemia extends BaseDetectionData
+
+   /**
+     * String uint; 单位，目前是ng/ml
+     * String fer; 糖化血红蛋白结果
+     */
+ 
+```
+
 ## 4 给设备发送指令
 ### 4.1 安稳air+
 	 /**
@@ -611,4 +713,8 @@ public class ReportRequest extends DetectionResultInfo {
 
 ### 6.1 蓝牙设备上显示蓝牙已被连接，但SnCallBack没有回调连接状态，和测量结果；
 首先考虑鉴权是否通过，通过``` AuthUtils.isAuthValid()```查看当时鉴权是否成功，也可以在初始化鉴权过程中监听鉴权状态回调；
+### 6.2 SncallBack 会重复回调多次测量结果；
+ 考虑多次调用了连接startConnect(List<SNDevice> snDevices, SnCallBack snCallBack)，每次都设置了callback；由于Callback是采用添加模式，会添加到列表回调列表里面，多次设置CallBack，导致回调多次；全局只调用一次带callback的连接，其它地方再次连接时不再传入callback，这样可以保证收到数据全局只回调一次;
+ 后续版本会考虑在连接过程中采用单一回调的模式，避免出现多次回调；
+
 
