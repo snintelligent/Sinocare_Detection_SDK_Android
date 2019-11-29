@@ -705,15 +705,33 @@ public class ReportRequest extends DetectionResultInfo {
     
     
 ```
+## 5 设备信息说明
 
-## 5 常见错误码
+设备名称型号 | 设备指标 | 蓝牙名称 | 蓝牙类别 | 设备图片
+---|--- | --- | --- | ---
+ UG-11| 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![UG-11](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ug_11.png?raw=true)
+EA-12 | 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![EA-12](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ea_12.png?raw=true)
+EA-18 | 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![EA-18](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ea_18.png?raw=true)
+KA-11 | 血酮、血糖 | BDE_WEIXIN_TTM | BLE | ![KA-11](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ka_11.png?raw=true)
+卡迪克 | 血脂 | CardioChek | BLE | ![CardioChek](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_cardiochek.png?raw=true)
+WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_wl_1.png?raw=true)
+金准+ | 血糖 | BDE_WEIXIN_TTM | BLE | ![金准+](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_gold_aq.png?raw=true)
+掌越SLX120 | 血脂、血糖 | SLX120 | BLE | ![SXL120](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_sxl.png?raw=true)
+安稳+Air | 血糖 | BDE_WEIXIN_TTM | BLE | ![安稳+Air](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_anwen_air.png?raw=true)
+三诺血压计 | 血压、脉搏 | ClinkBlood | BLE | ![三诺血压计](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_yukang.png?raw=true) 
+便携式全自动生化分析仪 | 尿微量白蛋白、尿肌酐、ACR | OSTRAN | 经典蓝牙 配对码 0000| ![生化分析仪](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_biochemical.png?raw=true)
+糖化血红蛋白分析仪 PCH-100 | 糖化血红蛋白 | HC-05 | 经典蓝牙 外置 配对码0000 | ![PCH-100](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_pch_100.png?raw=true) 
+	
 
 
-## 6 常见问题
+## 6 常见错误码
 
-### 6.1 蓝牙设备上显示蓝牙已被连接，但SnCallBack没有回调连接状态，和测量结果；
+
+## 7 常见问题
+
+### 7.1 蓝牙设备上显示蓝牙已被连接，但SnCallBack没有回调连接状态，和测量结果；
 首先考虑鉴权是否通过，通过``` AuthUtils.isAuthValid()```查看当时鉴权是否成功，也可以在初始化鉴权过程中监听鉴权状态回调；
-### 6.2 SncallBack 会重复回调多次测量结果；
+### 7.2 SncallBack 会重复回调多次测量结果；
  考虑多次调用了连接startConnect(List<SNDevice> snDevices, SnCallBack snCallBack)，每次都设置了callback；由于Callback是采用添加模式，会添加到列表回调列表里面，多次设置CallBack，导致回调多次；全局只调用一次带callback的连接，其它地方再次连接时不再传入callback，这样可以保证收到数据全局只回调一次;
  后续版本会考虑在连接过程中采用单一回调的模式，避免出现多次回调；
 
