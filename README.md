@@ -332,7 +332,7 @@ public class SnDataEaka extends BaseDetectionData {
      ***************************zzg*******************/
      }
 ```
-### 3.5.2 脂测量结果统一用此类封装；相关设备：卡迪克，SLX-120（掌越）
+### 3.5.2 血脂测量结果统一用此类封装；相关设备：卡迪克，SLX-120（掌越）
 ```java
 public class SnDataCardioCbek extends BaseDetectionData {
 
@@ -724,7 +724,7 @@ WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://github.com/snintelligent/Sinoca
 安稳+Air | 血糖 | BDE_WEIXIN_TTM | BLE | ![安稳+Air](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_anwen_air.png?raw=true)
 三诺血压计 | 血压、脉搏 | ClinkBlood | BLE | ![三诺血压计](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_yukang.png?raw=true) 
 便携式全自动生化分析仪 | 尿微量白蛋白、尿肌酐、ACR | OSTRAN | 经典蓝牙 配对码 0000| ![生化分析仪](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_biochemical.png?raw=true)
-糖化血红蛋白分析仪 PCH-100 | 糖化血红蛋白 | HC-05 | 经典蓝牙 外置 配对码0000 | ![PCH-100](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_pch_100.png?raw=true) 
+糖化血红蛋白分析仪 PCH-100 | 糖化血红蛋白 | OSTRAN | 经典蓝牙 外置 配对码0000 | ![PCH-100](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_pch_100.png?raw=true) 
 	
 
 
