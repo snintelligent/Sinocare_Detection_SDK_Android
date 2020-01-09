@@ -501,9 +501,9 @@ public class SnDataAnemia extends BaseDetectionData
       	    }
 	}
 ```
-扫描二维码查看解读报告示例（浏览器扫描）
+扫描二维码查看解读报告示例
 	
-![解读报告示例：https://mc2test.tmqyt.com/external/mobile_report.html?resultId=DE14A4C65C73F63E2501EA47703F7C40](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/report_qr_code.png?raw=true)
+![解读报告示例：https://mcc.tmqyt.com/external/mobile_report.html?resultId=17E17465A032A5CA0B8FF59B6216CA8A](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/report_qr_code.png?raw=true)
 
 ```java
 MulticriteriaSDKManager.generateReport(reportRequest, new BaseCallBack(){
