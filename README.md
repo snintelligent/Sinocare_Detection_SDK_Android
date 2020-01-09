@@ -1,6 +1,6 @@
 
 # 1. 多指标设备接入SDK说明
-Sinocare_Detection_SDK_Android 是三诺生物传感股份有限公司的设备连接的SDK。
+Sinocare_Detection_SDK_Android 是三诺生物传感股份有限公司开发的设备连接的SDK，目前已接入包括三诺自有设备在内的20多款检测设设备；可以便捷的实现多款蓝牙设备的同时连接与数据接收，极大的简化了蓝牙设备的接入流程，接入用户只需要专注自身业务的开发，降低了用户接入蓝牙设备的开发成本；同时会为接入用户提供对应的技术支持，及时的响应客户的需求；
 
 ## 1.1 文件说明
 Sinocare_Detection_SDK_Android 主要是通过aar方式提供给第三发软件开发使用.
@@ -332,7 +332,7 @@ public class SnDataEaka extends BaseDetectionData {
      ***************************zzg*******************/
      }
 ```
-### 3.5.2 脂测量结果统一用此类封装；相关设备：卡迪克，SLX-120（掌越）
+### 3.5.2 血脂测量结果统一用此类封装；相关设备：卡迪克，SLX-120（掌越）
 ```java
 public class SnDataCardioCbek extends BaseDetectionData {
 
@@ -501,6 +501,10 @@ public class SnDataAnemia extends BaseDetectionData
       	    }
 	}
 ```
+扫描二维码查看解读报告示例（浏览器扫描）
+	
+![解读报告示例：https://mc2test.tmqyt.com/external/mobile_report.html?resultId=DE14A4C65C73F63E2501EA47703F7C40](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/report_qr_code.png?raw=true)
+
 ```java
 MulticriteriaSDKManager.generateReport(reportRequest, new BaseCallBack(){
 
@@ -720,7 +724,7 @@ WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://github.com/snintelligent/Sinoca
 安稳+Air | 血糖 | BDE_WEIXIN_TTM | BLE | ![安稳+Air](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_anwen_air.png?raw=true)
 三诺血压计 | 血压、脉搏 | ClinkBlood | BLE | ![三诺血压计](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_yukang.png?raw=true) 
 便携式全自动生化分析仪 | 尿微量白蛋白、尿肌酐、ACR | OSTRAN | 经典蓝牙 配对码 0000| ![生化分析仪](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_biochemical.png?raw=true)
-糖化血红蛋白分析仪 PCH-100 | 糖化血红蛋白 | HC-05 | 经典蓝牙 外置 配对码0000 | ![PCH-100](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_pch_100.png?raw=true) 
+糖化血红蛋白分析仪 PCH-100 | 糖化血红蛋白 | OSTRAN | 经典蓝牙 外置 配对码0000 | ![PCH-100](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_pch_100.png?raw=true) 
 	
 
 
