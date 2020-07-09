@@ -111,7 +111,7 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 ```
 # 3. 接口说明
 
-## 3.1 初始化SDK、鉴权（只有鉴权通过，sdk才可以正常使用）
+## 3.1 初始化SDK、鉴权（只有鉴权通过，sdk才可以正常使用）；注意：不要反复鉴权或每次连接前都做一次鉴权，鉴权太频繁会增加鉴权失败的机率；
 ```Java
      public class MyApplication extends Application {
 		    public MyApplication() {
