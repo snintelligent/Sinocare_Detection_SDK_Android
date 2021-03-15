@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
@@ -14,6 +15,7 @@ import com.sinocare.multicriteriasdk.MulticriteriaSDKManager;
 import com.sinocare.multicriteriasdk.db.SharedPreferencesUtils;
 import com.sinocare.multicriteriasdk.entity.SNDevice;
 import com.sinocare.multicriteriasdk.entity.SnBoothType;
+import com.sinocare.multicriteriasdk.utils.LogUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -34,6 +36,32 @@ public class SpalshActivity extends AppCompatActivity implements PopupWindowChoo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spalsh);
         MulticriteriaSDKManager.initAndAuthentication(getApplication(), null);
+        MulticriteriaSDKManager.setLogHandler(new LogUtils.LogListener() {
+            @Override
+            public void d(String s, String s1) {
+                Log.d(s, s1);
+            }
+
+            @Override
+            public void e(String s, String s1) {
+                Log.e(s, s1);
+            }
+
+            @Override
+            public void i(String s, String s1) {
+                Log.i(s, s1);
+            }
+
+            @Override
+            public void v(String s, String s1) {
+                Log.v(s, s1);
+            }
+
+            @Override
+            public void w(String s, String s1) {
+                Log.w(s, s1);
+            }
+        });
         initData();
         initPermiss();
     }

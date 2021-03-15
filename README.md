@@ -23,14 +23,6 @@ keytool -v -list -keystore sinocare-debug.jks
          SHA256: E2:01:25:14:57:12:3A:EF:91:F4:5B:3D:94:9A:A2:AA:D0:A9:54:D6:8F:12:25:56:FA:01:76:E9:AB:BA:92:AE
 签名算法名称: SHA256withRSA
 
-签名改造：
-#1、修改release keystore密码为 android： 
-keytool -storepasswd -keystore  [path]/yourRelase.keystore
-#2、修改别名密码为android：
-keytool -keypasswd -keystore [path]/yourRelase.keystore -alias  your-alias
-#3、修改别名为androiddebugkey：
-keytool -changealias -keystore [path]/yourRelase.keystore -alias your_alias -destalias androiddebugkey
-#4、重命名yourRelase.keystore为debug.keystore，然后替换默认的debug.keystore
 ```
 
 
@@ -62,7 +54,7 @@ allprojects {
 在App 模块 build.gradle中配置
 
 ```powershell
-  implementation 'com.sinocare.android_lib:multicriteriasdk:1.0.13'
+  implementation 'com.sinocare.android_lib:multicriteriasdk:1.0.16'
 ```
 
 ## 2.3 配置manifest
@@ -75,14 +67,7 @@ manifest的配置主要包括添加权限,代码示例如下：
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> //允许程序发现和配对蓝牙设备
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--打印机需要权限-->
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <!--打印机需要权限-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> //允许程序获取当前WiFi接入的状态以及WLAN热点的信息
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> //允许程序获取网络信息状态，如当前的网络连接是否有效
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />//允许程序改变WiFi状态
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />//允许程序改变网络状态,如是否联网
 ```
 sdk access key配置，示例代码如下，在application标签下配置meta-data, key值sino_minute_access_key，value为申请的access key
 ``` xml
@@ -121,8 +106,6 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 		    @Override
 		    public void onCreate() {
 		        super.onCreate();
-			//如果不需要处理鉴权状态，可以直接传null，sdk里面存储鉴权状态
-			 // MulticriteriaSDKManager.initAndAuthentication(this,null)
 		        MulticriteriaSDKManager.initAndAuthentication(this, new AuthStatusListener() {
 
             			@Override
@@ -134,16 +117,6 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
     }
 ```
 
-也可以将初始化与鉴权分别调用：
-```
-  	MulticriteriaSDKManager.init(this); //初始化
-        MulticriteriaSDKManager.authentication(new AuthStatusListener() { //鉴权
-            @Override
-            public void onAuthStatus(AuthStatus authStatus) {
-                
-            }
-        });
-```
 AnthStatus鉴权状态说明：
 ```java
     /**
@@ -190,50 +163,38 @@ AnthStatus鉴权状态说明：
 如果是targetSdkVersion 大于等于23，需要6.0权限处理，则需要在启获取权限后，再开始连接
 ```java
         RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.READ_PHONE_STATE).subscribe(new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) throws Exception {
-                if (aBoolean) {
-                    startConnect();
-                } else {
-                    Toast.makeText(MainActivity.this, "请先给设备赋权限", Toast.LENGTH_SHORT);
-                }
-            }
-        });
+                rxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+                            startConnect();
+                        } else {
+                            Toast.makeText(MainActivity.this, "请先给设备赋权限", Toast.LENGTH_SHORT);
+                        }
+                    }
+                });
 ```
-真正发起连接代码，及连接状态 和 数据解析
+目前仪器测试完，数据直接会通过SDK回传。
 ```Java
-    private void startConnect() {
-        SNDevice snDevice = new SNDevice(SNDevice.DEVICE_EA_12, "DC:DC:DC:DC:DC");// 设备类型 ，和 mac地址
-        snDevices.add(snDevice);
-        MulticriteriaSDKManager.startConnect(snDevices, new SnCallBack() {
-            @Override
-            public void onDataComing(SNDevice device, DeviceDetectionData data) {
-              //设备数据回调,
-            }
-
-            @Override
-            public void onDeviceStateChange(SNDevice device, BoothDeviceConnectState state) {
-             //连接状态回调
-        });
-    }
+    MulticriteriaSDKManager.startConnect(snDevices, new SnCallBack() {
+                @Override
+                public void onDataComing(SNDevice device, DeviceDetectionData data) {
+                  //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
+                }
+    
+                 @Override
+                 public void onDeviceStateChange(SNDevice device, BoothDeviceConnectState state) {
+                 //设备数据状态：时间同步成功、历史数据获取成功、清除成功等等
+                 }
+                 
+                @Override
+                public void onDeviceStateChange(SNDevice device, BoothDeviceConnectState state) {
+                 //连接连接状态 目前只回调连接成功与断开连接
+                 }
+            });
 ```
 
-连接页面停止连接 ，恢复连接
-```java
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MulticriteriaSDKManager.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MulticriteriaSDKManager.onPause();
-    }
-```
-断开连接：
+断开指定设备连接：
 
 ```java
    MulticriteriaSDKManager.disConectDevice(snDevices);
@@ -244,95 +205,41 @@ AnthStatus鉴权状态说明：
      MulticriteriaSDKManager.finishAll();
 ```
 
-## 3.3 数据解析
-目前仪器测试完，数据直接会通过SDK回传。
+##  3.3 连接状态
 ```java
-    MulticriteriaSDKManager.startConnect(snDevices, new SnCallBack() {
-            @Override
-            public void onDataComing(SNDevice device, DeviceDetectionData data) {
-              //设备数据回调，解析见后面数据结构
-            }
-
-            @Override
-            public void onDeviceStateChange(SNDevice device, BoothDeviceConnectState state) {
-             //连接状态回调
-        });
-```
-
-##  3.4 连接状态
-```java
-public class BoothDeviceConnectState implements Parcelable {
-    /**
-     * 连接已经断开
-     */
-    public static final int DEVICE_STATE_DISCONNECTED = 0;
-    /**
-     * 连接中
-     */
-    public static final int DEVICE_STATE_CONNECTING = 1;
-    /**
-     * 已经连接
-     */
-    public static final int DEVICE_STATE_CONNECTED = 2;
-    /**
-     * 断开连接中
-     */
-    public static final int DEVICE_STATE_DISCONNECTING = 3;
-   
-    //以下目前只支持安稳air+设备
-     /**
-     * 开始测试
-     */
-    public static final int DEVICE_STATE_START_TEST = 4;
-     /**
-     * 关机
-     */
-    public static final int DEVICE_STATE_SHUTDOWN = 5;
-     /**
-     * 滴血闪烁
-     */
-    public static final int DEVICE_STATE_BLOOD_SPARKLING = 6;
-     /**
-     * 连接成功
-     */
-    public static final int DEVICE_STATE_CONNECTION_SUCCESS = 7;
-     /**
-     * 时间设置成功
-     */
-    public static final int DEVICE_STATE_TIME_SET_SUCCESS = 8;
-      /**
-     * 清除历史数据成功
-     */
-    public static final int DEVICE_STATE_CLEAN_DATA_SUCCESS = 9;
-     /**
-     * 清除历史数据失败
-     */
-    public static final int DEVICE_STATE_CLEAN_DATA_FAIL = 10;
-      /**
-     * 无历史数据
-     */
-    public static final int DEVICE_STATE_NO_DATA = 11;
-    }
+    public class BoothDeviceConnectState implements Parcelable {
+        /**
+         * 连接已经断开
+         */
+        public static final int DEVICE_STATE_DISCONNECTED = 0;
+        /**
+         * 连接成功
+         */
+        public static final int DEVICE_STATE_CONNECTED = 2;
+  
 ```
 
 ## 3.5 数据结构
-### 3.5.1 血糖，血酮，血尿酸测量结果统一采用此类封装，相关设备：安稳+, EA-12，金准+，金准+air ug_11，真睿二代
+### 3.4.1 血糖，血酮，血尿酸测量结果统一采用此类封装，相关设备：安稳+, EA-12，金准+，金准+air ug_11，真睿二代
 ```java
 public class SnDataEaka extends BaseDetectionData {
 
-    /***************************zzg***************************
-     *  String glucose;血糖值
-     *  String uaResult;血尿酸
-     *  String ketResult;血酮
-     *  Unit glucoseUnit;血糖值单位
-     *  Unit uaResultUnit;血尿酸单位
-     *  Unit ketResultUnit;血酮单位
-     *  boolean Lo; 是否低于最低值,低于最低值，仪器上面一般显示低值L
-     *  boolean HI;是否高于最高值，高于最高值，仪器上面一般显示高低H
-     ***************************zzg*******************/
-     }
+  /******************************************************
+       *  String glucose;血糖值
+       *  String uaResult;血尿酸
+       *  String ketResult;血酮
+       *  Unit glucoseUnit;血糖值单位，国内仪器为mmmol/L; 国际版的仪器存在mg/dl
+       *  Unit uaResultUnit;血尿酸单位
+       *  Unit ketResultUnit;血酮单位
+       *  boolean Lo; 是否低于最低值,低于最低值，仪器上面一般显示低值L
+       *  boolean HI;是否高于最高值，高于最高值，仪器上面一般显示高低H
+       *  String testTime;测量时间，2020-10
+       *  DataSources mDataSources; 数据来源（实时数据、历史数据）
+       *  SampleType sampleType; 检测样本（对于金稳+Air的测量结果会存在血糖质控液样本、血糖样本）
+       */ 
+       **********************************************/
 ```
-### 3.5.2 血脂测量结果统一用此类封装；相关设备：卡迪克，SLX-120（掌越）
+### 3.4.2 血脂测量结果统一用此类封装；相关设备：卡迪克，SLX-120（掌越）
 ```java
 public class SnDataCardioCbek extends BaseDetectionData {
 
@@ -351,7 +258,7 @@ public class SnDataCardioCbek extends BaseDetectionData {
      }
 
 ```
-### 3.5.3 血压结果类；相关设备：三诺蓝牙血压计（誉康、安诺心）， 脉搏波医用血压计RBP_9000，脉搏波BP-88B（臂式ble版），脉搏波RBP-9804（座式）
+### 3.4.3 血压结果类；相关设备：三诺蓝牙血压计（誉康、安诺心）， 脉搏波医用血压计RBP_9000，脉搏波BP-88B（臂式ble版），脉搏波RBP-9804（座式）
 ```java
 public class SnDataBp extends BaseDetectionData{
 
@@ -365,7 +272,7 @@ public class SnDataBp extends BaseDetectionData{
      ***************************zzg*******************/
      }
 ```
-### 3.5.4 糖化血红蛋白结果类； 相关设备：相关设备PCH-100
+### 3.4.4 糖化血红蛋白结果类； 相关设备：相关设备PCH-100
 ```java
 public class SnDataPch extends BaseDetectionData 
 
@@ -376,7 +283,7 @@ public class SnDataPch extends BaseDetectionData
 	* Unit unit;     糖化单位描述 %
 	*/
 ```
-### 3.5.5 身份证信息类；相关设备：华大互联网HD-100
+### 3.4.5 身份证信息类；相关设备：华大互联网HD-100
 ``` java
 public class SnDataIdCard extends BaseDetectionData
 
@@ -390,7 +297,7 @@ public class SnDataIdCard extends BaseDetectionData
      */
     
 ```
-### 3.5.6 尿14项结果类；相关设备：优利特URIT-31，恩普生半自动尿液分析仪ui，ui-10c,
+### 3.4.6 尿14项结果类；相关设备：优利特URIT-31，恩普生半自动尿液分析仪ui，ui-10c,
 ```java
 public class SnDataUrit extends BaseDetectionData
 
@@ -413,11 +320,10 @@ public class SnDataUrit extends BaseDetectionData
      	*/
 ```
 
-### 3.5.7 尿生化（微量白蛋白、肌酐、ACR）；相关设备：三诺全自动生化分析仪PABA-100
+### 3.4.7 尿生化（微量白蛋白、肌酐、ACR）；相关设备：三诺全自动生化分析仪PABA-100
 ```java
-public class SnDataACR extends BaseDetectionData
-/    
-    private 
+public class SnDataACR extends BaseDetectionData {
+
     /**
      * 数据类型： 目前只处理了测量类型的数据，没处理质控数据
      * 尿微：0x00 0x01;
@@ -440,39 +346,40 @@ public class SnDataACR extends BaseDetectionData
      * boolean acrbLow; ACR是否低于测量范围
      * boolean acrbHi;	ACR是否高于测量范围
      */
+}  
+     
 ```
 
-### 3.5.8 糖化血红蛋白指标；相关设备：手持式胶体金试纸分析仪
+### 3.4.8 糖化血红蛋白指标；相关设备：手持式胶体金试纸分析仪
 ```java
-public class SnDataAnemia extends BaseDetectionData
+public class SnDataAnemia extends BaseDetectionData {
 
    /**
      * String uint; 单位，目前是ng/ml
      * String fer; 糖化血红蛋白结果
      */
- 
+ }
 ```
 
-## 4 给设备发送指令
-### 4.1 安稳air+
-	 /**
-    	 * 测试连接  对应回调状态码 BoothDeviceConnectState.DEVICE_STATE_CONNECTION_SUCCESS
-     	*/
-	 MulticriteriaSDKManager.exeCmd(snDevice, SnDeviceOrder.TESTCONNECT);
-	
-	  /**
-    	 * 查询历史数据  
-     	*/
-	  MulticriteriaSDKManager.exeCmd(snDevice, SnDeviceOrder.HISTORYDATA);
- 	 /**
-    	 * 设置时间(自动获取系统时间)  对应回调状态码 BoothDeviceConnectState.DEVICE_STATE_TIME_SET_SUCCESS
-     	*/
-	 MulticriteriaSDKManager.exeCmd(snDevice, SnDeviceOrder.SETTIME);
-	 /**
-    	 * 清除历史数据 对应回调状态码 		BoothDeviceConnectState.DEVICE_STATE_CLEAN_DATA_SUCCESS\
-	 *BoothDeviceConnectState.DEVICE_STATE_CLEAN_DATA_FAIL
-     	 */
-	  MulticriteriaSDKManager.exeCmd(snDevice, SnDeviceOrder.CLEANHISTORYDATA);
+## 4 给设备发送指令，支持获取历史数据与清除历史数据；
+### 4.1 获取仪器历史测量结果；注意：仪器在滴血状态和测量状态可能无法响应此指令；
+
+```java
+   // MulticriteriaSDKManager类中执行如下方法可获取历史数据，获取成功后，历史记录会逐条回调至连接方法设置的回调中onDataComing(SNDevice device, DeviceDetectionData data)
+     /**
+      * 获取设备历史数据，对于部分区分质控数据和血液数据的，默认获取血液样本测量数据
+      * @param snDevice
+      */
+    public static void getHistoryData(SNDevice snDevice){}
+
+    /**
+     * 获取设备历史数据
+     * @param snDevice
+     * isReadQualityControlSolution  读质控历史记录（金稳+Air质控）
+     */
+    public static void getHistoryData(SNDevice snDevice,boolean isReadQualityControlSolution){}
+
+```
 	  
 ## 5 生成检测报告
 根据用户检测结果，并带入用户个人信息，生成对应的检测报告及解读；
@@ -709,7 +616,7 @@ public class ReportRequest extends DetectionResultInfo {
     
     
 ```
-## 5 设备信息说明
+## 6 设备信息说明
 
 设备名称型号 | 设备指标 | 蓝牙名称 | 蓝牙类别 | 设备图片
 ---|--- | --- | --- | ---
@@ -726,10 +633,6 @@ WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://github.com/snintelligent/Sinoca
 便携式全自动生化分析仪 | 尿微量白蛋白、尿肌酐、ACR | OSTRAN | 经典蓝牙 配对码 0000| ![生化分析仪](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_biochemical.png?raw=true)
 糖化血红蛋白分析仪 PCH-100 | 糖化血红蛋白 | OSTRAN | 经典蓝牙 外置 配对码0000 | ![PCH-100](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_pch_100.png?raw=true) 
 	
-
-
-## 6 常见错误码
-
 
 ## 7 常见问题
 
