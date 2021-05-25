@@ -362,22 +362,55 @@ public class SnDataAnemia extends BaseDetectionData {
 ```
 
 ## 4 给设备发送指令，支持获取历史数据与清除历史数据；
-### 4.1 获取仪器历史测量结果；注意：仪器在滴血状态和测量状态可能无法响应此指令；
+### 4.1 SampleType 样本类型
+
+```java
+public class SampleType implements Parcelable {
+       //血糖
+       public static final String INDEX_1_BLOOD = "0001";
+       //血糖质控液
+       public static final String INDEX_2_SUGER_SIMULATED_FLUID = "0002";
+       //血酮
+       public static final String INDEX_3__KETONE_BLOOD = "0003";
+       //血酮质控液
+       public static final String INDEX_4__KETONE_SIMULATED_FLUID = "0004";
+       //尿酸
+       public static final String INDEX_5_URIC_ACID_BLOOD = "0005";
+       //尿酸质控液
+       public static final String INDEX_6_URIC_ACID_SIMULATED_FLUID = "0006";
+    
+}
+
+```
+### 4.2 获取仪器历史测量结果；注意：仪器在滴血状态和测量状态可能无法响应此指令；
 
 ```java
    // MulticriteriaSDKManager类中执行如下方法可获取历史数据，获取成功后，历史记录会逐条回调至连接方法设置的回调中onDataComing(SNDevice device, DeviceDetectionData data)
      /**
-      * 获取设备历史数据，对于部分区分质控数据和血液数据的，默认获取血液样本测量数据
+      * 获取设备历史数据
+      * @param snDevice
+      * @param SampleType   SampleType.XXX   要获取的样本类型
+      */
+    public static void getHistoryData(SNDevice snDevice, String SampleType ) {}
+
+```
+
+### 4.3 清除设备历史数据；注意：仪器在滴血状态和测量状态可能无法响应此指令；
+
+```java
+   // MulticriteriaSDKManager类中执行如下方法可清除历史数据，清除成功后，会回调至连接方法设置的回调中sendDeviceDetectionStatus(SNDevice device, DeviceDetectionData data)
+     /**
+      * 清除设备历史数据
+      * @param snDevice
+      * @param SampleType   SampleType.XXX   要清除的样本类型
+      */
+    public static void clearHistoryData(SNDevice snDevice, String sampleType) {}
+
+     /**
+      * 清除所有设备历史数据  (包含血糖,质控液)部分机子有血酮的，尿酸的 一概清除 
       * @param snDevice
       */
-    public static void getHistoryData(SNDevice snDevice){}
-
-    /**
-     * 获取设备历史数据
-     * @param snDevice
-     * isReadQualityControlSolution  读质控历史记录（金稳+Air质控）
-     */
-    public static void getHistoryData(SNDevice snDevice,boolean isReadQualityControlSolution){}
+    public static void clearHistoryData(SNDevice snDevice) {}
 
 ```
 	  

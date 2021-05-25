@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.sinocare.multicriteriasdk.entity.BoothDeviceConnectState;
+import com.sinocare.multicriteriasdk.entity.DeviceDetectionState;
 import com.sinocare.multicriteriasdk.entity.SNDevice;
 import com.sinocare.multicriteriasdk.utils.TimerHelper;
 
@@ -100,6 +101,7 @@ public class MsgListAdapter extends BaseAdapter {
          String date;
          SNDevice snDevice;
         BoothDeviceConnectState state ;
+        DeviceDetectionState mDeviceDetectionState;
 
         public DeviceListItem(String msg, boolean siri) {
             message = msg;
@@ -121,6 +123,13 @@ public class MsgListAdapter extends BaseAdapter {
 
         public void setState(BoothDeviceConnectState state) {
             this.state = state;
+        }
+        public DeviceDetectionState getDeviceDetectionState() {
+            return mDeviceDetectionState;
+        }
+
+        public void setDeviceDetectionState(DeviceDetectionState mDeviceDetectionState) {
+            this.mDeviceDetectionState = mDeviceDetectionState;
         }
     }
 

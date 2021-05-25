@@ -12,7 +12,9 @@ import com.sinocare.multicriteriasdk.MulticriteriaSDKManager;
 import com.sinocare.multicriteriasdk.SnCallBack;
 import com.sinocare.multicriteriasdk.bean.DeviceDetectionData;
 import com.sinocare.multicriteriasdk.entity.BoothDeviceConnectState;
+import com.sinocare.multicriteriasdk.entity.DeviceDetectionState;
 import com.sinocare.multicriteriasdk.entity.SNDevice;
+import com.sinocare.multicriteriasdk.entity.SampleType;
 import com.sinocare.multicriteriasdk.entity.SnPrintInfo;
 import com.sinocare.multicriteriasdk.utils.LogUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -24,6 +26,8 @@ import java.util.Map;
 
 import io.reactivex.functions.Consumer;
 
+import static com.sinocare.multicriteriasdk.entity.DeviceDetectionState.DetectionStateEnum.*;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listViewData;
     private MsgListAdapter dataAdapter;
     public Map<String, BoothDeviceConnectState> stateHashMap = new HashMap<>();
-    private int count= 0;
+    private int count = 0;
     private TextView tv;
 
     @Override
@@ -100,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
      * @time 2019/2/26 20:50
      */
     private void startConnect() {
+        MulticriteriaSDKManager.
         MulticriteriaSDKManager.startConnect(snDevices, new SnCallBack() {
             @Override
             public void onDataComing(SNDevice device, DeviceDetectionData data) {
@@ -151,10 +156,30 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
+
+            @Override
+            public void onDetectionStateChange(SNDevice snDevice, DeviceDetectionState deviceDetectionState) {
+                switch (deviceDetectionState.getStatus()) {
+                    case STATE_TIME_SET_SUCCESS:
+                    case STATE_TIME_SET_FAI:
+                    case STATE_CLEAN_HISTORY_DATA_SUCCESS:
+                    case STATE_CLEAN_HISTORY_DATA_FAIL:
+                    case STATE_NO_HISTORY_DATA:
+                    case STATE_NO_HISTORY_DATA_FAIL:
+                        MsgListAdapter.DeviceListItem deviceList = new MsgListAdapter.DeviceListItem(snDevice.getDesc() + "(" + deviceDetectionState.getStatus() + ")", false);
+                        deviceList.setSnDevice(snDevice);
+                        deviceList.setDeviceDetectionState(deviceDetectionState);
+                        statusAdapter.addMsgItem(deviceList);
+                        listViewStatus.setSelection(0);
+                        break;
+
+                }
+
+            }
         });
         MulticriteriaSDKManager.onResume();
     }
- 
+
 
     @Override
     public void finish() {
