@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
      * @time 2019/2/26 20:50
      */
     private void startConnect() {
-        MulticriteriaSDKManager.
         MulticriteriaSDKManager.startConnect(snDevices, new SnCallBack() {
             @Override
             public void onDataComing(SNDevice device, DeviceDetectionData data) {
@@ -185,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         MulticriteriaSDKManager.disConectDevice(snDevices);
+        MulticriteriaSDKManager.finishAll();
         snDevices.clear();
     }
 
