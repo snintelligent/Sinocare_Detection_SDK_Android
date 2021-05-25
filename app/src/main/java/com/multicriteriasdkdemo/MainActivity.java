@@ -184,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         MulticriteriaSDKManager.disConectDevice(snDevices);
-        MulticriteriaSDKManager.finishAll();
         snDevices.clear();
     }
 
