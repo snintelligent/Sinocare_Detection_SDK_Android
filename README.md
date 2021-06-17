@@ -54,7 +54,7 @@ allprojects {
 在App 模块 build.gradle中配置
 
 ```powershell
-  implementation 'com.sinocare.android_lib:multicriteriasdk:1.0.17'
+  implementation 'com.sinocare.android_lib:multicriteriasdk:1.0.18'
 ```
 
 ## 2.3 配置manifest
@@ -97,6 +97,9 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 # 3. 接口说明
 
 ## 3.1 初始化SDK、鉴权（只有鉴权通过，sdk才可以正常使用）；注意：不要反复鉴权或每次连接前都做一次鉴权，鉴权太频繁会增加鉴权失败的机率；
+## 初始化SDK、鉴权分两种 如下：
+
+### 3.1.1 一种默认设置蓝牙连接  默认时间3000毫秒  (注意 此方法在SDK 1.0.18以下才支持)
 ```Java
      public class MyApplication extends Application {
 		    public MyApplication() {
@@ -106,6 +109,7 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 		    @Override
 		    public void onCreate() {
 		        super.onCreate();
+                //
 		        MulticriteriaSDKManager.initAndAuthentication(this, new AuthStatusListener() {
 
             			@Override
@@ -113,6 +117,26 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 
             			}
         		});
+		    }
+    }
+```
+### 3.1.2 一种手动设置蓝牙连接时间  最低3秒 3000 = 3秒 (注意 此方法在等于大于SDK 1.0.18 才支持)
+```Java
+     public class MyApplication extends Application {
+		    public MyApplication() {
+		        super();
+		    }
+	
+		    @Override
+		    public void onCreate() {
+		        super.onCreate();
+               
+               MulticriteriaSDKManager.initAndAuthentication(3000,this, new AuthStatusListener() {
+               		@Override
+               		public void onAuthStatus(AuthStatus authStatus) {
+               
+               		}
+        	   });
 		    }
     }
 ```
@@ -174,9 +198,33 @@ AnthStatus鉴权状态说明：
                     }
                 });
 ```
-目前仪器测试完，数据直接会通过SDK回传。
+目前仪器测试完，数据直接会通过SDK回传。在回传前可以设置蓝牙是否开启扫描，开启扫描就是扫描到了蓝牙再去连接，如果不开启扫描，就是直接连接设备
 ```Java
-    MulticriteriaSDKManager.startConnect(snDevices, new SnCallBack() {
+
+ /**
+  * 第一种 默认就是开启扫描设备(注意 此方法在SDK 1.0.18以下才支持)
+  */
+    MulticriteriaSDKManager.startConnect(snDevices,new SnCallBack() {
+                @Override
+                public void onDataComing(SNDevice device, DeviceDetectionData data) {
+                  //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
+                }
+    
+                 @Override
+                 public void onDeviceStateChange(SNDevice device, BoothDeviceConnectState state) {
+                 //设备数据状态：时间同步成功、历史数据获取成功、清除成功等等
+                 }
+                 
+                @Override
+                public void onDeviceStateChange(SNDevice device, BoothDeviceConnectState state) {
+                 //连接连接状态 目前只回调连接成功与断开连接
+                 }
+            });
+
+ /**
+  * 第二种  isScanningBluetooth  ture 扫描  false不扫描   (注意 此方法在等于大于SDK 1.0.18 才支持)
+  */
+    MulticriteriaSDKManager.startConnect(snDevices, isScanningBluetooth,new SnCallBack() {
                 @Override
                 public void onDataComing(SNDevice device, DeviceDetectionData data) {
                   //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
@@ -653,13 +701,14 @@ public class ReportRequest extends DetectionResultInfo {
 
 设备名称型号 | 设备指标 | 蓝牙名称 | 蓝牙类别 | 设备图片
 ---|--- | --- | --- | ---
- UG-11| 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![UG-11](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ug_11.png?raw=true)
+UG-11| 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![UG-11](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ug_11.png?raw=true)
 EA-12 | 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![EA-12](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ea_12.png?raw=true)
 EA-18 | 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![EA-18](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ea_18.png?raw=true)
 KA-11 | 血酮、血糖 | BDE_WEIXIN_TTM | BLE | ![KA-11](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ka_11.png?raw=true)
 卡迪克 | 血脂 | CardioChek | BLE | ![CardioChek](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_cardiochek.png?raw=true)
 WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_wl_1.png?raw=true)
 金准+ | 血糖 | BDE_WEIXIN_TTM | BLE | ![金准+](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_gold_aq.png?raw=true)
+金准+Air | 血糖 | BDE_WEIXIN_TTM | BLE | ![金准+Air](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_gold_aq.png?raw=true)
 掌越SLX120 | 血脂、血糖 | SLX120 | BLE | ![SXL120](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_sxl.png?raw=true)
 安稳+Air | 血糖 | BDE_WEIXIN_TTM | BLE | ![安稳+Air](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_anwen_air.png?raw=true)
 三诺血压计 | 血压、脉搏 | ClinkBlood | BLE | ![三诺血压计](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_yukang.png?raw=true) 
