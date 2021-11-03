@@ -99,7 +99,7 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 ## 3.1 初始化SDK、鉴权（只有鉴权通过，sdk才可以正常使用）；注意：不要反复鉴权或每次连接前都做一次鉴权，鉴权太频繁会增加鉴权失败的机率；
 ## 初始化SDK、鉴权分两种 如下：
 
-### 3.1.1 一种默认设置蓝牙连接  默认时间3000毫秒  (注意 此方法在SDK 1.0.18以下才支持)
+### 3.1.1 一种默认设置蓝牙连接  默认时间3000毫秒 
 ```Java
      public class MyApplication extends Application {
 		    public MyApplication() {
@@ -202,7 +202,7 @@ AnthStatus鉴权状态说明：
 ```Java
 
  /**
-  * 第一种 默认就是开启扫描设备(注意 此方法在SDK 1.0.18以下才支持)
+  * 第一种 默认就是开启扫描设备
   */
     MulticriteriaSDKManager.startConnect(snDevices,new SnCallBack() {
                 @Override
