@@ -159,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDetectionStateChange(SNDevice snDevice, DeviceDetectionState deviceDetectionState) {
                 switch (deviceDetectionState.getStatus()) {
+                    case STATE_BLOOD_SPARKLING:
+                    case STATE_START_TEST:
                     case STATE_TIME_SET_SUCCESS:
                     case STATE_TIME_SET_FAI:
                     case STATE_CLEAN_HISTORY_DATA_SUCCESS:
