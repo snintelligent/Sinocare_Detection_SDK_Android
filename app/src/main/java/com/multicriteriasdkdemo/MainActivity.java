@@ -83,17 +83,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         snDevices.addAll(bleDevices);
-        RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.READ_PHONE_STATE).subscribe(new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) throws Exception {
-                if (aBoolean) {
-                    startConnect();
-                } else {
-                    Toast.makeText(MainActivity.this, "请先给设备赋权限", Toast.LENGTH_SHORT);
-                }
-            }
-        });
+        startConnect();
+
     }
 
     /**

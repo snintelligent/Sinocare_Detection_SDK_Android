@@ -22,23 +22,12 @@ buildscript {
 
 allprojects {
     repositories {
+
         maven {
-            url 'https://maven.aliyun.com/repository/public'
-        }
-        maven {
-            credentials {
-                username 'sEvpvj'
-                password 'yKIOo1lt6V'
-            }
+
             url 'https://repo.rdc.aliyun.com/repository/107484-release-klJuvE/'
         }
-        maven {
-            credentials {
-                username 'sEvpvj'
-                password 'yKIOo1lt6V'
-            }
-            url 'https://repo.rdc.aliyun.com/repository/107484-snapshot-ZvSq3g/'
-        }
+
         google()
         jcenter()
         maven { url 'https://jitpack.io' }

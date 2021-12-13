@@ -1,17 +1,23 @@
-
 # 1. 多指标设备接入SDK说明
-Sinocare_Detection_SDK_Android 是三诺生物传感股份有限公司开发的设备连接的SDK，目前已接入包括三诺自有设备在内的20多款检测设设备；可以便捷的实现多款蓝牙设备的同时连接与数据接收，极大的简化了蓝牙设备的接入流程，接入用户只需要专注自身业务的开发，降低了用户接入蓝牙设备的开发成本；同时会为接入用户提供对应的技术支持，及时的响应客户的需求；
+
+Sinocare_Detection_SDK_Android
+是三诺生物传感股份有限公司开发的设备连接的SDK，目前已接入包括三诺自有设备在内的20多款检测设设备；可以便捷的实现多款蓝牙设备的同时连接与数据接收，极大的简化了蓝牙设备的接入流程，接入用户只需要专注自身业务的开发，降低了用户接入蓝牙设备的开发成本；同时会为接入用户提供对应的技术支持，及时的响应客户的需求；
 
 ## 1.1 文件说明
+
 Sinocare_Detection_SDK_Android 主要是通过aar方式提供给第三发软件开发使用.
 
 ## 1.2 使用设备的Android系统版本和蓝牙版本要求
+
 		 设备（手机，平板，电视等）需支持android 5.0 及以上操作系统，支持蓝牙4.0，支持ble
-    
+
 # 2. 集成方法
 
 ## 2.1 接入前准备
-提供app包名和keystore sha1指纹，用于生成sdk接入的access key; 由于debug keystore 和release keystore的证书指纹不一致，为了保证app调试与正式上线后都能正常的鉴权成功，建议利用release keystore改造出一个debug版keystore保证两者证书指纹一致；
+
+提供app包名和keystore sha1指纹，用于生成sdk接入的access key; 由于debug keystore 和release
+keystore的证书指纹不一致，为了保证app调试与正式上线后都能正常的鉴权成功，建议利用release keystore改造出一个debug版keystore保证两者证书指纹一致；
+
 ``` shell
 //获取keystore 指纹命令
 keytool -v -list -keystore sinocare-debug.jks
@@ -25,32 +31,21 @@ keytool -v -list -keystore sinocare-debug.jks
 
 ```
 
-
 ## 2.2 SDK接入
+
 在根目录build.gradle中加入如下配置
+
 ```powershell
 allprojects {
     repositories {
         maven {
-            url 'https://maven.aliyun.com/repository/public'
-        }
-        maven {
-            credentials {
-                username 'sEvpvj'
-                password 'yKIOo1lt6V'
-            }
             url 'https://repo.rdc.aliyun.com/repository/107484-release-klJuvE/'
         }
-        maven {
-            credentials {
-                username 'sEvpvj'
-                password 'yKIOo1lt6V'
-            }
-            url 'https://repo.rdc.aliyun.com/repository/107484-snapshot-ZvSq3g/'
-        }
+       
     }
 }
 ```
+
 在App 模块 build.gradle中配置
 
 ```powershell
@@ -58,6 +53,7 @@ allprojects {
 ```
 
 ## 2.3 配置manifest
+
 manifest的配置主要包括添加权限,代码示例如下：
 
 ```powershell
@@ -69,225 +65,183 @@ manifest的配置主要包括添加权限,代码示例如下：
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> //允许程序获取网络信息状态，如当前的网络连接是否有效
 ```
+
+## 2.4 动态权限申请 
+
+如果targetSdkVersion 小于23，不需要6.0权限处理。如果是targetSdkVersion 大于等于23，需要6.0权限处理，则需要在启获取权限后，再开始连接
+
+```java
+           //申请权限
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION},1);
+```
+
 sdk access key配置，示例代码如下，在application标签下配置meta-data, key值sino_minute_access_key，value为申请的access key
+
 ``` xml
-<application
-        android:allowBackup="true"
-        android:name=".MyApplication"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+<application ...>
 
         <meta-data android:name="sino_minute_access_key"
             android:value="c3ecbb62344af7bbc6271aaabbcccc"/>
 	    
 </application>
 ```
-## 2.4 混淆说明
-如果app进行混淆，请添加如下混淆配置，确保sdk中关键类不被混淆：
-```xml
--keep class com.sinocare.multicriteriasdk.utils.NoProguard
 
--keep class * implements com.sinocare.multicriteriasdk.utils.NoProguard {
-    *;
-}
+## 2.5 混淆说明
+
+如果app进行混淆，请添加如下混淆配置，确保sdk中关键类不被混淆：
+
+```xml
+    -keep class com.sinocare.multicriteriasdk.utils.NoProguard
+
+    -keep class * implements com.sinocare.multicriteriasdk.utils.NoProguard {*;}
 ```
+
 # 3. 接口说明
 
 ## 3.1 初始化SDK、鉴权（只有鉴权通过，sdk才可以正常使用）；注意：不要反复鉴权或每次连接前都做一次鉴权，鉴权太频繁会增加鉴权失败的机率；
+
 ## 初始化SDK、鉴权分两种 如下：
 
-### 3.1.1 一种默认设置蓝牙连接  默认时间3000毫秒 
 ```Java
      public class MyApplication extends Application {
-		    public MyApplication() {
-		        super();
-		    }
-		
-		    @Override
-		    public void onCreate() {
-		        super.onCreate();
-                //
-		        MulticriteriaSDKManager.initAndAuthentication(this, new AuthStatusListener() {
+    
+        @Override
+        public void onCreate() {
+          super.onCreate();
+          // 第一种鉴权接口和默认设置蓝牙连接间隔时间
+           MulticriteriaSDKManager.initAndAuthentication(this, new AuthStatusListener() {
 
-            			@Override
-            			public void onAuthStatus(AuthStatus authStatus) {
-
-            			}
-        		});
-		    }
+               @Override
+               public void onAuthStatus(AuthStatus authStatus) {
+  
+               }
+           });
+        
+         //第二种鉴权接口和手动设置蓝牙连接间隔时间 最低3秒 3000 = 3秒 (注意 此方法在等于大于SDK 1.0.18 才支持)
+//           MulticriteriaSDKManager.initAndAuthentication(3000, this, new AuthStatusListener() {
+//              @Override
+//               public void onAuthStatus(AuthStatus authStatus) {
+//
+//               }
+//           });
     }
-```
-### 3.1.2 一种手动设置蓝牙连接时间  最低3秒 3000 = 3秒 (注意 此方法在等于大于SDK 1.0.18 才支持)
-```Java
-     public class MyApplication extends Application {
-		    public MyApplication() {
-		        super();
-		    }
-	
-		    @Override
-		    public void onCreate() {
-		        super.onCreate();
-               
-               MulticriteriaSDKManager.initAndAuthentication(3000,this, new AuthStatusListener() {
-               		@Override
-               		public void onAuthStatus(AuthStatus authStatus) {
-               
-               		}
-        	   });
-		    }
-    }
-```
-
-AnthStatus鉴权状态说明：
-```java
-    /**
-     * SDK鉴权成功
-     */
-    public static final int  SDK_AUTHENTICATION_SUCCESS = 10000;
-
-    /**
-     * accessKey 不正确
-     */
-    public static final int  SDK_ACCESS_KEY_INCORRECT = 10001;
-
-    /**
-     * 包名不正确
-     */
-    public static final int PACKAGE_NAME_INCORRECT = 10002;
-
-    /**
-     * 签名不正确
-     */
-    public static final int SINATURE_SHA1_INCORRECT = 10003;
-
-    /**
-     * 服务器或网络异常，服务器无法正常响应，具体错误查看msg
-     */
-    public static final int NETWORK_OR_SERVER_ERROR = 10004;
-
-
-    /**
-     * 接口返回服务器异常
-     */
-    public static final int API_SERVER_ERROR = 500;
-
-
-    /**
-     * AccessKey配置不正确
-     */
-    public static final int SDK_ACCESS_KEY_INCOORECT = 401;
+}
 ```
 
 
-## 3.2  连接与断开连接，数据获取
-如果targetSdkVersion 小于23，不需要6.0权限处理。
-如果是targetSdkVersion 大于等于23，需要6.0权限处理，则需要在启获取权限后，再开始连接
-```java
-        RxPermissions rxPermissions = new RxPermissions(this);
-                rxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        if (aBoolean) {
-                            startConnect();
-                        } else {
-                            Toast.makeText(MainActivity.this, "请先给设备赋权限", Toast.LENGTH_SHORT);
-                        }
-                    }
-                });
-```
-目前仪器测试完，数据直接会通过SDK回传。在回传前可以设置蓝牙是否开启扫描，开启扫描就是扫描到了蓝牙再去连接，如果不开启扫描，就是直接连接设备
+###  3.1.1 AnthStatus鉴权状态码说明：
+
+code | 说明 
+--- | --- 
+10000 | SDK鉴权成功
+10001 | accessKey 不正确
+10002 | 包名不正确
+10003 | 签名不正确
+10004 | 服务器或网络异常，服务器无法正常响应，具体错误查看msg
+500 | 接口返回服务器异常
+401 | AccessKey配置不正确
+
+
+## 3.2 连接与断开连接，数据获取
+###  3.2.1 连接与数据获取
+目前仪器测试完，数据直接会通过SDK回传。在回传前可以设置蓝牙是否开启扫描，开启扫描就是扫描到了蓝牙再去连接，如果不开启扫描，就是直接连接设备，跳过扫面。
+
 ```Java
 
- /**
-  * 第一种 默认就是开启扫描设备
-  */
-    MulticriteriaSDKManager.startConnect(snDevices,new SnCallBack() {
-                @Override
-                public void onDataComing(SNDevice device, DeviceDetectionData data) {
-                  //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
-                }
-    
-                 @Override
-                 public void onDeviceStateChange(SNDevice device, BoothDeviceConnectState state) {
-                 //设备数据状态：时间同步成功、历史数据获取成功、清除成功等等
-                 }
-                 
-                @Override
-                public void onDeviceStateChange(SNDevice device, BoothDeviceConnectState state) {
-                 //连接连接状态 目前只回调连接成功与断开连接
-                 }
-            });
+/**
+ * 第一种 默认就是开启扫描设备
+ */
+    MulticriteriaSDKManager.startConnect(snDevices,new SnCallBack(){
+         @Override
+         public void onDataComing(SNDevice device,DeviceDetectionData data){
+            //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
+         }
 
- /**
-  * 第二种  isScanningBluetooth  ture 扫描  false不扫描   (注意 此方法在等于大于SDK 1.0.18 才支持)
-  */
-    MulticriteriaSDKManager.startConnect(snDevices, isScanningBluetooth,new SnCallBack() {
-                @Override
-                public void onDataComing(SNDevice device, DeviceDetectionData data) {
-                  //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
-                }
-    
-                 @Override
-                 public void onDeviceStateChange(SNDevice device, BoothDeviceConnectState state) {
-                 //设备数据状态：时间同步成功、历史数据获取成功、清除成功等等
-                 }
-                 
-                @Override
-                public void onDeviceStateChange(SNDevice device, BoothDeviceConnectState state) {
-                 //连接连接状态 目前只回调连接成功与断开连接
-                 }
-            });
+         @Override
+         public void onDetectionStateChange(SNDevice device,DeviceDetectionState state){
+             //设备数据状态：时间同步成功、历史数据获取成功、清除成功等等
+         }
+
+         @Override
+         public void onDeviceStateChange(SNDevice device,BoothDeviceConnectState state){
+             //连接连接状态 目前只回调连接成功与断开连接
+         }
+    });
+
+        /**
+         * 第二种  isScanningBluetooth  ture 扫描  false不扫描   (注意 此方法在等于大于SDK 1.0.18 才支持)
+         */
+//        MulticriteriaSDKManager.startConnect(snDevices,isScanningBluetooth,new SnCallBack(){
+//          @Override
+//          public void onDataComing(SNDevice device,DeviceDetectionData data){
+//             //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
+//          }
+//
+//          @Override
+//          public void onDetectionStateChange(SNDevice device,DeviceDetectionState state){
+//              //设备数据状态：时间同步成功、历史数据获取成功、清除成功等等
+//          }
+//
+//          @Override
+//          public void onDeviceStateChange(SNDevice device,BoothDeviceConnectState state){
+//           //连接连接状态 目前只回调连接成功与断开连接
+//        
+//          }
+//        });
+```
+   连接状态 BoothDeviceConnectState
+```java
+    public class BoothDeviceConnectState implements Parcelable {
+    /**
+     * 连接已经断开
+     */
+    public static final int DEVICE_STATE_DISCONNECTED = 0;
+    /**
+     * 连接成功
+     */
+    public static final int DEVICE_STATE_CONNECTED = 2;
+}
+  
 ```
 
-断开指定设备连接：
+###  3.2.2 断开连接
 
 ```java
    MulticriteriaSDKManager.disConectDevice(snDevices);
 ```
 
 退出App
+
 ```java
      MulticriteriaSDKManager.finishAll();
 ```
 
-##  3.3 连接状态
-```java
-    public class BoothDeviceConnectState implements Parcelable {
-        /**
-         * 连接已经断开
-         */
-        public static final int DEVICE_STATE_DISCONNECTED = 0;
-        /**
-         * 连接成功
-         */
-        public static final int DEVICE_STATE_CONNECTED = 2;
-  
-```
 
-## 3.5 数据结构
-### 3.4.1 血糖，血酮，血尿酸测量结果统一采用此类封装，相关设备：安稳+, EA-12，金准+，金准+air ug_11，真睿二代
+## 3.3数据结构 DeviceDetectionData
+
+###  3.3.1 血糖，血酮，血尿酸测量结果统一采用此类封装，相关设备：安稳+, EA-12，金准+，金准+air ug_11，真睿二代  
+
 ```java
 public class SnDataEaka extends BaseDetectionData {
 
-  /******************************************************
-       *  String glucose;血糖值
-       *  String uaResult;血尿酸
-       *  String ketResult;血酮
-       *  Unit glucoseUnit;血糖值单位，国内仪器为mmmol/L; 国际版的仪器存在mg/dl
-       *  Unit uaResultUnit;血尿酸单位
-       *  Unit ketResultUnit;血酮单位
-       *  boolean Lo; 是否低于最低值,低于最低值，仪器上面一般显示低值L
-       *  boolean HI;是否高于最高值，高于最高值，仪器上面一般显示高低H
-       *  String testTime;测量时间，2020-10
-       *  DataSources mDataSources; 数据来源（实时数据、历史数据）
-       *  SampleType sampleType; 检测样本（对于金稳+Air的测量结果会存在血糖质控液样本、血糖样本）
-       */ 
+    /******************************************************
+     *  String glucose;血糖值
+     *  String uaResult;血尿酸
+     *  String ketResult;血酮
+     *  Unit glucoseUnit;血糖值单位，国内仪器为mmmol/L; 国际版的仪器存在mg/dl
+     *  Unit uaResultUnit;血尿酸单位
+     *  Unit ketResultUnit;血酮单位
+     *  boolean Lo; 是否低于最低值,低于最低值，仪器上面一般显示低值L
+     *  boolean HI;是否高于最高值，高于最高值，仪器上面一般显示高低H
+     *  String testTime;测量时间，2020-10
+     *  DataSources mDataSources; 数据来源（实时数据、历史数据）
+     *  SampleType sampleType; 检测样本（对于金稳+Air的测量结果会存在血糖质控液样本、血糖样本）
+     */ 
        **********************************************/
+}
 ```
-### 3.4.2 血脂测量结果统一用此类封装；相关设备：卡迪克，SLX-120（掌越）
+###  3.3.2  血脂测量结果统一用此类封装；相关设备：卡迪克，SLX-120（掌越）
+
 ```java
 public class SnDataCardioCbek extends BaseDetectionData {
 
@@ -303,12 +257,14 @@ public class SnDataCardioCbek extends BaseDetectionData {
      *  String glucose;血糖
      *  Unit cardioCbekUnit; 单位
      ***************************zzg*******************/
-     }
+}
 
 ```
-### 3.4.3 血压结果类；相关设备：三诺蓝牙血压计（誉康、安诺心）， 脉搏波医用血压计RBP_9000，脉搏波BP-88B（臂式ble版），脉搏波RBP-9804（座式）
+
+###  3.3.3  血压结果类；相关设备：三诺蓝牙血压计（誉康、安诺心）， 脉搏波医用血压计RBP_9000，脉搏波BP-88B（臂式ble版），脉搏波RBP-9804（座式）
+
 ```java
-public class SnDataBp extends BaseDetectionData{
+public class SnDataBp extends BaseDetectionData {
 
     /***************************zzg***************************
      * int bloodMeasureLow :  舒张压
@@ -318,22 +274,27 @@ public class SnDataBp extends BaseDetectionData{
      */
     
      ***************************zzg*******************/
-     }
+}
 ```
-### 3.4.4 糖化血红蛋白结果类； 相关设备：相关设备PCH-100
-```java
-public class SnDataPch extends BaseDetectionData 
 
-	/**
-	* String testResult; 糖化结果，单位是 %
-	* Boolean isLo;   是否低于最低值，低于最低值时，设备无法给出测量值，会显示低值标识
-	* Boolean isHI;  是否高于最高值，高于最高值时，设备无法给出测量值，会显示高值标识
-	* Unit unit;     糖化单位描述 %
-	*/
+###  3.3.4 糖化血红蛋白结果类； 相关设备：相关设备PCH-100
+
+```java
+public class SnDataPch extends BaseDetectionData {
+
+/**
+ * String testResult; 糖化结果，单位是 %
+ * Boolean isLo;   是否低于最低值，低于最低值时，设备无法给出测量值，会显示低值标识
+ * Boolean isHI;  是否高于最高值，高于最高值时，设备无法给出测量值，会显示高值标识
+ * Unit unit;     糖化单位描述 %
+ */
+}
 ```
-### 3.4.5 身份证信息类；相关设备：华大互联网HD-100
+
+###  3.3.5  身份证信息类；相关设备：华大互联网HD-100
+
 ``` java
-public class SnDataIdCard extends BaseDetectionData
+public class SnDataIdCard extends BaseDetectionData{
 
     /**
      * String name;   	 姓名
@@ -343,32 +304,36 @@ public class SnDataIdCard extends BaseDetectionData
      * int age;       	 年龄
      * String birthday;  出生日期；格式 yyyy-MM-dd
      */
-    
+    }
 ```
-### 3.4.6 尿14项结果类；相关设备：优利特URIT-31，恩普生半自动尿液分析仪ui，ui-10c,
+
+###  3.3.6  尿14项结果类；相关设备：优利特URIT-31，恩普生半自动尿液分析仪ui，ui-10c,
+
 ```java
-public class SnDataUrit extends BaseDetectionData
+public class SnDataUrit extends BaseDetectionData {
 
-	/****
-     	* String leu;	 白细胞
-     	* String ket;    酮体
-     	* String nit;  	 亚硝酸盐
-     	* String uro;	 尿胆原
-     	* String bil; 	 胆红素
-     	* String pro;	 蛋白质
-     	* String glu;  	 葡萄糖
-     	* String sg;	 尿比重
-     	* String bld; 	 隐血
-     	* String ph; 	 酸碱度
-     	* String vc; 	 维生素 C
-     	* String cr;	 肌酐
-     	* String ca; 	尿钙
-     	* String ma; 微白蛋白
-     	* String response; 16进制字符串，命令执行后，设备的返回确认指令，比如：指令执行成功或失败；
-     	*/
+/****
+ * String leu;	 白细胞
+ * String ket;    酮体
+ * String nit;  	 亚硝酸盐
+ * String uro;	 尿胆原
+ * String bil; 	 胆红素
+ * String pro;	 蛋白质
+ * String glu;  	 葡萄糖
+ * String sg;	 尿比重
+ * String bld; 	 隐血
+ * String ph; 	 酸碱度
+ * String vc; 	 维生素 C
+ * String cr;	 肌酐
+ * String ca; 	尿钙
+ * String ma; 微白蛋白
+ * String response; 16进制字符串，命令执行后，设备的返回确认指令，比如：指令执行成功或失败；
+ */
+}
 ```
 
-### 3.4.7 尿生化（微量白蛋白、肌酐、ACR）；相关设备：三诺全自动生化分析仪PABA-100
+###  3.3.7  尿生化（微量白蛋白、肌酐、ACR）；相关设备：三诺全自动生化分析仪PABA-100
+
 ```java
 public class SnDataACR extends BaseDetectionData {
 
@@ -394,334 +359,106 @@ public class SnDataACR extends BaseDetectionData {
      * boolean acrbLow; ACR是否低于测量范围
      * boolean acrbHi;	ACR是否高于测量范围
      */
-}  
-     
-```
-
-### 3.4.8 糖化血红蛋白指标；相关设备：手持式胶体金试纸分析仪
-```java
-public class SnDataAnemia extends BaseDetectionData {
-
-   /**
-     * String uint; 单位，目前是ng/ml
-     * String fer; 糖化血红蛋白结果
-     */
- }
-```
-
-## 4 给设备发送指令，支持获取历史数据与清除历史数据；
-### 4.1 SampleType 样本类型
-
-```java
-public class SampleType implements Parcelable {
-       //血糖
-       public static final String INDEX_1_BLOOD = "0001";
-       //血糖质控液
-       public static final String INDEX_2_SUGER_SIMULATED_FLUID = "0002";
-       //血酮
-       public static final String INDEX_3__KETONE_BLOOD = "0003";
-       //血酮质控液
-       public static final String INDEX_4__KETONE_SIMULATED_FLUID = "0004";
-       //尿酸
-       public static final String INDEX_5_URIC_ACID_BLOOD = "0005";
-       //尿酸质控液
-       public static final String INDEX_6_URIC_ACID_SIMULATED_FLUID = "0006";
-    
 }
 
 ```
-### 4.2 获取仪器历史测量结果；注意：仪器在滴血状态和测量状态可能无法响应此指令；
+
+###  3.3.8  糖化血红蛋白指标；相关设备：手持式胶体金试纸分析仪
 
 ```java
-   // MulticriteriaSDKManager类中执行如下方法可获取历史数据，获取成功后，历史记录会逐条回调至连接方法设置的回调中onDataComing(SNDevice device, DeviceDetectionData data)
-     /**
-      * 获取设备历史数据
-      * @param snDevice
-      * @param SampleType   SampleType.XXX   要获取的样本类型
-      */
-    public static void getHistoryData(SNDevice snDevice, String SampleType ) {}
+public class SnDataAnemia extends BaseDetectionData {
 
+    /**
+     * String uint; 单位，目前是ng/ml
+     * String fer; 糖化血红蛋白结果
+     */
+}
 ```
 
-### 4.3 清除设备历史数据；注意：仪器在滴血状态和测量状态可能无法响应此指令；
+# 4 给设备发送指令，支持获取历史数据与清除历史数据；
+
+## 4.1 SampleType 样本类型
 
 ```java
-   // MulticriteriaSDKManager类中执行如下方法可清除历史数据，清除成功后，会回调至连接方法设置的回调中sendDeviceDetectionStatus(SNDevice device, DeviceDetectionData data)
-     /**
-      * 清除设备历史数据
-      * @param snDevice
-      * @param SampleType   SampleType.XXX   要清除的样本类型
-      */
-    public static void clearHistoryData(SNDevice snDevice, String sampleType) {}
+public class SampleType implements Parcelable {
+    //血糖
+    public static final String INDEX_1_BLOOD = "0001";
+    //血糖质控液
+    public static final String INDEX_2_SUGER_SIMULATED_FLUID = "0002";
+    //血酮
+    public static final String INDEX_3__KETONE_BLOOD = "0003";
+    //血酮质控液
+    public static final String INDEX_4__KETONE_SIMULATED_FLUID = "0004";
+    //尿酸
+    public static final String INDEX_5_URIC_ACID_BLOOD = "0005";
+    //尿酸质控液
+    public static final String INDEX_6_URIC_ACID_SIMULATED_FLUID = "0006";
 
-     /**
-      * 清除所有设备历史数据  (包含血糖,质控液)部分机子有血酮的，尿酸的 一概清除 
-      * @param snDevice
-      */
-    public static void clearHistoryData(SNDevice snDevice) {}
+}
 
 ```
-	  
-## 5 生成检测报告
-根据用户检测结果，并带入用户个人信息，生成对应的检测报告及解读；
-返回数据格式：
-``` json
-	{
-	    "code":"0", // 0: 成功 500: 服务器异常， 401:接口验证不通过，10001:SDK Key不正确，10002:APP包名不正确， 10003:APP 签名不正确 		    
-            "msg":"", //状态描述信息
- 	    "data": {
-                "indexSuggestReports": [
-                   {
-                     "medicalName": "身体质量指数",
-                     "medicalNameShortened": "BMI",
-                     "suggest": "根据您的检测结果分析如下：xxxxxxxx",
-                     "cliSignificance": "身体质量指数的临床意义：xxxxxx"
-                  },
-                  {
-                     "medicalName": "血糖",
-                     "medicalNameShortened": "GLU",
-                     "suggest": "根据您的检测结果分析如下：xxxx",
-                     "cliSignificance": "血糖的临床意义：xxxx"
-                   }
-             ],
 
-       	    "medicalReportUrl": "https:xxxxx" //返回的结果解读H5地址
-      	    }
-	}
-```
-扫描二维码查看解读报告示例
-	
-![解读报告示例：https://mcc.tmqyt.com/external/mobile_report.html?resultId=17E17465A032A5CA0B8FF59B6216CA8A](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/report_qr_code.png?raw=true)
+## 4.2 获取仪器历史测量结果；注意：仪器在滴血状态和测量状态可能无法响应此指令；
 
 ```java
-MulticriteriaSDKManager.generateReport(reportRequest, new BaseCallBack(){
+   
+/**
+ * 获取设备历史数据
+ * @param snDevice
+ * @param SampleType   SampleType.XXX   要获取的样本类型
+ */
+MulticriteriaSDKManager.getHistoryData(SNDevice snDevice,String sampleType);
 
-	//注意，这里回调均在子线程，baseHttpResult对象中data字段为JsonElement类型，需要自行解析
-            @Override
-            public void onSuccess(BaseHttpResult baseHttpResult) {
-                // 检测报告结果
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
-            }
-        });
-
-// ReportRequest.java
-public class ReportRequest extends DetectionResultInfo {
-    private String sdkAccessToken;
-
-    private String uid;
-
-    private String name;
-
-    private int sex;
-
-    private String birthday;
-
-    /**
-     * 对外构造方法，默认已经设置好token值了，用户不需要再处理，构造方法中字段为生成检测报告所必须的个人信息字段；
-     * @param uid 用户手机号
-     * @param name 用户姓名
-     * @param sex 性别 1：男，2：女
-     * @param birthday 生日，格式yyyy-MM-dd
-     */
-    public ReportRequest(String uid, String name, int sex, String birthday) {
-        this(AuthUtils.getAccessToken(), uid, name, sex, birthday);
-    }
-    
-    // DetectionResultInfo.java 基本指标类
-    public class DetectionResultInfo implements JsonInterface {
-
-    /**
-     *身高
-     */
-    private String heightResult;
-    /**
-     * 体重
-     */
-    private String weightResult;
-
-    /**
-     * 血糖测试时间段,1:空腹 2:餐后 3:随机 0:其他
-     */
-    private Integer foodStatus = 0;
-
-
-    /**
-     * 血糖
-     */
-    private String glu;
-    /**
-     * 血酮
-     */
-    private String ket;
-    /**
-     * 血尿酸
-     */
-    private String ua;
-    /**
-     * 糖化血红蛋白
-     */
-    private String hbalc;
-    /**
-     * 甘油三脂
-     */
-    private String tg;
-    /**
-     * 总胆固醇
-     */
-    private String chol;
-    /**
-     * 高密度脂蛋白胆固醇
-     */
-    private String hdlc;
-
-    /**
-     * 低密度脂蛋白胆固醇
-     */
-    private String ldlc;
-
-    /**
-     * 总胆/高密
-     */
-    private String tcHdlc;
-    /**
-     *低密度/高密度比值
-     */
-    private String ldlcHdlc;
-
-    /**
-     * 非高密度脂蛋白胆固醇
-     */
-    private String nonHdlc;
-
-    /**
-     * 血压(收缩压/舒张压)例如: 110/89 这里的110是收缩压89是舒张压，必须以“/”相隔
-     */
-    private String bpResult;
-
-    /**
-     * 血氧饱和度
-     */
-    private String spo2;
-    /**
-     * 脉博
-     */
-    private String p;
-    /**
-     * 体温
-     */
-    private String t;
-
-    /**
-     * 尿微量白蛋白
-     */
-    private String malb;
-    /**
-     * 尿肌酐
-     */
-    private String ucr;
-    /**
-     * 尿微量白蛋白/尿肌酐
-     */
-    private String acr;
-    /**
-     * 铁蛋白
-     */
-    private String fer;
-
-    //尿白细胞
-    private String wbc;
-    //尿酮体
-    private String uket;
-    //尿亚硝酸盐
-    private String nit;
-    //尿胆原
-    private String uro;
-    //尿胆红素
-    private String bil;
-    //尿蛋白质
-    private String pro;
-    //尿糖
-    private String uglu;
-    //尿比重
-    private String sg;
-    //隐血
-    private String bld;
-    //酸碱度
-    private String ph;
-    //维生素 C
-    private String vc;
-    //尿肌酐
-    private String cr;
-    //尿钙
-    private String ca;
-    //微白蛋白
-    private String ma;
-
-    /**
-     *  呼气流量峰值，仪器测量原始值
-     */
-    private String pef;
-
-    //呼气流量峰值预计值（计算值，用户自己计算生成）
-    private String pefPredicted;
-
-    /**
-     * 第一秒用力呼气量，仪器测量原始值
-     */
-    private String fev1;
-
-    //第一秒用力呼气量预计值（计算值，用户自己计算生成）
-    private String fev1Predicted;
-
-    /**
-     *    用力肺活量，仪器测量原始值
-     */
-    private String fvc;
-
-    //用力肺活量预计值（计算值，用户自己计算生成）
-    private String fvcPredicted;
-
-    //PEF实际测量值/PEF预计值*100%（计算值，用户自己计算生成）
-    private String pefRate;
-
-    //FEV1实际测量值/FEV1预计值*100%（计算值，用户自己计算生成）
-    private String fev1Rate;
-
-    //FEV1实际测量值/FVC实际测量值*100%（计算值，用户自己计算生成）
-    private String fev1fvcRate;
-    
-    
-    
 ```
-## 6 设备信息说明
+
+## 4.3 清除设备历史数据；注意：仪器在滴血状态和测量状态可能无法响应此指令；
+
+```java
+   // 清除成功后，会回调至连接方法设置的回调中sendDeviceDetectionStatus(SNDevice device, DeviceDetectionData data)
+/**
+ * 清除设备历史数据
+ * @param snDevice
+ * @param SampleType   SampleType.XXX   要清除的样本类型
+ */
+MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice,String sampleType);
+
+/**
+ * 清除所有设备历史数据  (包含血糖,质控液)部分机子有血酮的，尿酸的 一概清除 
+ * @param snDevice
+ */
+MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice);
+
+```
+
+
+# 5 设备信息说明
 
 设备名称型号 | 设备指标 | 蓝牙名称 | 蓝牙类别 | 设备图片
 ---|--- | --- | --- | ---
-UG-11| 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![UG-11](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ug_11.png?raw=true)
-EA-12 | 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![EA-12](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ea_12.png?raw=true)
-EA-18 | 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![EA-18](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ea_18.png?raw=true)
-KA-11 | 血酮、血糖 | BDE_WEIXIN_TTM | BLE | ![KA-11](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_ka_11.png?raw=true)
-卡迪克 | 血脂 | CardioChek | BLE | ![CardioChek](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_cardiochek.png?raw=true)
-WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_wl_1.png?raw=true)
-金准+ | 血糖 | BDE_WEIXIN_TTM | BLE | ![金准+](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_gold_aq.png?raw=true)
-金准+Air | 血糖 | BDE_WEIXIN_TTM | BLE | ![金准+Air](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_gold_aq.png?raw=true)
-掌越SLX120 | 血脂、血糖 | SLX120 | BLE | ![SXL120](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_sxl.png?raw=true)
-安稳+Air | 血糖 | BDE_WEIXIN_TTM | BLE | ![安稳+Air](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_anwen_air.png?raw=true)
-三诺血压计 | 血压、脉搏 | ClinkBlood | BLE | ![三诺血压计](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_yukang.png?raw=true) 
-便携式全自动生化分析仪 | 尿微量白蛋白、尿肌酐、ACR | OSTRAN | 经典蓝牙 配对码 0000| ![生化分析仪](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_biochemical.png?raw=true)
-糖化血红蛋白分析仪 PCH-100 | 糖化血红蛋白 | OSTRAN | 经典蓝牙 外置 配对码0000 | ![PCH-100](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/blob/master/deviceImages/img_device_pch_100.png?raw=true) 
-	
+UG-11| 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![UG-11](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ug_11.png?)
+EA-12 | 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![EA-12](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ea_12.png?)
+EA-18 | 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![EA-18](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ea_18.png?)
+KA-11 | 血酮、血糖 | BDE_WEIXIN_TTM | BLE | ![KA-11](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ka_11.png?)
+卡迪克 | 血脂 | CardioChek | BLE | ![CardioChek](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_cardiochek.png?)
+WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_wl_1.png?)
+金准+ | 血糖 | BDE_WEIXIN_TTM | BLE | ![金准+](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_gold_aq.png?)
+金准+Air | 血糖 | BDE_WEIXIN_TTM | BLE | ![金准+Air](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_gold_aq.png?)
+掌越SLX120 | 血脂、血糖 | SLX120 | BLE | ![SXL120](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_sxl.png?)
+安稳+Air | 血糖 | BDE_WEIXIN_TTM | BLE | ![安稳+Air](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_anwen_air.png?)
+三诺血压计 | 血压、脉搏 | ClinkBlood | BLE | ![三诺血压计](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_yukang.png?)
+便携式全自动生化分析仪 | 尿微量白蛋白、尿肌酐、ACR | OSTRAN | 经典蓝牙 配对码 0000| ![生化分析仪](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_biochemical.png?)
+糖化血红蛋白分析仪 PCH-100 | 糖化血红蛋白 | OSTRAN | 经典蓝牙 外置 配对码0000 | ![PCH-100](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_pch_100.png?)
 
-## 7 常见问题
+# 6 常见问题
 
-### 7.1 蓝牙设备上显示蓝牙已被连接，但SnCallBack没有回调连接状态，和测量结果；
+## 6.1 蓝牙设备上显示蓝牙已被连接，但SnCallBack没有回调连接状态，和测量结果；
+
 首先考虑鉴权是否通过，通过``` AuthUtils.isAuthValid()```查看当时鉴权是否成功，也可以在初始化鉴权过程中监听鉴权状态回调；
-### 7.2 SncallBack 会重复回调多次测量结果；
- 考虑多次调用了连接startConnect(List<SNDevice> snDevices, SnCallBack snCallBack)，每次都设置了callback；由于Callback是采用添加模式，会添加到列表回调列表里面，多次设置CallBack，导致回调多次；全局只调用一次带callback的连接，其它地方再次连接时不再传入callback，这样可以保证收到数据全局只回调一次;
- 后续版本会考虑在连接过程中采用单一回调的模式，避免出现多次回调；
+
+## 6.2 SncallBack 会重复回调多次测量结果；
+
+考虑多次调用了连接startConnect(List<SNDevice> snDevices, SnCallBack snCallBack)
+，每次都设置了callback；由于Callback是采用添加模式，会添加到列表回调列表里面，多次设置CallBack，导致回调多次；全局只调用一次带callback的连接，其它地方再次连接时不再传入callback，这样可以保证收到数据全局只回调一次;
+后续版本会考虑在连接过程中采用单一回调的模式，避免出现多次回调；
 
 
