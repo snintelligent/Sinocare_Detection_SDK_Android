@@ -10,6 +10,7 @@ buildscript {
         maven { url 'https://jitpack.io' }
         google()
         jcenter()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0'
@@ -24,8 +25,21 @@ allprojects {
     repositories {
 
         maven {
-
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            credentials {
+                username 'sEvpvj'
+                password 'yKIOo1lt6V'
+            }
             url 'https://repo.rdc.aliyun.com/repository/107484-release-klJuvE/'
+        }
+        maven {
+            credentials {
+                username 'sEvpvj'
+                password 'yKIOo1lt6V'
+            }
+            url 'https://repo.rdc.aliyun.com/repository/107484-snapshot-ZvSq3g/'
         }
 
         google()

@@ -39,9 +39,22 @@ keytool -v -list -keystore sinocare-debug.jks
 allprojects {
     repositories {
         maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            credentials {
+                username 'sEvpvj'
+                password 'yKIOo1lt6V'
+            }
             url 'https://repo.rdc.aliyun.com/repository/107484-release-klJuvE/'
         }
-       
+        maven {
+            credentials {
+                username 'sEvpvj'
+                password 'yKIOo1lt6V'
+            }
+            url 'https://repo.rdc.aliyun.com/repository/107484-snapshot-ZvSq3g/'
+        }
     }
 }
 ```
@@ -49,7 +62,7 @@ allprojects {
 在App 模块 build.gradle中配置
 
 ```powershell
-  implementation 'com.sinocare.android_lib:multicriteriasdk:1.2.1'
+  implementation 'com.sinocare.android_lib:multicriteriasdk:1.2.21'
 ```
 
 ## 2.3 配置manifest
