@@ -12,9 +12,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.sinocare.multicriteriasdk.MulticriteriaSDKManager;
+import com.sinocare.multicriteriasdk.auth.AuthStatusListener;
 import com.sinocare.multicriteriasdk.db.SharedPreferencesUtils;
 import com.sinocare.multicriteriasdk.entity.SNDevice;
 import com.sinocare.multicriteriasdk.entity.SnBoothType;
+import com.sinocare.multicriteriasdk.utils.AuthStatus;
 import com.sinocare.multicriteriasdk.utils.LogUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -35,7 +37,12 @@ public class SpalshActivity extends AppCompatActivity implements PopupWindowChoo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spalsh);
-        MulticriteriaSDKManager.initAndAuthentication(getApplication(), null);
+        MulticriteriaSDKManager.initAndAuthentication(getApplication(), new AuthStatusListener() {
+            @Override
+            public void onAuthStatus(AuthStatus authStatus) {
+                Log.d(TAG,authStatus.getMsg());
+            }
+        });
         MulticriteriaSDKManager.setLogHandler(new LogUtils.LogListener() {
             @Override
             public void d(String s, String s1) {
