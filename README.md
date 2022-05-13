@@ -55,6 +55,7 @@ allprojects {
             }
             url 'https://repo.rdc.aliyun.com/repository/107484-snapshot-ZvSq3g/'
         }
+           maven { url 'https://jitpack.io' }
     }
 }
 ```
@@ -62,7 +63,7 @@ allprojects {
 在App 模块 build.gradle中配置
 
 ```powershell
-  implementation 'com.sinocare.android_lib:multicriteriasdk:1.2.32'
+  implementation 'com.sinocare.android_lib:multicriteriasdk:1.2.6'
 ```
 
 ## 2.3 配置manifest
