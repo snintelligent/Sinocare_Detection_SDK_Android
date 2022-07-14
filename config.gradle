@@ -12,6 +12,7 @@ ext {
 
     ]
 
+
     dependencies = [
             "gson"               : "com.google.code.gson:gson:2.7",
             "retrofit"           : "2.1.0",
