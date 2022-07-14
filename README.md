@@ -3,6 +3,7 @@
 ### (注意)此版本为新版本SDK 2.X.X, 需要旧版SDK请点击[旧版SDK 1.X.X](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/tree/old_sdk/)
 
 
+
 # 1. 多指标设备接入SDK说明
 
 Sinocare_Detection_SDK_Android
@@ -296,7 +297,7 @@ isOpenProcessData | 是打开过程数据 | 否(个别机器有过程数据)
               "result":"81"
 			}
 		},
-        "testTim ":"2022 - 07 - 13 15: 30: 47",
+        "testTime ":"2022 - 07 - 13 15: 30: 47",
         "type":"bloodPressure"
 	},
 	"msg": "当前测试值"
@@ -393,7 +394,7 @@ MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice,String sampleType);
 
 设备名称型号 | 设备指标 | 蓝牙名称 | 蓝牙类别 | 设备图片
 ---|--- | --- | --- | ---
-UG-11| 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![UG-11](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ug_11.png?)
+UG-11| 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | [UG-11](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ug_11.png?)
 EA-12 | 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![EA-12](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ea_12.png?)
 EA-18 | 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![EA-18](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ea_18.png?)
 KA-11 | 血酮、血糖 | BDE_WEIXIN_TTM | BLE | ![KA-11](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ka_11.png?)
