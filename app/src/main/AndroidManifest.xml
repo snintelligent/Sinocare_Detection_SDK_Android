@@ -34,7 +34,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="sino_minute_access_key"
-            android:value="0f8d7d7668644c7ca01e985c48c7fd2e" />
+            android:value="cb31f0f891df5434aa0130631738260b" />
 
         <activity
             android:name=".MainActivity"

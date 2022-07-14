@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                showStatusInfo(device, state);
+
 
             }
 
@@ -165,25 +165,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showStatusInfo(SNDevice device, BoothDeviceConnectState state) {
-        BoothDeviceConnectState state1 = stateHashMap.get(device.getMac());
-        if (state1 != null && state1.getmState() == state.getmState()) {
-            return;
-        }
-        stateHashMap.put(device.getMac(), state);
-        String extendString = "";
-        if (device.getDataProtocolCode() == SNDevice.DEVICE_GPRINTER_PRINTER_BLE) {
-            extendString = "（点击打印样板）";
-        }
-        String msg = device.getName() + "(" + state.getDesc() + ")";
-        boolean isSiri = false;
-        MsgListAdapter.DeviceListItem deviceListItem = new MsgListAdapter.DeviceListItem(msg + extendString, isSiri);
-        deviceListItem.setSnDevice(device);
-        deviceListItem.setState(state);
-        statusAdapter.addMsgItem(deviceListItem);
-        listViewStatus.setSelection(0);
 
-    }
 
     @Override
     protected void onResume() {
