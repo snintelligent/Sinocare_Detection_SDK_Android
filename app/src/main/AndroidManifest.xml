@@ -1,47 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.multicriteriasdkdemo">
+    package="com.multicriteriasdkdemo">
+    <!-- 蓝牙相关权限 -->
+    <!-- 只能安装在有蓝牙ble设备上 -->
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
 
-    <!--蓝牙相关权限-->
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" /> //只能安装在有蓝牙ble设备上
-    <uses-permission android:name="android.permission.BLUETOOTH" /> // 声明蓝牙权限
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> //允许程序发现和配对蓝牙设备
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--打印机需要权限-->
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <!--打印机需要权限-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 打印机需要权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 打印机需要权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> //允许程序获取当前WiFi接入的状态以及WLAN热点的信息
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> //允许程序获取网络信息状态，如当前的网络连接是否有效
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />//允许程序改变WiFi状态
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />//允许程序改变网络状态,如是否联网
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 不支持低功耗蓝牙的是否安装 -->
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> <!-- 定位权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
-        android:allowBackup="true"
         android:name=".MyApplication"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-        android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".DeviceScanActivity"
-                  android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".SpalshActivity"
-                  android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        <meta-data
+            android:name="sino_minute_access_key"
+            android:value="0f8d7d7668644c7ca01e985c48c7fd2e" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".DeviceInfoListActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".DeviceScanActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".SpalshActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="sino_minute_access_key"
-            android:value="cb31f0f891df5434aa0130631738260b" />
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
 
 </manifest>

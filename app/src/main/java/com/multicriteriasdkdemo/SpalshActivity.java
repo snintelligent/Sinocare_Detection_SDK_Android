@@ -1,36 +1,38 @@
 package com.multicriteriasdkdemo;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.sinocare.multicriteriasdk.MulticriteriaSDKManager;
 import com.sinocare.multicriteriasdk.auth.AuthStatusListener;
 import com.sinocare.multicriteriasdk.db.SharedPreferencesUtils;
 import com.sinocare.multicriteriasdk.entity.SNDevice;
-import com.sinocare.multicriteriasdk.entity.SnBoothType;
 import com.sinocare.multicriteriasdk.utils.AuthStatus;
-import com.sinocare.multicriteriasdk.utils.LogUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
-public class SpalshActivity extends AppCompatActivity implements PopupWindowChooseType.OpClick {
+public class SpalshActivity extends AppCompatActivity {
 
     private static final String TAG = SpalshActivity.class.getSimpleName();
-    private ListView mListView;
+    private RecyclerView recyclerView;
     private ArrayList<SNDevice> list = new ArrayList<>();
-    private DeviceAdapter deviceAdapter;
+    private DeviceInfoListAdapter deviceAdapter;
     private boolean blueToothPermissFlag = false;
 
     @Override
@@ -40,81 +42,49 @@ public class SpalshActivity extends AppCompatActivity implements PopupWindowChoo
         MulticriteriaSDKManager.initAndAuthentication(getApplication(), new AuthStatusListener() {
             @Override
             public void onAuthStatus(AuthStatus authStatus) {
-                Log.d(TAG,authStatus.getMsg());
-            }
-        });
-        MulticriteriaSDKManager.setLogHandler(new LogUtils.LogListener() {
-            @Override
-            public void d(String s, String s1) {
-                Log.d(s, s1);
-            }
-
-            @Override
-            public void e(String s, String s1) {
-                Log.e(s, s1);
-            }
-
-            @Override
-            public void i(String s, String s1) {
-                Log.i(s, s1);
-            }
-
-            @Override
-            public void v(String s, String s1) {
-                Log.v(s, s1);
-            }
-
-            @Override
-            public void w(String s, String s1) {
-                Log.w(s, s1);
+                Log.e(TAG, authStatus.toString());
             }
         });
         initData();
         initPermiss();
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // User chose not to enable Bluetooth.
-        if (resultCode == Activity.RESULT_OK && requestCode == 1) {
-            SNDevice snDevice = data.getExtras().getParcelable("device");
-            SNDevice comfirmDevice = deviceAdapter.addDevice(snDevice, false);
-            if (comfirmDevice != null) {//去掉原来的，直接替换为新设备，每种类型设备只能保留一个
-                deviceAdapter.removeItem(comfirmDevice);
-                deviceAdapter.addDevice(snDevice, true);
-            }
-            return;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void initData() {
-        mListView = findViewById(R.id.list);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //设置分割线
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         list = new ArrayList<>();
         Map<String, ?> objectMap = SharedPreferencesUtils.getAll(this);
+
         for (String s : objectMap.keySet()) {
-            Object value = objectMap.get(s);
-            if (value instanceof Integer) {
-                list.add(new SNDevice((Integer) value, s));
+            String value = String.valueOf(objectMap.get(s));
+            try {
+                JSONObject jsonObject = new JSONObject(value);
+                SNDevice snDevice = new SNDevice();
+                snDevice.setMac(jsonObject.getString("mac"));
+                snDevice.setMachineCode(jsonObject.getString("machineCode"));
+                snDevice.setBleNamePrefix(jsonObject.getString("bleNamePrefix"));
+                snDevice.setDataProtocolCode(jsonObject.getString("dataProtocolCode"));
+                snDevice.setImageUrl(jsonObject.getString("imageUrl"));
+                snDevice.setProductCode(jsonObject.getString("productCode"));
+                snDevice.setName(jsonObject.getString("name"));
+                list.add(snDevice);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
-        deviceAdapter = new DeviceAdapter(list, this);
-        mListView.setAdapter(deviceAdapter);
-        mListView.setOnItemLongClickListener((parent, view, position, id) -> {
-            deviceAdapter.removeItem(deviceAdapter.getItem(position));
-            return false;
-        });
+        deviceAdapter = new DeviceInfoListAdapter(list, this);
+        recyclerView.setAdapter(deviceAdapter);
+
     }
 
     private void initPermiss() {
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 .subscribe(granted -> {
-                    if (granted) {
-                        blueToothPermissFlag = true;
-                    } else {
-                        blueToothPermissFlag = false;
-                    }
+                    blueToothPermissFlag = granted;
                 });
     }
 
@@ -123,9 +93,9 @@ public class SpalshActivity extends AppCompatActivity implements PopupWindowChoo
         super.onStop();
         SharedPreferencesUtils.clear(this);
         Map<String, Object> objectMap = new HashMap<>();
-        ArrayList<SNDevice> snDevices = deviceAdapter.getDeviceList();
+        List<SNDevice> snDevices = deviceAdapter.getDeviceList();
         for (SNDevice snDevice : snDevices) {
-            objectMap.put(snDevice.getMac(), snDevice.getType());
+            objectMap.put(snDevice.getMac(), JsonUtils.toJson(snDevice));
         }
         SharedPreferencesUtils.putMap(objectMap, this);
     }
@@ -146,27 +116,17 @@ public class SpalshActivity extends AppCompatActivity implements PopupWindowChoo
             initPermiss();
             return;
         }
-        PopupWindowChooseType popupWindowChooseType = new PopupWindowChooseType(this, this);
-        popupWindowChooseType.showAtLocation(view, Gravity.CENTER, 0, 0);
+        Intent intent = new Intent(this, DeviceInfoListActivity.class);
+        startActivityForResult(intent, 1);
     }
 
-    @Override
-    public void goTestActivity(int snDeviceType) {
+
+
+
+    public void goTestActivity(SNDevice snDevice) {
         Intent intent = new Intent(this, DeviceScanActivity.class);
-        intent.putExtra("snDeviceType", snDeviceType);
-        SNDevice snDevice = new SNDevice(snDeviceType);
-        int deviceType = 1;
-        if (SnBoothType.BLE.equals(snDevice.getSnBoothType().getDesc())) {
-            deviceType = 1;
-        } else if (SnBoothType.UN_BLE.equals(snDevice.getSnBoothType().getDesc())) {
-            deviceType = 0;
-        } else if (SnBoothType.OTHER.equals(snDevice.getSnBoothType().getDesc())) {
-            if(snDevice.getType() == SNDevice.DEVICE_ID_CARD || snDevice.getType() == SNDevice.DEVICE_GPRINT){
-                deviceType = 0;
-            }
-        }
-        intent.putExtra("deviceType", deviceType);
-        startActivityForResult(intent, 1);
+        intent.putExtra("snDevice", snDevice);
+        startActivityForResult(intent, 2);
     }
 
     public void startTest(View view) {
@@ -175,7 +135,26 @@ public class SpalshActivity extends AppCompatActivity implements PopupWindowChoo
             return;
         }
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("snDevices", deviceAdapter.getDeviceList());
+        intent.putParcelableArrayListExtra("snDevices", deviceAdapter.getDeviceList());
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // User chose not to enable Bluetooth.
+        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 1) {
+            SNDevice snDevice = data.getExtras().getParcelable("device");
+            goTestActivity(snDevice);
+        } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 2) {
+            SNDevice snDevice = data.getExtras().getParcelable("device");
+            for (SNDevice snDevice1 : deviceAdapter.getDeviceList()) {
+                if (snDevice.getMac().equals(snDevice1.getMac())) {
+                    return;
+                }
+            }
+            deviceAdapter.addDevice(snDevice);
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

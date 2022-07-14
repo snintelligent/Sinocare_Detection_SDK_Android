@@ -1,44 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.multicriteriasdkdemo.SpalshActivity">
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="0dp"
-                          android:layout_weight="1"
-                          android:orientation="vertical">
-                <Button
-                    android:id="@+id/btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="addDevice"
-                    android:text="添加需要连接设备"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="已绑定设备列表(长按可删除)"/>
 
-                <ListView
-                    android:id="@+id/list"
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:divider="#ffc6c6c6"
-                    android:scrollingCache="false"/>
-            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="addDevice"
+                android:text="添加需要连接设备" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已绑定设备列表(长按可删除)" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:divider="#ffc6c6c6"
+                android:scrollingCache="false" />
+        </LinearLayout>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@color/colorPrimaryDark"
             android:onClick="startTest"
-            android:text="进入测量界面"/>
+            android:text="进入测量界面" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

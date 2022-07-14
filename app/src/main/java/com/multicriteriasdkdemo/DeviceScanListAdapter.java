@@ -91,30 +91,30 @@ public class DeviceScanListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    /**
-     * 给设备加上类型名称
-     * @param deviceName
-     * @return
-     */
-    private String chnageName(String deviceName){
-        for (int i = 0; i < SNDevice.SIZE; i++) {
-            SNDevice snDevice = new SNDevice(i);
-            String  name  = snDevice.getNickName();
-            String[] nicknames = name.split(",");
-            for (int j = 0; j < nicknames.length; j++) {
-                String nickname = nicknames[j];
-                if(deviceName.startsWith(nickname) || deviceName.contains(nickname)){
-                    if(snDevice.getType() == SNDevice.DEVICE_KA_11 || snDevice.getType() == SNDevice.DEVICE_EA_12 ||snDevice.getType() == SNDevice.DEVICE_EA_18|| snDevice.getType() == SNDevice.DEVICE_UG_11){//名称相同
-                        deviceName = deviceName + "(血酮或者血尿酸或UG-11)";
-                        return deviceName;
-                    }else {
-                        deviceName = deviceName+ "(" + snDevice.getDesc()+ ")";
-                    }
-                }
-            }
-        }
-        return deviceName;
-    }
+//    /**
+//     * 给设备加上类型名称
+//     * @param deviceName
+//     * @return
+//     */
+//    private String chnageName(String deviceName){
+//        for (int i = 0; i < SNDevice.SIZE; i++) {
+//            SNDevice snDevice = new SNDevice(i);
+//            String  name  = snDevice.getNickName();
+//            String[] nicknames = name.split(",");
+//            for (int j = 0; j < nicknames.length; j++) {
+//                String nickname = nicknames[j];
+//                if(deviceName.startsWith(nickname) || deviceName.contains(nickname)){
+//                    if(snDevice.getType() == SNDevice.DEVICE_KA_11 || snDevice.getType() == SNDevice.DEVICE_EA_12 ||snDevice.getType() == SNDevice.DEVICE_EA_18|| snDevice.getType() == SNDevice.DEVICE_UG_11){//名称相同
+//                        deviceName = deviceName + "(血酮或者血尿酸或UG-11)";
+//                        return deviceName;
+//                    }else {
+//                        deviceName = deviceName+ "(" + snDevice.getDesc()+ ")";
+//                    }
+//                }
+//            }
+//        }
+//        return deviceName;
+//    }
 
     class ViewHolder {
         LinearLayout frame_ll;

@@ -19,9 +19,9 @@ public class MsgListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Context context;
     public MsgListAdapter(Context context, ArrayList<DeviceListItem> l) {
-    	list = l;
-		mInflater = LayoutInflater.from(context);
-		this.context = context;
+        list = l;
+        mInflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     @Override
@@ -46,27 +46,22 @@ public class MsgListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-    	ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
         DeviceListItem item=list.get(position);
         if(convertView == null){
-        	convertView = mInflater.inflate(R.layout.list_item, null);          
-        	viewHolder=new ViewHolder(
-        			(View) convertView.findViewById(R.id.list_child),
-        			(TextView) convertView.findViewById(R.id.chat_msg)
-        	       );
-        	convertView.setTag(viewHolder);
+            convertView = mInflater.inflate(R.layout.list_item, null);
+            viewHolder=new ViewHolder(convertView.findViewById(R.id.list_child), convertView.findViewById(R.id.chat_msg));
+            convertView.setTag(viewHolder);
         }
         else{
-        	viewHolder = (ViewHolder)convertView.getTag();
-        }       
-        
-        if(item.isSiri)
-        {
-        	viewHolder.child.setBackgroundResource(R.drawable.msgbox_rec);
+            viewHolder = (ViewHolder)convertView.getTag();
         }
-        else 
-        {
-        	viewHolder.child.setBackgroundResource(R.drawable.msgbox_send);
+
+        if(item.isSiri) {
+            viewHolder.child.setBackgroundResource(R.drawable.msgbox_rec);
+        }
+        else {
+            viewHolder.child.setBackgroundResource(R.drawable.msgbox_send);
         }
         viewHolder.msg.setText("时间：" + item.date + "\n" + item.message);
         //LogUtil.log("data", item.message.trim());
@@ -85,21 +80,21 @@ public class MsgListAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-    	  protected View child;
-          protected TextView msg;
-  
-          public ViewHolder(View child, TextView msg){
-              this.child = child;
-              this.msg = msg;
-              
-          }
+        protected View child;
+        protected TextView msg;
+
+        public ViewHolder(View child, TextView msg){
+            this.child = child;
+            this.msg = msg;
+
+        }
     }
 
     public static class DeviceListItem {
         String message;
         boolean isSiri;//是否为命令开始
-         String date;
-         SNDevice snDevice;
+        String date;
+        SNDevice snDevice;
         BoothDeviceConnectState state ;
         DeviceDetectionState mDeviceDetectionState;
 
@@ -124,6 +119,7 @@ public class MsgListAdapter extends BaseAdapter {
         public void setState(BoothDeviceConnectState state) {
             this.state = state;
         }
+
         public DeviceDetectionState getDeviceDetectionState() {
             return mDeviceDetectionState;
         }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"></ImageView>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintLeft_toRightOf="@+id/image"
+        app:layout_constraintBottom_toTopOf="@+id/tvMac"
+        android:textColor="@android:color/black"
+        tools:text="安稳" />
+
+    <TextView
+        android:id="@+id/tvMac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintLeft_toRightOf="@+id/image"
+        app:layout_constraintBottom_toBottomOf="@+id/image"
+        android:layout_marginBottom="2dp"
+        android:textSize="12sp"
+        tools:text="E1:9C:BF:3C:F4:F7">
+
+    </TextView>
+
+</android.support.constraint.ConstraintLayout>

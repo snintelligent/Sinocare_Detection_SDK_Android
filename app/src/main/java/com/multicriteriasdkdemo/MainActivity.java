@@ -1,32 +1,47 @@
 package com.multicriteriasdkdemo;
 
 import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sinocare.multicriteriasdk.DeviceCmdS;
 import com.sinocare.multicriteriasdk.MulticriteriaSDKManager;
 import com.sinocare.multicriteriasdk.SnCallBack;
+import com.sinocare.multicriteriasdk.auth.AuthUtils;
+import com.sinocare.multicriteriasdk.bean.BaseDetectionData;
 import com.sinocare.multicriteriasdk.bean.DeviceDetectionData;
+import com.sinocare.multicriteriasdk.bean.StandardBodyData;
 import com.sinocare.multicriteriasdk.entity.BoothDeviceConnectState;
 import com.sinocare.multicriteriasdk.entity.DeviceDetectionState;
 import com.sinocare.multicriteriasdk.entity.SNDevice;
 import com.sinocare.multicriteriasdk.entity.SampleType;
+import com.sinocare.multicriteriasdk.entity.SnDeviceOrder;
 import com.sinocare.multicriteriasdk.entity.SnPrintInfo;
 import com.sinocare.multicriteriasdk.utils.LogUtils;
+import com.sinocare.multicriteriasdk.utils.TimerHelper;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
-import io.reactivex.functions.Consumer;
-
-import static com.sinocare.multicriteriasdk.entity.DeviceDetectionState.DetectionStateEnum.*;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,41 +52,29 @@ public class MainActivity extends AppCompatActivity {
     private ListView listViewData;
     private MsgListAdapter dataAdapter;
     public Map<String, BoothDeviceConnectState> stateHashMap = new HashMap<>();
-    private int count = 0;
+    private final int count = 0;
     private TextView tv;
+    //    private String anwenMac;
+//    private Map<String, String> map;
+
+    private Disposable mKangTaiSpO2Disposable;
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+
+    private static final String[] PERMISSIONS_STORAGE = {
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        map = new HashMap<>();
+        Log.d(TAG, "鉴权结果： " + AuthUtils.isAuthValid() + "Token值： " + AuthUtils.getAccessToken());
         setTitle("测量界面");
         listViewStatus = findViewById(R.id.list_status);
         statusAdapter = new MsgListAdapter(this, new ArrayList<>());
         listViewStatus.setAdapter(statusAdapter);
-        listViewStatus.setOnItemClickListener((parent, view, position, id) -> {
-            MsgListAdapter.DeviceListItem deviceListItem = ((MsgListAdapter.DeviceListItem) statusAdapter.getItem(position));
-            if (deviceListItem.getState().getmState() != BoothDeviceConnectState.DEVICE_STATE_CONNECTED) {
-                Toast.makeText(MainActivity.this, "设备未连接", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            SNDevice snDevice = ((MsgListAdapter.DeviceListItem) statusAdapter.getItem(position)).getSnDevice();
-            SnPrintInfo snPrintInfo = new SnPrintInfo();
-            snPrintInfo.setAge(45);
-            snPrintInfo.setName("三诺糖友");
-            snPrintInfo.setSex(1);
-            snPrintInfo.setPrintTitle("三诺");
-            snPrintInfo.setTestTime("2019-10-10 14:30:24");
-            List<SnPrintInfo.TestItem> testItems = new ArrayList<>();
-            SnPrintInfo.TestItem testItem = new SnPrintInfo.TestItem();
-            testItem.setMedicalCode("HbA1c");
-            testItem.setMedicalName("糖化血红蛋白");
-            testItem.setMedicalMethod("亲和色谱法");
-            testItem.setMedicalUnits("%");
-            testItem.setMedicalResult("3");
-            testItems.add(testItem);
-            snPrintInfo.setTestItemList(testItems);
-            MulticriteriaSDKManager.exeCmd(snDevice, snPrintInfo);
-        });
+
         listViewData = findViewById(R.id.list_data);
         tv = findViewById(R.id.tv);
         dataAdapter = new MsgListAdapter(this, new ArrayList<>());
@@ -83,9 +86,20 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         snDevices.addAll(bleDevices);
-        startConnect();
+        RxPermissions rxPermissions = new RxPermissions(this);
+        // 电话权限是打印机要
+        rxPermissions.request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).subscribe(aBoolean -> {
+            if (aBoolean) {
+                startConnect();
+            } else {
+                Toast.makeText(MainActivity.this, "请先给设备赋权限", Toast.LENGTH_SHORT);
+            }
+        });
+
+
 
     }
+
 
     /**
      * 开始测量
@@ -95,12 +109,11 @@ public class MainActivity extends AppCompatActivity {
      * @time 2019/2/26 20:50
      */
     private void startConnect() {
-        MulticriteriaSDKManager.startConnect(snDevices, new SnCallBack() {
+        MulticriteriaSDKManager.startConnect(snDevices, false, new SnCallBack() {
             @Override
-            public void onDataComing(SNDevice device, DeviceDetectionData data) {
-                LogUtils.d(TAG, "onDataComing: ------snDevice---" + device.toString());
-                LogUtils.d(TAG, "onDataComing: -----data----" + data);
-                String msg = device.getDesc() + "收到数据：(" + data.toString() + ")";
+            public void onDataComing(SNDevice device, BaseDetectionData data) {
+                LogUtils.d(TAG, "onDataComing: ------snDevice---" + data.getData());
+                String msg = device.getName() + "收到数据：" + JsonUtils.toJson(data);
                 MsgListAdapter.DeviceListItem deviceListItem = new MsgListAdapter.DeviceListItem(msg, false);
                 dataAdapter.addMsgItem(deviceListItem);
                 listViewData.setSelection(0);
@@ -111,71 +124,92 @@ public class MainActivity extends AppCompatActivity {
                 LogUtils.d(TAG, "onDeviceStateChange: -----snDevice----" + device.toString());
                 switch (state.getmState()) {
                     case BoothDeviceConnectState.DEVICE_STATE_CONNECTED:
-                    case BoothDeviceConnectState.DEVICE_STATE_DISCONNECTED:
-                        BoothDeviceConnectState state1 = stateHashMap.get(device.getMac());
-                        if (state1 != null && state1.getmState() == state.getmState()) {
-                            return;
+                        if (device.getDataProtocolCode() == SNDevice.DEVICE_CMS5D_OXIMETER_BLE) {
+                            if (mKangTaiSpO2Disposable != null && !mKangTaiSpO2Disposable.isDisposed()) {
+                                mKangTaiSpO2Disposable.dispose();
+                            }
+                            mKangTaiSpO2Disposable = Observable.interval(1, 15, TimeUnit.SECONDS).observeOn(Schedulers.single()).subscribe(aLong -> {
+                                MulticriteriaSDKManager.exeCmd(device, DeviceCmdS.KANGTAI_SPO2_START_REALTIME_DATA_CMD);
+                            });
                         }
-                        stateHashMap.put(device.getMac(), state);
-                        String extendString = "";
-                        if (device.getType() == SNDevice.DEVICE_GPRINT) {
-                            extendString = "（点击打印样板）";
-                        }
-                        String msg = device.getDesc() + "(" + state.getDesc() + ")";
-                        boolean isSiri = false;
-                        MsgListAdapter.DeviceListItem deviceListItem = new MsgListAdapter.DeviceListItem(msg + extendString, isSiri);
-                        deviceListItem.setSnDevice(device);
-                        deviceListItem.setState(state);
-                        statusAdapter.addMsgItem(deviceListItem);
-                        listViewStatus.setSelection(0);
                         break;
-                    case BoothDeviceConnectState.DEVICE_STATE_START_TEST:
-                    case BoothDeviceConnectState.DEVICE_STATE_SHUTDOWN:
-                    case BoothDeviceConnectState.DEVICE_STATE_BLOOD_SPARKLING:
-                    case BoothDeviceConnectState.DEVICE_STATE_TIME_SET_SUCCESS:
-                    case BoothDeviceConnectState.DEVICE_STATE_CLEAN_DATA_FAIL:
-                    case BoothDeviceConnectState.DEVICE_STATE_CLEAN_DATA_SUCCESS:
-                    case BoothDeviceConnectState.DEVICE_STATE_CONNECTION_SUCCESS:
-                    case BoothDeviceConnectState.DEVICE_STATE_NO_DATA:
-                        MsgListAdapter.DeviceListItem deviceList = new MsgListAdapter.DeviceListItem(device.getDesc() + "(" + state.getDesc() + ")" + "", false);
-                        deviceList.setSnDevice(device);
-                        deviceList.setState(state);
-                        statusAdapter.addMsgItem(deviceList);
-                        listViewStatus.setSelection(0);
+                    case BoothDeviceConnectState.DEVICE_STATE_DISCONNECTED:
+                        if (mKangTaiSpO2Disposable != null && !mKangTaiSpO2Disposable.isDisposed()) {
+                            mKangTaiSpO2Disposable.dispose();
+                        }
                         break;
                 }
+
+                showStatusInfo(device, state);
 
             }
 
             @Override
-            public void onDetectionStateChange(SNDevice snDevice, DeviceDetectionState deviceDetectionState) {
-                switch (deviceDetectionState.getStatus()) {
-                    case STATE_BLOOD_SPARKLING:
-                    case STATE_START_TEST:
-                    case STATE_TIME_SET_SUCCESS:
-                    case STATE_TIME_SET_FAI:
-                    case STATE_CLEAN_HISTORY_DATA_SUCCESS:
-                    case STATE_CLEAN_HISTORY_DATA_FAIL:
-                    case STATE_NO_HISTORY_DATA:
-                    case STATE_NO_HISTORY_DATA_FAIL:
-                        MsgListAdapter.DeviceListItem deviceList = new MsgListAdapter.DeviceListItem(snDevice.getDesc() + "(" + deviceDetectionState.getStatus() + ")", false);
-                        deviceList.setSnDevice(snDevice);
-                        deviceList.setDeviceDetectionState(deviceDetectionState);
-                        statusAdapter.addMsgItem(deviceList);
-                        listViewStatus.setSelection(0);
-                        break;
+            public void onDetectionStateChange(SNDevice device, DeviceDetectionState detectionState) {
+                MsgListAdapter.DeviceListItem deviceList;
+                if (detectionState.getStatus() == DeviceDetectionState.DetectionStateEnum.DEVICEINFO_SN) {
+                    if (TextUtils.isEmpty(device.getSn()) || device.getSn().contains("00000000000")) {
+                        return;
+                    } else {
+                        deviceList = new MsgListAdapter.DeviceListItem(device.getName() + "(" + detectionState.getStatus() + ")" + "sn:" + device.getSn(), false);
 
+                    }
+                } else {
+                    deviceList = new MsgListAdapter.DeviceListItem(device.getName() + "(" + detectionState.getStatus() + ")", false);
                 }
-
+                deviceList.setSnDevice(device);
+                deviceList.setDeviceDetectionState(detectionState);
+                statusAdapter.addMsgItem(deviceList);
+                listViewStatus.setSelection(0);
             }
         });
-        MulticriteriaSDKManager.onResume();
+    }
+
+    private void showStatusInfo(SNDevice device, BoothDeviceConnectState state) {
+        BoothDeviceConnectState state1 = stateHashMap.get(device.getMac());
+        if (state1 != null && state1.getmState() == state.getmState()) {
+            return;
+        }
+        stateHashMap.put(device.getMac(), state);
+        String extendString = "";
+        if (device.getDataProtocolCode() == SNDevice.DEVICE_GPRINTER_PRINTER_BLE) {
+            extendString = "（点击打印样板）";
+        }
+        String msg = device.getName() + "(" + state.getDesc() + ")";
+        boolean isSiri = false;
+        MsgListAdapter.DeviceListItem deviceListItem = new MsgListAdapter.DeviceListItem(msg + extendString, isSiri);
+        deviceListItem.setSnDevice(device);
+        deviceListItem.setState(state);
+        statusAdapter.addMsgItem(deviceListItem);
+        listViewStatus.setSelection(0);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mKangTaiSpO2Disposable != null && !mKangTaiSpO2Disposable.isDisposed()) {
+            mKangTaiSpO2Disposable.dispose();
+        }
     }
 
 
     @Override
     public void finish() {
         super.finish();
+        LogUtils.d(TAG, "finish: ");
+        //TODO 断开连接
         MulticriteriaSDKManager.disConectDevice(snDevices);
         snDevices.clear();
     }
