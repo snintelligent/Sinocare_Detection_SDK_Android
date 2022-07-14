@@ -296,7 +296,7 @@ isOpenProcessData | 是打开过程数据 | 否(个别机器有过程数据)
               "result":"81"
 			}
 		},
-        "testTim ":"2022 - 07 - 13 15: 30: 47",
+        "testTime ":"2022 - 07 - 13 15: 30: 47",
         "type":"bloodPressure"
 	},
 	"msg": "当前测试值"
@@ -387,7 +387,7 @@ MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice,String sampleType);
 
 ```java
      MulticriteriaSDKManager.finishAll();
-
+```
 
 # 5 设备信息说明
 
