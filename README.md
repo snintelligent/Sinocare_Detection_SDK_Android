@@ -1,6 +1,6 @@
 
   
-### (注意)此版本为新版本SDK 2.X.X, 需要旧版SDK请点击[旧版SDK 1.X.X](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/tree/old_sdk/)
+### (注意)此版本为新版本SDK 2.X.X, 需要旧版SDK请点击[旧版SDK 1.X.X](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/tree/sinocare_ble_1.2.x/)
 
 
 # 1. 多指标设备接入SDK说明
@@ -405,7 +405,7 @@ WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://gitee.com/sinocare-iot/Sinocare
 安稳+Air | 血糖 | BDE_WEIXIN_TTM | BLE | ![安稳+Air](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_anwen_air.png?)
 三诺血压计 | 血压、脉搏 | ClinkBlood | BLE | ![三诺血压计](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_yukang.png?)
 便携式全自动生化分析仪 | 尿微量白蛋白、尿肌酐、ACR | OSTRAN | 经典蓝牙 配对码 0000| ![生化分析仪](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_biochemical.png?)
-糖化血红蛋白分析仪 PCH-100 | 糖化血红蛋白 | OSTRAN | 经典蓝牙 外置 配对码0000 | ![PCH-100](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_pch_100.png?)
+糖化血红蛋白分析仪 PCH-100 | 糖化血红蛋白 | BDE_WEIXIN_TTM | BLE | ![PCH-100](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_pch_100.png?)
 
 # 6 常见问题
 
