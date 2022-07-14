@@ -388,7 +388,7 @@ MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice,String sampleType);
 
 ```java
      MulticriteriaSDKManager.finishAll();
-
+```
 
 # 5 设备信息说明
 
