@@ -1,5 +1,8 @@
 
-# 点击跳转[旧版SDK](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/tree/old_sdk/)
+
+# 点击跳转[新版SDK](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/tree/new_sdk/)
+
+
 
 
 # 1. 多指标设备接入SDK说明
