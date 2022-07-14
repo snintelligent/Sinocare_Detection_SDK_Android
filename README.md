@@ -1,6 +1,6 @@
 
 
-### (注意)此版本为旧版本SDK 1.X.X, 需要新版SDK请点击[新版SDK 2.X.X](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/tree/new_sdk/)
+### (注意)此版本为旧版本SDK 1.X.X, 需要新版SDK请点击[新版SDK 2.X.X](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/tree/sinocare_ble_2.0/)
 
 
 
