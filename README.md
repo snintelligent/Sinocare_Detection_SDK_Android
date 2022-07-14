@@ -394,7 +394,7 @@ MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice,String sampleType);
 
 设备名称型号 | 设备指标 | 蓝牙名称 | 蓝牙类别 | 设备图片
 ---|--- | --- | --- | ---
-UG-11| 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | [UG-11](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ug_11.png?)
+UG-11| 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![UG-11](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ug_11.png?)
 EA-12 | 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![EA-12](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ea_12.png?)
 EA-18 | 血尿酸、血糖 | BDE_WEIXIN_TTM | BLE | ![EA-18](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ea_18.png?)
 KA-11 | 血酮、血糖 | BDE_WEIXIN_TTM | BLE | ![KA-11](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_ka_11.png?)
