@@ -1,6 +1,7 @@
 
-  
-### (注意)此版本为新版本SDK 2.X.X, 需要旧版SDK请点击[旧版SDK 1.X.X](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/tree/sinocare_ble_1.2.x)
+### (注意)此版本为新版本SDK 2.X.X, 需要旧版SDK请点击[(gitee)旧版SDK 1.X.X](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/tree/sinocare_ble_1.2.x/)
+### (注意)此版本为新版本SDK 2.X.X, 需要旧版SDK请点击[(github)旧版SDK 1.X.X](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/tree/sinocare_ble_1.2.x)
+
 
 
 # 1. 多指标设备接入SDK说明
