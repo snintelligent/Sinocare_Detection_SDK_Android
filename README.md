@@ -324,22 +324,30 @@ isOpenProcessData | 是打开过程数据 | 否(个别机器有过程数据)
 
 ```
 
-#### 返回参数 data
+#### 返回参数 
+参数名称|备注| 
+---|--- |
+code|  02 错误值, 04 当前测试值, 05 历史数据值, 20 序列号, B7 测量过程值, 0E 历史数据补发| 
+data|  返回内容| 
+msg| 描述| 
 
+#### 返回参数 data  (result返回详细字段描述请见6.3)(result返回错误码请见6.4)
 type | 指标类型说明 | 
 ---|--- |
-bloodGlucose | 血糖
-bloodLipids | 血脂
-bloodPressure | 血压
-uricAcid | 血尿酸
-bloodKetone | 血酮
-urinalysis | 尿常规
-bloodOxygen | 血氧
-temperature | 温度
-acr | ACR
-ferritin | 铁蛋白
-HbA1c | 糖化血红蛋白
-IDCard | 身份证
+bloodGlucose | 血糖| 
+bloodLipids | 血脂| 
+bloodPressure | 血压| 
+uricAcid | 血尿酸| 
+bloodKetone | 血酮| 
+urinalysis | 尿常规| 
+bloodOxygen | 血氧| 
+temperature | 温度| 
+acr | ACR| 
+ferritin | 铁蛋白| 
+HbA1c | 糖化血红蛋白| 
+IDCard | 身份证| 
+
+
 
 ## 3.3 给设备发送指令，支持获取历史数据与清除历史数据；
 
@@ -438,4 +446,27 @@ WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://gitee.com/sinocare-iot/Sinocare
 ，每次都设置了callback；由于Callback是采用添加模式，会添加到列表回调列表里面，多次设置CallBack，导致回调多次；全局只调用一次带callback的连接，其它地方再次连接时不再传入callback，这样可以保证收到数据全局只回调一次;
 后续版本会考虑在连接过程中采用单一回调的模式，避免出现多次回调；
 
+## 6.3 测量指标字段；
+result | 指标名称 | result | 指标名称 |result | 指标名称 |
+---|--- |---|--- |---|--- |
+GLU|血糖|MALB|尿微量白蛋白|Ca|尿钙|
+KET|血酮|UCr|尿肌酐|MA|微白蛋白|
+UA|血尿酸|ACR|尿微量白蛋白/尿肌酐|PEF|呼气流量峰值，仪器测量原始值|
+HbA1c|糖化血红蛋白|FER|铁蛋白|FEV1|第一秒用力呼气量，仪器测量原始值|
+TG|甘油三脂|WBC|尿白细胞|FVC|用力肺活量，仪器测量原始值|
+CHOL|总胆固醇|UKET|尿酮体|MEF75|MEF75值|
+HDLC|高密度脂蛋白胆固醇|NIT|尿亚硝酸盐|MEF50|MEF50值|
+LDLC|低密度脂蛋白胆固醇|URO|尿胆原|MEF25|MEF25值|
+TCHDLC|总胆/高密|BIL|尿胆红素|MMEF|MMEF值|
+LDLCHDLC|低密度/高密度比值|PRO|尿蛋白质|DATA500|500组曲线数组|
+NONHDLC|非高密度脂蛋白胆固醇|UGLU|尿糖|
+BloodMeasureHigh|收缩压|SG|尿比重|
+BloodMeasureLow|舒张压|BLD|隐血|
+P|脉博|pH|酸碱度|
+SPO2|血氧饱和度|VC|维生素 C|
+T|体温|CR|尿肌酐|
+
+## 6.4 错误码对照表,请下载到本地；
+
+[test2](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/wiki)
 
