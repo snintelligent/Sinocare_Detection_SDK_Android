@@ -240,7 +240,25 @@ isOpenProcessData | 是打开过程数据 | 否(个别机器有过程数据)
   "msg": "当前测试值"
 }
 
-示例2    血脂 type=bloodLipids
+示例2 尿酸 type=uricAcid
+{
+  "code": "04", // 04 当前测试值 , 05 历史数据值 ,02 错误值
+  "data": {
+    "result": {
+      "UA": {
+        "result": "200",
+        "unit": "μmol/L"
+      }
+    },
+    "sampleType": "血尿酸",
+    "testTime": "2022-07-13 15:41:07",
+    "type": "uricAcid"
+
+  },
+  "msg": "当前测试值"
+}
+
+示例3    血脂 type=bloodLipids
 {
   "code": "04",
   "data": {
@@ -279,7 +297,7 @@ isOpenProcessData | 是打开过程数据 | 否(个别机器有过程数据)
 }
 
 
-示例3 血压计 type=bloodPressure
+示例4 血压计 type=bloodPressure
 
 {
 	"code": "04",  
