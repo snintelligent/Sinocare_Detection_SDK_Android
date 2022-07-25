@@ -871,7 +871,7 @@
 		"productTypeId" : "1",
 		"productTypeName" : "血糖仪",
 		"connectProtocolCode" : "classical_bt",
-		"dataProtocolCode" : "wl_one_ble",
+		"dataProtocolCode" : "wl_one_general_ble",
 		"machineCode" : "0004",
 		"snPrefix" : "L,1G",
 		"bleNamePrefix" : "Sinocare",
