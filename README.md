@@ -466,6 +466,6 @@ T|体温|CR|尿肌酐|
 
 ## 6.4 错误码对照表,请下载到本地；
 
-[test2](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/wiki)
+[错误码对照表](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/wiki)
 
 
