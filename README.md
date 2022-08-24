@@ -90,7 +90,18 @@ manifest的配置主要包括添加权限,代码示例如下：
 
 ```java
            //申请权限
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION},1);
+      RxPermissions rxPermissions = new RxPermissions(this);
+              if(isAndroid12()){
+              rxPermissions.request(Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT)
+              .subscribe(granted -> {
+              blueToothPermissFlag = granted;
+              });
+              }else{
+              rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+              .subscribe(granted -> {
+              blueToothPermissFlag = granted;
+              });
+              }
 ```
 
 sdk access key配置，示例代码如下，在application标签下配置meta-data, key值sino_minute_access_key，value为申请的access key
