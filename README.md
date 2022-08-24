@@ -1,8 +1,6 @@
-
 ### 注意：此版本为新版SDK 2.0.x，如需使用旧版SDK 1.2.x,请前往[Gitee地址](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/tree/sinocare_ble_1.2.x/) 或者[Github地址](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/tree/sinocare_ble_1.2.x)
+
 ### 温馨提示：若您仍在使用旧版SDK，建议您更新为新版SDK，连接更方便，数据更清晰，拓展更便捷。
-
-
 
 # 1. 多指标设备接入SDK说明
 
@@ -77,6 +75,12 @@ manifest的配置主要包括添加权限,代码示例如下：
 ```powershell
     <!--蓝牙相关权限-->
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" /> //只能安装在有蓝牙ble设备上
+        <!--Android12 的蓝牙权限 如果您的应用与已配对的蓝牙设备通信或者获取当前手机蓝牙是否打开-->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <!--Android12 的蓝牙权限 如果您的应用查找蓝牙设备（如蓝牙低功耗 (BLE) 外围设备）-->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"
+        />
     <uses-permission android:name="android.permission.BLUETOOTH" /> // 声明蓝牙权限
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> //允许程序发现和配对蓝牙设备
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -90,7 +94,18 @@ manifest的配置主要包括添加权限,代码示例如下：
 
 ```java
            //申请权限
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION},1);
+       RxPermissions rxPermissions=new RxPermissions(this);
+               if(isAndroid12()){
+               rxPermissions.request(Manifest.permission.BLUETOOTH_SCAN,Manifest.permission.BLUETOOTH_CONNECT)
+               .subscribe(granted->{
+               blueToothPermissFlag=granted;
+               });
+               }else{
+               rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
+               .subscribe(granted->{
+               blueToothPermissFlag=granted;
+               });
+               }
 ```
 
 sdk access key配置，示例代码如下，在application标签下配置meta-data, key值sino_minute_access_key，value为申请的access key
@@ -164,7 +179,7 @@ code | 说明
 
 目前仪器测试完，数据直接会通过SDK回传。在回传前可以设置蓝牙是否开启扫描，开启扫描就是扫描到了蓝牙再去连接，如果不开启扫描，就是直接连接设备，跳过扫面。
 
-####  SnDevices参数说明
+#### SnDevices参数说明
 
 字段 | 说明 | 是否必填
 ---|--- |--- 
@@ -182,21 +197,21 @@ isOpenProcessData | 是打开过程数据 | 否(个别机器有过程数据)
  * 第一种 默认就是开启扫描设备
  */
     MulticriteriaSDKManager.startConnect(snDevices,new SnCallBack(){
-        @Override
-        public void onDataComing(SNDevice device,BaseDetectionData data){
+@Override
+public void onDataComing(SNDevice device,BaseDetectionData data){
         //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
         }
 
-         @Override
-         public void onDetectionStateChange(SNDevice device,DeviceDetectionState state){
+@Override
+public void onDetectionStateChange(SNDevice device,DeviceDetectionState state){
         //设备数据状态：时间同步成功、历史数据获取成功、清除成功等等
         }
 
-         @Override
-         public void onDeviceStateChange(SNDevice device,BoothDeviceConnectState state){
+@Override
+public void onDeviceStateChange(SNDevice device,BoothDeviceConnectState state){
         //连接连接状态 目前只回调连接成功与断开连接
-         }
-    });
+        }
+        });
 
 /**
  * 第二种  isScanningBluetooth  ture 扫描  false不扫描   (注意 此方法在等于大于SDK 1.0.18 才支持)
@@ -220,29 +235,32 @@ isOpenProcessData | 是打开过程数据 | 否(个别机器有过程数据)
 //        });
 
 ```
+
 #### 返回参数 示例 BaseDetectionData
+
 ```json
  示例1 血糖 type=bloodGlucose
 {
-  "code": "04", // 04 当前测试值 , 05 历史数据值 ,02 错误值
+  "code": "04",
+  // 04 当前测试值 , 05 历史数据值 ,02 错误值
   "data": {
-  "result": {
-    "GLU": {
-      "result": "1.2",
-      "unit": "mmol/L"
-    }
-  },
-  "sampleType": "血糖",
-  "testTime": "2022-07-13 15:41:07",
-  "type": "bloodGlucose"
-
+    "result": {
+      "GLU": {
+        "result": "1.2",
+        "unit": "mmol/L"
+      }
+    },
+    "sampleType": "血糖",
+    "testTime": "2022-07-13 15:41:07",
+    "type": "bloodGlucose"
   },
   "msg": "当前测试值"
 }
 
 示例2 尿酸 type=uricAcid
 {
-  "code": "04", // 04 当前测试值 , 05 历史数据值 ,02 错误值
+  "code": "04",
+  // 04 当前测试值 , 05 历史数据值 ,02 错误值
   "data": {
     "result": {
       "UA": {
@@ -253,7 +271,6 @@ isOpenProcessData | 是打开过程数据 | 否(个别机器有过程数据)
     "sampleType": "血尿酸",
     "testTime": "2022-07-13 15:41:07",
     "type": "uricAcid"
-
   },
   "msg": "当前测试值"
 }
@@ -300,31 +317,32 @@ isOpenProcessData | 是打开过程数据 | 否(个别机器有过程数据)
 示例4 血压计 type=bloodPressure
 
 {
-	"code": "04",  
-	"data": {
-		"result": {
-			"BloodMeasureHigh ":{
-			  "result":"95",
-              "unit":"mmHg"
-		    },
-			"BloodMeasureLow ":{
-              "result":"64",
-              "unit":"mmHg"
-			},
-			"P":{
-              "result":"81"
-			}
-		},
-        "testTime ":"2022 - 07 - 13 15: 30: 47",
-        "type":"bloodPressure"
-	},
-	"msg": "当前测试值"
+  "code": "04",
+  "data": {
+    "result": {
+      "BloodMeasureHigh ": {
+        "result": "95",
+        "unit": "mmHg"
+      },
+      "BloodMeasureLow ": {
+        "result": "64",
+        "unit": "mmHg"
+      },
+      "P": {
+        "result": "81"
+      }
+    },
+    "testTime ": "2022 - 07 - 13 15: 30: 47",
+    "type": "bloodPressure"
+  },
+  "msg": "当前测试值"
 }
 
 
 ```
 
 #### 返回参数
+
 参数名称|备注| 
 ---|--- |
 code|  02 错误值, 04 当前测试值, 05 历史数据值, 20 序列号, B7 测量过程值, 0E 历史数据补发| 
@@ -332,6 +350,7 @@ data|  返回内容|
 msg| 描述| 
 
 #### 返回参数 data  (result返回详细字段描述请见6.3)(result返回错误码请见6.4)
+
 type | 指标类型说明 | 
 ---|--- |
 bloodGlucose | 血糖| 
@@ -445,6 +464,7 @@ WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://gitee.com/sinocare-iot/Sinocare
 后续版本会考虑在连接过程中采用单一回调的模式，避免出现多次回调；
 
 ## 6.3 测量指标字段；
+
 result | 指标名称 | result | 指标名称 |result | 指标名称 |
 ---|--- |---|--- |---|--- |
 GLU|血糖|MALB|尿微量白蛋白|Ca|尿钙|
