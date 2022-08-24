@@ -1,10 +1,6 @@
-
-
-
 ### 注意：此版本为旧版本SDK 1.2.x，如需使用新版SDK 2.0.x,请前往[Gitee地址](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/tree/sinocare_ble_2.0.x/) 或者[Github地址](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/tree/sinocare_ble_2.0.x)
+
 ### 温馨提示：若您仍在使用旧版SDK，建议您更新为新版SDK，连接更方便，数据更清晰，拓展更便捷。
-
-
 
 # 1. 多指标设备接入SDK说明
 
@@ -83,18 +79,36 @@ manifest的配置主要包括添加权限,代码示例如下：
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" /> //只能安装在有蓝牙ble设备上
     <uses-permission android:name="android.permission.BLUETOOTH" /> // 声明蓝牙权限
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> //允许程序发现和配对蓝牙设备
+    <!--Android12 的蓝牙权限 如果您的应用与已配对的蓝牙设备通信或者获取当前手机蓝牙是否打开-->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <!--Android12 的蓝牙权限 如果您的应用查找蓝牙设备（如蓝牙低功耗 (BLE) 外围设备）-->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="s"
+        />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> //允许程序获取网络信息状态，如当前的网络连接是否有效
 ```
 
-## 2.4 动态权限申请 
+## 2.4 动态权限申请
 
 如果targetSdkVersion 小于23，不需要6.0权限处理。如果是targetSdkVersion 大于等于23，需要6.0权限处理，则需要在启获取权限后，再开始连接
 
 ```java
-           //申请权限
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION},1);
+      RxPermissions rxPermissions=new RxPermissions(this);
+// 申请android12 版本权限
+        if(isAndroid12()){
+           rxPermissions.request(Manifest.permission.BLUETOOTH_SCAN,Manifest.permission.BLUETOOTH_CONNECT)
+              .subscribe(granted->{
+              
+           });
+        }else{
+           rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
+              .subscribe(granted->{
+                
+           });
+        }
 ```
 
 sdk access key配置，示例代码如下，在application标签下配置meta-data, key值sino_minute_access_key，value为申请的access key
@@ -126,20 +140,20 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 
 ```Java
      public class MyApplication extends Application {
-    
-        @Override
-        public void onCreate() {
-          super.onCreate();
-          // 第一种鉴权接口和默认设置蓝牙连接间隔时间
-           MulticriteriaSDKManager.initAndAuthentication(this, new AuthStatusListener() {
 
-               @Override
-               public void onAuthStatus(AuthStatus authStatus) {
-  
-               }
-           });
-        
-         //第二种鉴权接口和手动设置蓝牙连接间隔时间 最低3秒 3000 = 3秒 (注意 此方法在等于大于SDK 1.0.18 才支持)
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        // 第一种鉴权接口和默认设置蓝牙连接间隔时间
+        MulticriteriaSDKManager.initAndAuthentication(this, new AuthStatusListener() {
+
+            @Override
+            public void onAuthStatus(AuthStatus authStatus) {
+
+            }
+        });
+
+        //第二种鉴权接口和手动设置蓝牙连接间隔时间 最低3秒 3000 = 3秒 (注意 此方法在等于大于SDK 1.0.18 才支持)
 //           MulticriteriaSDKManager.initAndAuthentication(3000, this, new AuthStatusListener() {
 //              @Override
 //               public void onAuthStatus(AuthStatus authStatus) {
@@ -150,10 +164,9 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 }
 ```
 
+### 3.1.1 AnthStatus鉴权状态码说明：
 
-###  3.1.1 AnthStatus鉴权状态码说明：
-
-code | 说明 
+code | 说明
 --- | --- 
 10000 | SDK鉴权成功
 10001 | accessKey 不正确
@@ -163,9 +176,10 @@ code | 说明
 500 | 接口返回服务器异常
 401 | AccessKey配置不正确
 
-
 ## 3.2 连接与断开连接，数据获取
-###  3.2.1 连接与数据获取
+
+### 3.2.1 连接与数据获取
+
 目前仪器测试完，数据直接会通过SDK回传。在回传前可以设置蓝牙是否开启扫描，开启扫描就是扫描到了蓝牙再去连接，如果不开启扫描，就是直接连接设备，跳过扫面。
 
 ```Java
@@ -174,25 +188,25 @@ code | 说明
  * 第一种 默认就是开启扫描设备
  */
     MulticriteriaSDKManager.startConnect(snDevices,new SnCallBack(){
-         @Override
-         public void onDataComing(SNDevice device,DeviceDetectionData data){
-            //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
-         }
+@Override
+public void onDataComing(SNDevice device,DeviceDetectionData data){
+        //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
+        }
 
-         @Override
-         public void onDetectionStateChange(SNDevice device,DeviceDetectionState state){
-             //设备数据状态：时间同步成功、历史数据获取成功、清除成功等等
-         }
+@Override
+public void onDetectionStateChange(SNDevice device,DeviceDetectionState state){
+        //设备数据状态：时间同步成功、历史数据获取成功、清除成功等等
+        }
 
-         @Override
-         public void onDeviceStateChange(SNDevice device,BoothDeviceConnectState state){
-             //连接连接状态 目前只回调连接成功与断开连接
-         }
-    });
+@Override
+public void onDeviceStateChange(SNDevice device,BoothDeviceConnectState state){
+        //连接连接状态 目前只回调连接成功与断开连接
+        }
+        });
 
-        /**
-         * 第二种  isScanningBluetooth  ture 扫描  false不扫描   (注意 此方法在等于大于SDK 1.0.18 才支持)
-         */
+/**
+ * 第二种  isScanningBluetooth  ture 扫描  false不扫描   (注意 此方法在等于大于SDK 1.0.18 才支持)
+ */
 //        MulticriteriaSDKManager.startConnect(snDevices,isScanningBluetooth,new SnCallBack(){
 //          @Override
 //          public void onDataComing(SNDevice device,DeviceDetectionData data){
@@ -211,7 +225,9 @@ code | 说明
 //          }
 //        });
 ```
-   连接状态 BoothDeviceConnectState
+
+连接状态 BoothDeviceConnectState
+
 ```java
     public class BoothDeviceConnectState implements Parcelable {
     /**
@@ -223,10 +239,10 @@ code | 说明
      */
     public static final int DEVICE_STATE_CONNECTED = 2;
 }
-  
+
 ```
 
-###  3.2.2 断开连接
+### 3.2.2 断开连接
 
 ```java
    MulticriteriaSDKManager.disConectDevice(snDevices);
@@ -238,10 +254,9 @@ code | 说明
      MulticriteriaSDKManager.finishAll();
 ```
 
-
 ## 3.3数据结构 DeviceDetectionData
 
-###  3.3.1 血糖，血酮，血尿酸测量结果统一采用此类封装，相关设备：安稳+, EA-12，金准+，金准+air ug_11，真睿二代  
+### 3.3.1 血糖，血酮，血尿酸测量结果统一采用此类封装，相关设备：安稳+, EA-12，金准+，金准+air ug_11，真睿二代
 
 ```java
 public class SnDataEaka extends BaseDetectionData {
@@ -262,7 +277,8 @@ public class SnDataEaka extends BaseDetectionData {
        **********************************************/
 }
 ```
-###  3.3.2  血脂测量结果统一用此类封装；相关设备：卡迪克，SLX-120（掌越）
+
+### 3.3.2 血脂测量结果统一用此类封装；相关设备：卡迪克，SLX-120（掌越）
 
 ```java
 public class SnDataCardioCbek extends BaseDetectionData {
@@ -283,7 +299,7 @@ public class SnDataCardioCbek extends BaseDetectionData {
 
 ```
 
-###  3.3.3  血压结果类；相关设备：三诺蓝牙血压计（誉康、安诺心）， 脉搏波医用血压计RBP_9000，脉搏波BP-88B（臂式ble版），脉搏波RBP-9804（座式）
+### 3.3.3 血压结果类；相关设备：三诺蓝牙血压计（誉康、安诺心）， 脉搏波医用血压计RBP_9000，脉搏波BP-88B（臂式ble版），脉搏波RBP-9804（座式）
 
 ```java
 public class SnDataBp extends BaseDetectionData {
@@ -299,7 +315,7 @@ public class SnDataBp extends BaseDetectionData {
 }
 ```
 
-###  3.3.4 糖化血红蛋白结果类； 相关设备：相关设备PCH-100
+### 3.3.4 糖化血红蛋白结果类； 相关设备：相关设备PCH-100
 
 ```java
 public class SnDataPch extends BaseDetectionData {
@@ -313,7 +329,7 @@ public class SnDataPch extends BaseDetectionData {
 }
 ```
 
-###  3.3.5  身份证信息类；相关设备：华大互联网HD-100
+### 3.3.5 身份证信息类；相关设备：华大互联网HD-100
 
 ``` java
 public class SnDataIdCard extends BaseDetectionData{
@@ -329,7 +345,7 @@ public class SnDataIdCard extends BaseDetectionData{
     }
 ```
 
-###  3.3.6  尿14项结果类；相关设备：优利特URIT-31，恩普生半自动尿液分析仪ui，ui-10c,
+### 3.3.6 尿14项结果类；相关设备：优利特URIT-31，恩普生半自动尿液分析仪ui，ui-10c,
 
 ```java
 public class SnDataUrit extends BaseDetectionData {
@@ -354,7 +370,7 @@ public class SnDataUrit extends BaseDetectionData {
 }
 ```
 
-###  3.3.7  尿生化（微量白蛋白、肌酐、ACR）；相关设备：三诺全自动生化分析仪PABA-100
+### 3.3.7 尿生化（微量白蛋白、肌酐、ACR）；相关设备：三诺全自动生化分析仪PABA-100
 
 ```java
 public class SnDataACR extends BaseDetectionData {
@@ -385,7 +401,7 @@ public class SnDataACR extends BaseDetectionData {
 
 ```
 
-###  3.3.8  糖化血红蛋白指标；相关设备：手持式胶体金试纸分析仪
+### 3.3.8 糖化血红蛋白指标；相关设备：手持式胶体金试纸分析仪
 
 ```java
 public class SnDataAnemia extends BaseDetectionData {
@@ -423,7 +439,7 @@ public class SampleType implements Parcelable {
 ## 4.2 获取仪器历史测量结果；注意：仪器在滴血状态和测量状态可能无法响应此指令；
 
 ```java
-   
+
 /**
  * 获取设备历史数据
  * @param snDevice
@@ -448,10 +464,9 @@ MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice,String sampleType);
  * 清除所有设备历史数据  (包含血糖,质控液)部分机子有血酮的，尿酸的 一概清除 
  * @param snDevice
  */
-MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice);
+        MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice);
 
 ```
-
 
 # 5 设备信息说明
 

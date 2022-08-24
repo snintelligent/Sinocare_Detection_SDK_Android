@@ -3,6 +3,7 @@ package com.multicriteriasdkdemo;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -108,16 +109,21 @@ public class SpalshActivity extends AppCompatActivity implements PopupWindowChoo
 
     private void initPermiss() {
         RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-                .subscribe(granted -> {
-                    if (granted) {
-                        blueToothPermissFlag = true;
-                    } else {
-                        blueToothPermissFlag = false;
-                    }
-                });
+        if(isAndroid12()){
+            rxPermissions.request(Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT)
+                    .subscribe(granted -> {
+                        blueToothPermissFlag = granted;
+                    });
+        }else{
+            rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    .subscribe(granted -> {
+                        blueToothPermissFlag = granted;
+                    });
+        }
     }
-
+    private boolean isAndroid12(){
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ;
+    }
     @Override
     protected void onStop() {
         super.onStop();
