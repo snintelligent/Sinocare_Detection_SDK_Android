@@ -2,7 +2,7 @@
 	{
 		"id" : "1526842931345264641",
 		"productCode" : "100218",
-		"productName" : "便携式全自动生化分析仪",
+		"name" : "便携式全自动生化分析仪",
 		"modelName" : "",
 		"productTypeId" : "6",
 		"productTypeName" : "POCT仪器",
@@ -18,7 +18,7 @@
 	{
 		"id" : "1526843760617885698",
 		"productCode" : "100222",
-		"productName" : "卡迪克血脂仪",
+		"name" : "卡迪克血脂仪",
 		"modelName" : "",
 		"productTypeId" : "7",
 		"productTypeName" : "血脂血糖测试仪",
@@ -34,7 +34,7 @@
 	{
 		"id" : "1526845240720658433",
 		"productCode" : "100232",
-		"productName" : "康泰血氧仪",
+		"name" : "康泰血氧仪",
 		"modelName" : "",
 		"productTypeId" : "13",
 		"productTypeName" : "血氧仪",
@@ -50,7 +50,7 @@
 	{
 		"id" : "336",
 		"productCode" : "100040",
-		"productName" : "EA-11血糖尿酸测试仪",
+		"name" : "EA-11血糖尿酸测试仪",
 		"modelName" : "EA-11型",
 		"productTypeId" : "3",
 		"productTypeName" : "血糖尿酸测试仪",
@@ -66,7 +66,7 @@
 	{
 		"id" : "339",
 		"productCode" : "100043",
-		"productName" : "EA-12血糖尿酸测试仪",
+		"name" : "EA-12血糖尿酸测试仪",
 		"modelName" : "EA-12型",
 		"productTypeId" : "3",
 		"productTypeName" : "血糖尿酸测试仪",
@@ -82,7 +82,7 @@
 	{
 		"id" : "351",
 		"productCode" : "100055",
-		"productName" : "KA-11血糖血酮测试仪",
+		"name" : "KA-11血糖血酮测试仪",
 		"modelName" : "KA-11",
 		"productTypeId" : "5",
 		"productTypeName" : "血糖血酮测试仪",
@@ -98,7 +98,7 @@
 	{
 		"id" : "371",
 		"productCode" : "100075",
-		"productName" : "EA-18血糖尿酸测试仪",
+		"name" : "EA-18血糖尿酸测试仪",
 		"modelName" : "EA-18型",
 		"productTypeId" : "3",
 		"productTypeName" : "血糖尿酸测试仪",
@@ -114,7 +114,7 @@
 	{
 		"id" : "1526841259801874433",
 		"productCode" : "100211",
-		"productName" : "Ui-10C掌上尿液分析仪",
+		"name" : "Ui-10C掌上尿液分析仪",
 		"modelName" : "",
 		"productTypeId" : "16",
 		"productTypeName" : "尿液分析仪",
@@ -130,7 +130,7 @@
 	{
 		"id" : "1526841409114902530",
 		"productCode" : "100212",
-		"productName" : "Ui掌上尿液分析仪",
+		"name" : "Ui掌上尿液分析仪",
 		"modelName" : "",
 		"productTypeId" : "16",
 		"productTypeName" : "尿液分析仪",
@@ -146,7 +146,7 @@
 	{
 		"id" : "308",
 		"productCode" : "100012",
-		"productName" : "金准+Air血糖仪",
+		"name" : "金准+Air血糖仪",
 		"modelName" : "金准+Air",
 		"productTypeId" : "1",
 		"productTypeName" : "血糖仪",
@@ -162,7 +162,7 @@
 	{
 		"id" : "370",
 		"productCode" : "100074",
-		"productName" : "金准+血糖仪",
+		"name" : "金准+血糖仪",
 		"modelName" : "金准+",
 		"productTypeId" : "1",
 		"productTypeName" : "血糖仪",
@@ -178,7 +178,7 @@
 	{
 		"id" : "1526843894424571906",
 		"productCode" : "100223",
-		"productName" : "佳博PT-261便携式条码打印机",
+		"name" : "佳博PT-261便携式条码打印机",
 		"modelName" : "",
 		"productTypeId" : "9",
 		"productTypeName" : "打印机",
@@ -194,7 +194,7 @@
 	{
 		"id" : "1526843993754079233",
 		"productCode" : "100224",
-		"productName" : "佳博GP-2120TU热敏条码打印机",
+		"name" : "佳博GP-2120TU热敏条码打印机",
 		"modelName" : "",
 		"productTypeId" : "9",
 		"productTypeName" : "打印机",
@@ -210,7 +210,7 @@
 	{
 		"id" : "1526841026204307457",
 		"productCode" : "100210",
-		"productName" : "GT2016铁蛋白分析仪",
+		"name" : "GT2016铁蛋白分析仪",
 		"modelName" : "",
 		"productTypeId" : "6",
 		"productTypeName" : "POCT仪器",
@@ -226,7 +226,7 @@
 	{
 		"id" : "1526844288806588418",
 		"productCode" : "100226",
-		"productName" : "华大HD-100身份证读卡器",
+		"name" : "华大HD-100身份证读卡器",
 		"modelName" : "",
 		"productTypeId" : "10",
 		"productTypeName" : "读卡器",
@@ -242,7 +242,7 @@
 	{
 		"id" : "1526844664976936962",
 		"productCode" : "100227",
-		"productName" : "华大SW100-D21身份证读卡器",
+		"name" : "华大SW100-D21身份证读卡器",
 		"modelName" : "",
 		"productTypeId" : "10",
 		"productTypeName" : "读卡器",
@@ -258,7 +258,7 @@
 	{
 		"id" : "1526844901023977474",
 		"productCode" : "100229",
-		"productName" : "呼吸家手持肺功能仪",
+		"name" : "呼吸家手持肺功能仪",
 		"modelName" : "",
 		"productTypeId" : "14",
 		"productTypeName" : "肺功能仪",
@@ -274,7 +274,7 @@
 	{
 		"id" : "306",
 		"productCode" : "100010",
-		"productName" : "金稳+Air血糖仪",
+		"name" : "金稳+Air血糖仪",
 		"modelName" : "金稳+Air",
 		"productTypeId" : "1",
 		"productTypeName" : "血糖仪",
@@ -290,7 +290,7 @@
 	{
 		"id" : "1526842618609569794",
 		"productCode" : "100214",
-		"productName" : "脉搏波RBP-9804臂式血压计",
+		"name" : "脉搏波RBP-9804臂式血压计",
 		"modelName" : "",
 		"productTypeId" : "8",
 		"productTypeName" : "血压计",
@@ -306,7 +306,7 @@
 	{
 		"id" : "1526842697579925506",
 		"productCode" : "100215",
-		"productName" : "脉搏波RBP-9805臂式血压计",
+		"name" : "脉搏波RBP-9805臂式血压计",
 		"modelName" : "",
 		"productTypeId" : "8",
 		"productTypeName" : "血压计",
@@ -322,7 +322,7 @@
 	{
 		"id" : "1526842773345832962",
 		"productCode" : "100216",
-		"productName" : "脉搏波RBP-9000台式血压计",
+		"name" : "脉搏波RBP-9000台式血压计",
 		"modelName" : "",
 		"productTypeId" : "8",
 		"productTypeName" : "血压计",
@@ -338,7 +338,7 @@
 	{
 		"id" : "1526842840903487490",
 		"productCode" : "100217",
-		"productName" : "脉搏波BP-888臂式血压计",
+		"name" : "脉搏波BP-888臂式血压计",
 		"modelName" : "",
 		"productTypeId" : "8",
 		"productTypeName" : "血压计",
@@ -354,7 +354,7 @@
 	{
 		"id" : "1526843626244968450",
 		"productCode" : "100221",
-		"productName" : "美的连IRT101B红外体温计",
+		"name" : "美的连IRT101B红外体温计",
 		"modelName" : "",
 		"productTypeId" : "12",
 		"productTypeName" : "温度计",
@@ -370,7 +370,7 @@
 	{
 		"id" : "1526844084904693761",
 		"productCode" : "100225",
-		"productName" : "美的连血氧仪",
+		"name" : "美的连血氧仪",
 		"modelName" : "",
 		"productTypeId" : "13",
 		"productTypeName" : "血氧仪",
@@ -386,7 +386,7 @@
 	{
 		"id" : "315",
 		"productCode" : "100019",
-		"productName" : "诺凡BA-803",
+		"name" : "诺凡BA-803",
 		"modelName" : "诺凡BA-803",
 		"productTypeId" : "8",
 		"productTypeName" : "血压计",
@@ -402,7 +402,7 @@
 	{
 		"id" : "328",
 		"productCode" : "100032",
-		"productName" : "诺凡BA-803臂式血压计（4G版）",
+		"name" : "诺凡BA-803臂式血压计（4G版）",
 		"modelName" : "诺凡803血压计4G版",
 		"productTypeId" : "8",
 		"productTypeName" : "血压计",
@@ -418,7 +418,7 @@
 	{
 		"id" : "329",
 		"productCode" : "100033",
-		"productName" : "诺凡AXD-817臂式血压计（4G版）",
+		"name" : "诺凡AXD-817臂式血压计（4G版）",
 		"modelName" : "诺凡AXD-817臂式血压计",
 		"productTypeId" : "8",
 		"productTypeName" : "血压计",
@@ -434,7 +434,7 @@
 	{
 		"id" : "1526840334446137345",
 		"productCode" : "100208",
-		"productName" : "诺凡BA-806隧道式血压计",
+		"name" : "诺凡BA-806隧道式血压计",
 		"modelName" : "",
 		"productTypeId" : "8",
 		"productTypeName" : "血压计",
@@ -450,7 +450,7 @@
 	{
 		"id" : "1526843301932994561",
 		"productCode" : "100219",
-		"productName" : "PCH-100便携式蓝牙糖化血红蛋白分析仪",
+		"name" : "PCH-100便携式蓝牙糖化血红蛋白分析仪",
 		"modelName" : "",
 		"productTypeId" : "17",
 		"productTypeName" : "糖化血红蛋白分析仪",
@@ -466,7 +466,7 @@
 	{
 		"id" : "1526843451711590402",
 		"productCode" : "100220",
-		"productName" : "PCH-50便携式糖化血红蛋白分析仪",
+		"name" : "PCH-50便携式糖化血红蛋白分析仪",
 		"modelName" : "",
 		"productTypeId" : "17",
 		"productTypeName" : "糖化血红蛋白分析仪",
@@ -482,7 +482,7 @@
 	{
 		"id" : "1526844795159744513",
 		"productCode" : "100228",
-		"productName" : "云康宝CP30B超声波身高体重测量仪",
+		"name" : "云康宝CP30B超声波身高体重测量仪",
 		"modelName" : "",
 		"productTypeId" : "11",
 		"productTypeName" : "智能秤",
@@ -498,7 +498,7 @@
 	{
 		"id" : "300",
 		"productCode" : "100004",
-		"productName" : "安稳+Air血糖仪",
+		"name" : "安稳+Air血糖仪",
 		"modelName" : "安稳+Air",
 		"productTypeId" : "1",
 		"productTypeName" : "血糖仪",
@@ -514,7 +514,7 @@
 	{
 		"id" : "1526808456376782850",
 		"productCode" : "100207",
-		"productName" : "安诺心CF523智能体脂秤",
+		"name" : "安诺心CF523智能体脂秤",
 		"modelName" : "",
 		"productTypeId" : "11",
 		"productTypeName" : "智能秤",
@@ -530,7 +530,7 @@
 	{
 		"id" : "1526840578034536449",
 		"productCode" : "100209",
-		"productName" : "安诺心CW286智能体重秤",
+		"name" : "安诺心CW286智能体重秤",
 		"modelName" : "",
 		"productTypeId" : "11",
 		"productTypeName" : "智能秤",
@@ -546,7 +546,7 @@
 	{
 		"id" : "311",
 		"productCode" : "100015",
-		"productName" : "三诺臻准2000血糖仪",
+		"name" : "三诺臻准2000血糖仪",
 		"modelName" : "三诺臻准2000",
 		"productTypeId" : "1",
 		"productTypeName" : "血糖仪",
@@ -562,7 +562,7 @@
 	{
 		"id" : "312",
 		"productCode" : "100016",
-		"productName" : "三诺智惠血糖仪",
+		"name" : "三诺智惠血糖仪",
 		"modelName" : "GM501 Air",
 		"productTypeId" : "1",
 		"productTypeName" : "血糖仪",
@@ -578,7 +578,7 @@
 	{
 		"id" : "313",
 		"productCode" : "100017",
-		"productName" : "三诺优智血糖仪",
+		"name" : "三诺优智血糖仪",
 		"modelName" : "SC301 Air",
 		"productTypeId" : "1",
 		"productTypeName" : "血糖仪",
@@ -594,7 +594,7 @@
 	{
 		"id" : "314",
 		"productCode" : "100018",
-		"productName" : "SG901 Air血糖仪",
+		"name" : "SG901 Air血糖仪",
 		"modelName" : "SG901 Air",
 		"productTypeId" : "1",
 		"productTypeName" : "血糖仪",
@@ -610,7 +610,7 @@
 	{
 		"id" : "316",
 		"productCode" : "100020",
-		"productName" : "UA Air尿酸测试仪",
+		"name" : "UA Air尿酸测试仪",
 		"modelName" : "UA Air",
 		"productTypeId" : "2",
 		"productTypeName" : "尿酸测试仪",
@@ -626,7 +626,7 @@
 	{
 		"id" : "317",
 		"productCode" : "100021",
-		"productName" : "Safe AQ UA Air Ⅰ",
+		"name" : "Safe AQ UA Air Ⅰ",
 		"modelName" : "Safe AQ UA Air Ⅰ",
 		"productTypeId" : "2",
 		"productTypeName" : "尿酸测试仪",
@@ -642,7 +642,7 @@
 	{
 		"id" : "318",
 		"productCode" : "100022",
-		"productName" : "Safe AQ UA AirⅡ",
+		"name" : "Safe AQ UA AirⅡ",
 		"modelName" : "Safe AQ UA AirⅡ",
 		"productTypeId" : "2",
 		"productTypeName" : "尿酸测试仪",
@@ -658,7 +658,7 @@
 	{
 		"id" : "319",
 		"productCode" : "100023",
-		"productName" : "UA Ring尿酸测试仪",
+		"name" : "UA Ring尿酸测试仪",
 		"modelName" : "UA Ring",
 		"productTypeId" : "2",
 		"productTypeName" : "尿酸测试仪",
@@ -674,7 +674,7 @@
 	{
 		"id" : "1504369833689911297",
 		"productCode" : "100001",
-		"productName" : "UA Pro尿酸测试仪",
+		"name" : "UA Pro尿酸测试仪",
 		"modelName" : "UA-Pro",
 		"productTypeId" : "2",
 		"productTypeName" : "尿酸测试仪",
@@ -690,7 +690,7 @@
 	{
 		"id" : "1504369905793175554",
 		"productCode" : "100002",
-		"productName" : "UA Plus尿酸测试仪",
+		"name" : "UA Plus尿酸测试仪",
 		"modelName" : "UA-Plus",
 		"productTypeId" : "2",
 		"productTypeName" : "尿酸测试仪",
@@ -706,7 +706,7 @@
 	{
 		"id" : "1504370003999625218",
 		"productCode" : "100003",
-		"productName" : "UG Plus尿酸测试仪",
+		"name" : "UG Plus尿酸测试仪",
 		"modelName" : "UG-Plus",
 		"productTypeId" : "3",
 		"productTypeName" : "血糖尿酸测试仪",
@@ -722,7 +722,7 @@
 	{
 		"id" : "1526089271708954626",
 		"productCode" : "100202",
-		"productName" : "EA-19血糖尿酸测试仪",
+		"name" : "EA-19血糖尿酸测试仪",
 		"modelName" : "EA-19",
 		"productTypeId" : "3",
 		"productTypeName" : "血糖尿酸测试仪",
@@ -738,7 +738,7 @@
 	{
 		"id" : "1526089532913430529",
 		"productCode" : "100203",
-		"productName" : "EA-23血糖尿酸测试仪",
+		"name" : "EA-23血糖尿酸测试仪",
 		"modelName" : "EA-23",
 		"productTypeId" : "3",
 		"productTypeName" : "血糖尿酸测试仪",
@@ -754,7 +754,7 @@
 	{
 		"id" : "1526089802116444161",
 		"productCode" : "100204",
-		"productName" : "UG-23血糖尿酸测试仪",
+		"name" : "UG-23血糖尿酸测试仪",
 		"modelName" : "UG-23",
 		"productTypeId" : "3",
 		"productTypeName" : "血糖尿酸测试仪",
@@ -770,7 +770,7 @@
 	{
 		"id" : "307",
 		"productCode" : "100011",
-		"productName" : "掌越SLX-120血脂血糖仪",
+		"name" : "掌越SLX-120血脂血糖仪",
 		"modelName" : "SLX-120",
 		"productTypeId" : "7",
 		"productTypeName" : "血脂血糖测试仪",
@@ -786,7 +786,7 @@
 	{
 		"id" : "305",
 		"productCode" : "100009",
-		"productName" : "二代真睿TRUE METRIX AIR血糖仪",
+		"name" : "二代真睿TRUE METRIX AIR血糖仪",
 		"modelName" : "第二代真睿TRUE METRIX AIR",
 		"productTypeId" : "1",
 		"productTypeName" : "血糖仪",
@@ -802,7 +802,7 @@
 	{
 		"id" : "302",
 		"productCode" : "100006",
-		"productName" : "UG-11 Air血糖尿酸测试仪",
+		"name" : "UG-11 Air血糖尿酸测试仪",
 		"modelName" : "UG-11 Air",
 		"productTypeId" : "3",
 		"productTypeName" : "血糖尿酸测试仪",
@@ -818,7 +818,7 @@
 	{
 		"id" : "304",
 		"productCode" : "100008",
-		"productName" : "UG-11 Code血糖尿酸测试仪",
+		"name" : "UG-11 Code血糖尿酸测试仪",
 		"modelName" : "UG-11 Code血糖尿酸测试仪",
 		"productTypeId" : "3",
 		"productTypeName" : "血糖尿酸测试仪",
@@ -834,7 +834,7 @@
 	{
 		"id" : "1526844985077829633",
 		"productCode" : "100230",
-		"productName" : "优瑞恩血压计",
+		"name" : "优瑞恩血压计",
 		"modelName" : "",
 		"productTypeId" : "8",
 		"productTypeName" : "血压计",
@@ -850,7 +850,7 @@
 	{
 		"id" : "1526841572596289537",
 		"productCode" : "100213",
-		"productName" : "URIT便携式尿液分析仪",
+		"name" : "URIT便携式尿液分析仪",
 		"modelName" : "",
 		"productTypeId" : "16",
 		"productTypeName" : "尿液分析仪",
@@ -866,7 +866,7 @@
 	{
 		"id" : "320",
 		"productCode" : "100024",
-		"productName" : "蓝牙WL-1血糖仪",
+		"name" : "蓝牙WL-1血糖仪",
 		"modelName" : "蓝牙WL-1型",
 		"productTypeId" : "1",
 		"productTypeName" : "血糖仪",

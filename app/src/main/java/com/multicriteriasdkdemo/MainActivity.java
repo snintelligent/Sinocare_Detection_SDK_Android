@@ -86,16 +86,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         snDevices.addAll(bleDevices);
-        RxPermissions rxPermissions = new RxPermissions(this);
-        // 电话权限是打印机要
-        rxPermissions.request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).subscribe(aBoolean -> {
-            if (aBoolean) {
-                startConnect();
-            } else {
-                Toast.makeText(MainActivity.this, "请先给设备赋权限", Toast.LENGTH_SHORT);
-            }
-        });
-
+        startConnect();
 
 
     }
@@ -139,7 +130,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                 }
-
+                MsgListAdapter.DeviceListItem deviceList;
+                deviceList = new MsgListAdapter.DeviceListItem(device.getName() + "(" + state.toString() + ")", false);
+                deviceList.setSnDevice(device);
+                statusAdapter.addMsgItem(deviceList);
+                listViewStatus.setSelection(0);
 
 
             }
@@ -164,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     @Override
