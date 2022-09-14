@@ -84,5 +84,5 @@ dependencies {
     implementation rootProject.ext.dependencies["rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]
     implementation rootProject.ext.dependencies["rxpermissions"]
-    implementation 'com.sinocare.android_lib:multicriteriasdk:2.0.1_lite'
+    implementation 'com.sinocare.android_lib:multicriteriasdk:2.0.2_lite'
 }
