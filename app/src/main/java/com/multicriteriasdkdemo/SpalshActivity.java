@@ -70,7 +70,7 @@ public class SpalshActivity extends AppCompatActivity {
                 snDevice.setDataProtocolCode(jsonObject.getString("dataProtocolCode"));
                 snDevice.setImageUrl(jsonObject.getString("imageUrl"));
                 snDevice.setProductCode(jsonObject.getString("productCode"));
-                snDevice.setName(jsonObject.getString("productName"));
+                snDevice.setName(jsonObject.getString("name"));
                 list.add(snDevice);
             } catch (JSONException e) {
                 e.printStackTrace();
