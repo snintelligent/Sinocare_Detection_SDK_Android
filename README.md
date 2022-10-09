@@ -1,5 +1,5 @@
 
-### 注意：此版本为新版SDK 2.0.x，如需使用旧版SDK 1.2.x,请前往[Gitee地址](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/tree/sinocare_ble_1.2.x/) 或者[Github地址](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/tree/sinocare_ble_1.2.x)
+### 注意：此版本为新版SDK精简版 2.0.x，如需使用旧版SDK 1.2.x,请前往[Gitee地址](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/tree/sinocare_ble_1.2.x/) 或者[Github地址](https://github.com/snintelligent/Sinocare_Detection_SDK_Android/tree/sinocare_ble_1.2.x)
 ### 温馨提示：若您仍在使用旧版SDK，建议您更新为新版SDK，连接更方便，数据更清晰，拓展更便捷。
 
 
@@ -67,7 +67,7 @@ allprojects {
 在App 模块 build.gradle中配置
 
 ```powershell
-  implementation 'com.sinocare.android_lib:multicriteriasdk:2.0.2'
+   implementation 'com.sinocare.android_lib:multicriteriasdk:2.0.2_lite'
 ```
 
 ## 2.3 配置manifest
