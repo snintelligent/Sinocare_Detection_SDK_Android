@@ -67,7 +67,7 @@ allprojects {
 在App 模块 build.gradle中配置
 
 ```powershell
-  implementation 'com.sinocare.android_lib:multicriteriasdk:2.0.2_lite'
+  implementation 'com.sinocare.android_lib:multicriteriasdk:2.0.2'
 ```
 
 ## 2.3 配置manifest
@@ -97,17 +97,17 @@ manifest的配置主要包括添加权限,代码示例如下：
 ```java
            //申请权限
       RxPermissions rxPermissions = new RxPermissions(this);
-              if(isAndroid12()){
+         if(isAndroid12()){
               rxPermissions.request(Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT)
               .subscribe(granted -> {
-              blueToothPermissFlag = granted;
+           
               });
-              }else{
+         }else{
               rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
               .subscribe(granted -> {
-              blueToothPermissFlag = granted;
+             
               });
-              }
+         }
 ```
 
 sdk access key配置，示例代码如下，在application标签下配置meta-data, key值sino_minute_access_key，value为申请的access key
@@ -116,7 +116,7 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 <application ...>
 
         <meta-data android:name="sino_minute_access_key"
-            android:value="c3ecbb62344af7bbc6271aaabbcccc"/>
+            android:value="xxxxxxxxxxxxxxx"/>
 	    
 </application>
 ```
@@ -131,39 +131,26 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
     -keep class * implements com.sinocare.multicriteriasdk.utils.NoProguard {*;}
 ```
 
-# 3. 接口说明
+# 3. 接口说明（公共接口）
 
-## 3.1 初始化SDK、鉴权（只有鉴权通过，sdk才可以正常使用）；注意：不要反复鉴权或每次连接前都做一次鉴权，鉴权太频繁会增加鉴权失败的机率；
 
-## 初始化SDK、鉴权分两种 如下：
+## 3.1. 初始化SDK：
 
 ```Java
-     public class MyApplication extends Application {
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        // 第一种鉴权接口和默认设置蓝牙连接间隔时间
-        MulticriteriaSDKManager.initAndAuthentication(this, new AuthStatusListener() {
-
-            @Override
-            public void onAuthStatus(AuthStatus authStatus) {
-
-            }
-        });
-
-        //第二种鉴权接口和手动设置蓝牙连接间隔时间 最低3秒 3000 = 3秒 (注意 此方法在等于大于SDK 1.0.18 才支持)
-//           MulticriteriaSDKManager.initAndAuthentication(3000, this, new AuthStatusListener() {
-//              @Override
-//               public void onAuthStatus(AuthStatus authStatus) {
-//
-//               }
-//           });
-    }
-}
+ 
+        MulticriteriaSDKManager.init(getApplication());
+   
 ```
 
-### 3.1.1 AnthStatus鉴权状态码说明：
+## 3.2 鉴权SDK：鉴权（只有鉴权通过，sdk才可以正常使用）；注意：不要反复鉴权或每次连接前都做一次鉴权，鉴权太频繁会增加鉴权失败的机率
+
+```Java
+ 
+        MulticriteriaSDKManager.authentication(AuthStatusListener authStatusListener);
+   
+```
+
+####   AnthStatus鉴权返回状态码说明：
 
 code | 说明
 --- | --- 
@@ -175,13 +162,13 @@ code | 说明
 500 | 接口返回服务器异常
 401 | AccessKey配置不正确
 
-## 3.2 连接与断开连接，数据获取
+## 3.3 连接设备，数据获取
 
-### 3.2.1 连接与数据获取
+
 
 目前仪器测试完，数据直接会通过SDK回传。在回传前可以设置蓝牙是否开启扫描，开启扫描就是扫描到了蓝牙再去连接，如果不开启扫描，就是直接连接设备，跳过扫面。
 
-####  SnDevices参数说明
+####  SnDevices入参说明
 
 字段 | 说明 | 是否必填
 ---|--- |--- 
@@ -192,7 +179,9 @@ machineCode | 机器码 |  是
 productName | 设备名字| 否
 bleNamePrefix | 蓝牙前缀名字 | 否
 imageUrl | 设备图片地址 | 否
-isOpenProcessData | 是打开过程数据 | 否(个别机器有过程数据)
+isOpenProcessData | 是打开过程数据 | 否 (仅限于血氧，血压计，身高体重体脂称)
+
+
 
 ```Java
 /**
@@ -214,134 +203,15 @@ isOpenProcessData | 是打开过程数据 | 否(个别机器有过程数据)
         //连接连接状态 目前只回调连接成功与断开连接
          }
     });
-
+	
 /**
- * 第二种  isScanningBluetooth  ture 扫描  false不扫描   (注意 此方法在等于大于SDK 1.0.18 才支持)
+ * 第二种 关闭扫描设备，直连设备 isScanningBluetooth 是否扫描蓝牙
  */
-//        MulticriteriaSDKManager.startConnect(snDevices,isScanningBluetooth,new SnCallBack(){
-//          @Override
-//          public void onDataComing(SNDevice device,BaseDetectionData data){
-//             //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
-//          }
-//
-//          @Override
-//          public void onDetectionStateChange(SNDevice device,DeviceDetectionState state){
-//              //设备数据状态：时间同步成功、历史数据获取成功、清除成功等等
-//          }
-//
-//          @Override
-//          public void onDeviceStateChange(SNDevice device,BoothDeviceConnectState state){
-//           //连接连接状态 目前只回调连接成功与断开连接
-//        
-//          }
-//        });
+   MulticriteriaSDKManager.startConnect(snDevices,boolean isScanningBluetooth，new SnCallBack(){}
 
 ```
 #### 返回参数 示例 BaseDetectionData
-```json
- 示例1 血糖 type=bloodGlucose
-{
-  "code": "04", // 04 当前测试值 , 05 历史数据值 ,02 错误值
-  "data": {
-  "result": {
-    "GLU": {
-      "result": "1.2",
-      "unit": "mmol/L"
-    }
-  },
-  "sampleType": "血糖",
-  "testTime": "2022-07-13 15:41:07",
-  "type": "bloodGlucose"
 
-  },
-  "msg": "当前测试值"
-}
-
-示例2 尿酸 type=uricAcid
-{
-  "code": "04", // 04 当前测试值 , 05 历史数据值 ,02 错误值
-  "data": {
-    "result": {
-      "UA": {
-        "result": "200",
-        "unit": "μmol/L"
-      }
-    },
-    "sampleType": "血尿酸",
-    "testTime": "2022-07-13 15:41:07",
-    "type": "uricAcid"
-
-  },
-  "msg": "当前测试值"
-}
-
-示例3    血脂 type=bloodLipids
-{
-  "code": "04",
-  "data": {
-    "result": {
-      "CHOL": {
-        "result": "2.72",
-        "unit": "mmol/L"
-      },
-      "HDLC": {
-        "result": "2.42",
-        "unit": "mmol/L"
-      },
-      "LDLC": {
-        "result": "----",
-        "unit": "mmol/L"
-      },
-      "LDLCHDLC": {
-        "result": "----"
-      },
-      "NONHDLC": {
-        "result": "0.30",
-        "unit": "mmol/L"
-      },
-      "TCHDLC": {
-        "result": "1.12"
-      },
-      "TG": {
-        "result": "5.45",
-        "unit": "mmol/L"
-      }
-    },
-    "testTime": "2020-07-03 09:28:01",
-    "type": "bloodLipids"
-  },
-  "msg": "当前测试值"
-}
-
-
-示例4 血压计 type=bloodPressure
-
-{
-	"code": "04",  
-	"data": {
-		"result": {
-			"BloodMeasureHigh ":{
-			  "result":"95",
-              "unit":"mmHg"
-		    },
-			"BloodMeasureLow ":{
-              "result":"64",
-              "unit":"mmHg"
-			},
-			"P":{
-              "result":"81"
-			}
-		},
-        "testTime ":"2022 - 07 - 13 15: 30: 47",
-        "type":"bloodPressure"
-	},
-	"msg": "当前测试值"
-}
-
-
-```
-
-#### 返回参数 
 参数名称|备注| 
 ---|--- |
 code|  02 错误值, 04 当前测试值, 05 历史数据值, 20 序列号, B7 测量过程值, 0E 历史数据补发| 
@@ -364,9 +234,111 @@ ferritin | 铁蛋白|
 HbA1c | 糖化血红蛋白| 
 IDCard | 身份证| 
 
+```json
+ 示例1 血糖 type=bloodGlucose
+{
+  "code": "04", // 04 当前测试值 , 05 历史数据值 ,02 错误值
+  "data": {
+  "result": {
+    "GLU": {
+      "value": "1.2",
+      "unit": "mmol/L"
+    }
+  },
+  "sampleType": "血糖",
+  "testTime": "2022-07-13 15:41:07",
+  "type": "bloodGlucose"
+
+  },
+  "msg": "当前测试值"
+}
+
+示例2 尿酸 type=uricAcid
+{
+  "code": "04", // 04 当前测试值 , 05 历史数据值 ,02 错误值
+  "data": {
+    "result": {
+      "UA": {
+        "value": "200",
+        "unit": "μmol/L"
+      }
+    },
+    "sampleType": "血尿酸",
+    "testTime": "2022-07-13 15:41:07",
+    "type": "uricAcid"
+
+  },
+  "msg": "当前测试值"
+}
+
+示例3    血脂 type=bloodLipids
+{
+  "code": "04",
+  "data": {
+    "result": {
+      "CHOL": {
+        "value": "2.72",
+        "unit": "mmol/L"
+      },
+      "HDLC": {
+        "value": "2.42",
+        "unit": "mmol/L"
+      },
+      "LDLC": {
+        "value": "----",
+        "unit": "mmol/L"
+      },
+      "LDLCHDLC": {
+        "value": "----"
+      },
+      "NONHDLC": {
+        "result": "0.30",
+        "unit": "mmol/L"
+      },
+      "TCHDLC": {
+        "value": "1.12"
+      },
+      "TG": {
+        "value": "5.45",
+        "unit": "mmol/L"
+      }
+    },
+    "testTime": "2020-07-03 09:28:01",
+    "type": "bloodLipids"
+  },
+  "msg": "当前测试值"
+}
 
 
-## 3.3 给设备发送指令，支持获取历史数据与清除历史数据；
+示例4 血压计 type=bloodPressure
+
+{
+	"code": "04",  
+	"data": {
+		"result": {
+			"BloodMeasureHigh ":{
+			  "value":"95",
+              "unit":"mmHg"
+		    },
+			"BloodMeasureLow ":{
+              "value":"64",
+              "unit":"mmHg"
+			},
+			"P":{
+              "value":"81"
+			}
+		},
+        "testTime ":"2022-07-13 15:30:47",
+        "type":"bloodPressure"
+	},
+	"msg": "当前测试值"
+}
+
+
+```
+
+
+##  给设备发送指令；
 
 SampleType 样本类型
 
@@ -384,12 +356,14 @@ public class SampleType implements Parcelable {
     public static final String INDEX_5_URIC_ACID_BLOOD = "0005";
     //尿酸质控液
     public static final String INDEX_6_URIC_ACID_SIMULATED_FLUID = "0006";
+	//其他
+	public static final String INDEX_9999_Other = "9999";
 
 }
 
 ```
 
-### 3.3.1 获取仪器历史测量结果；注意：仪器在滴血状态和测量状态可能无法响应此指令；
+## 3.4 获取仪器历史测量结果；注意：仪器在滴血状态和测量状态可能无法响应此指令；碳系列设备不支持
 
 ```java
 
@@ -402,7 +376,7 @@ MulticriteriaSDKManager.getHistoryData(SNDevice snDevice,String sampleType);
 
 ```
 
-### 3.3.2 清除设备历史数据；注意：仪器在滴血状态和测量状态可能无法响应此指令；
+## 3.5 清除设备历史数据；注意：仪器在滴血状态和测量状态可能无法响应此指令；
 
 ```java
    // 清除成功后，会回调至连接方法设置的回调中sendDeviceDetectionStatus(SNDevice device, DeviceDetectionData data)
@@ -417,21 +391,71 @@ MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice,String sampleType);
  * 清除所有设备历史数据  (包含血糖,质控液)部分机子有血酮的，尿酸的 一概清除 
  * @param snDevice
  */
-        MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice);
+ MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice);
+
+```
+## 3.6 设置设备时间
+```java
+
+/**
+ * 设置设备时间
+ * @param snDevice
+ * @param millisconds   时间戳
+ */
+MulticriteriaSDKManager.setDeviceTime(SNDevice snDevice, long millisconds);
 
 ```
 
-# 4 断开连接
+## 3.7 断开连接
 
 ```java
    MulticriteriaSDKManager.disConectDevice(snDevices);
 ```
+## 3.8 退出App
 
-退出App
 
 ```java
      MulticriteriaSDKManager.finishAll();
 ```
+# 4 差异设备调用方法
+
+## 4.1 碳系列平台 （2000）
+
+### 4.1.0 获取历史序号
+
+```java
+/**
+ * 获取历史序号
+ * @param snDevice
+ * @param sampleType   样本类型见以上SampleType
+ */
+ 
+ MulticriteriaSDKManager.getHistoryOrderNumber(SNDevice snDevice, String sampleType);
+```
+
+### 4.1.1 通过序号来获取指定历史数据
+
+```java
+
+/**
+ * 获取设备历史数据
+ * @param snDevice
+ * @param SampleType   SampleType.XXX   要获取的样本类型
+  @param orderNumber   历史数据序号
+ */
+ MulticriteriaSDKManager.getHistoryData(SNDevice snDevice, String sampleType, int orderNumber);
+
+```
+
+## 4.2 安诺心诺凡血压计
+
+### 4.2.0 开始测量
+```java
+
+ MulticriteriaSDKManager.startMeasuring();
+
+```
+
 
 # 5 设备信息说明
 
