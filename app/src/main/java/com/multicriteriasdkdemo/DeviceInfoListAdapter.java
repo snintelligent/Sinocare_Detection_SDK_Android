@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sinocare.multicriteriasdk.entity.SNDevice;
 
 import java.io.InputStream;
@@ -54,9 +55,9 @@ public class DeviceInfoListAdapter extends RecyclerView.Adapter<DeviceInfoListAd
         holder.name.setText(snDevice.getName());
         holder.mac.setText(TextUtils.isEmpty(snDevice.getMac()) ? "" : snDevice.getMac());
         if(snDevice.getImageUrl() != null && !TextUtils.isEmpty(snDevice.getImageUrl())){
-            setNetworkBitmap(snDevice.getImageUrl(),holder.imageView);
+            Glide.with(context).load(snDevice.getImageUrl()).into(holder.imageView);
         }else{
-            holder.imageView.setImageDrawable(context.getDrawable(R.drawable.ic_launcher_foreground));
+            Glide.with(context).load(R.drawable.ic_launcher_foreground).into(holder.imageView);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,38 +68,6 @@ public class DeviceInfoListAdapter extends RecyclerView.Adapter<DeviceInfoListAd
                 }
             }
         });
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
-
-            @Override
-            public boolean onLongClick(View view) {
-                dataList.remove(holder.getAdapterPosition());
-                notifyDataSetChanged();
-                return false;
-            }
-        });
-    }
-    public void setNetworkBitmap(String url,ImageView imageView) {
-        Runnable networkImg = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL conn = new URL(url);
-                    InputStream in = conn.openConnection().getInputStream();
-                   Bitmap bitmap = BitmapFactory.decodeStream(in);
-                    in.close();
-                    Activity activity = (Activity)context;
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            imageView.setImageBitmap(bitmap);
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        new Thread(networkImg).start();
 
     }
     @Override
