@@ -177,6 +177,30 @@ code | 说明
 401 | AccessKey配置不正确
 
 ## 3.2 连接与断开连接，数据获取
+###  SNDevice设备类型：
+
+type | 说明 | type | 说明 | type | 说明
+--- | --- | ---| ---| ---| --- 
+DEVICE_EA_12 | EA_12系列血糖血尿酸仪 | DEVICE_SPO | 康泰血氧仪 | DEVICE_GOLD_JW_AIR | 金稳+Air血糖仪
+DEVICE_KA_11 | KA_11系列血糖血酮测试仪 | DEVICE_HXJ | 手持肺功能仪 | DEVICE_PCH_50_BLE | pch-50糖化血红蛋白
+DEVICE_CARDIO_CBEK | 卡迪克血脂仪 | DEVICE_FER | GT2016铁蛋白分析仪 | DEVICE_HPALC | 碳系列血糖仪
+DEVICE_PCH_100_BLE | PCH-100便携式糖化血红蛋白分析仪 | DEVICE_EMP_UI | Ui掌上尿液分析仪 | DEVICE_LEFUHENGQI_BMI | 安诺心体重秤
+DEVICE_BLOOD_PRESSURE_MBB_BP_BLE | 脉搏波台式血压计 | DEVICE_EMP_UI_10C | Ui-10C掌上尿液分析仪 | DEVICE_LEFUHENGQI_BODY_FAT_BMI |安诺心体脂秤 
+DEVICE_BLOOD_PRESSURE_MBB_BLE_9804 | 脉搏波血压计 | DEVICE_ANWEN_AIR | 安稳+Air血糖仪 | DEVICE_HPALC_UA | 碳系列尿酸仪
+DEVICE_BLOOD_PRESSURE_MBB_BLE | 脉搏波臂式血压计（小的绑带长形的） | DEVICE_UG_11 | UG_11系列血糖血尿酸仪 | DEVICE_QN_TAPE | QN电子健康尺
+DEVICE_BLOOD_PRESSURE_YK | 安诺心诺凡蓝牙血压计 | DEVICE_UG_11_AIR | UG_11_air系列血糖血尿酸仪 | DEVICE_AILIKANG_DIGITAL_THERMOMETER | 爱立康电子体温计
+DEVICE_BLOOD_PRESSURE_YK_806 | 安诺心诺凡台式血压计 | DEVICE_UG_11_CODE | UG_11_code系列血糖血尿酸仪 | DEVICE_HD_ID_CARD | 华大身份证读卡器
+DEVICE_WL_ONE | WL-1型蓝牙血糖仪 | DEVICE_AILIKANG_FOND_THERMOMETER | 爱立康 方迪红外额温计 | DEVICE_SHANGHE_BMI | 智能互联身高体重秤
+DEVICE_WEIXIN_WL_ONE | 微信版WL-1型蓝牙血糖仪 | DEVICE_ICARE | ICare | 
+DEVICE_WL_ONE_JYZY | WL-1型教育专员版血糖仪 | DEVICE_ZHEN_RUI | 二代真睿血糖仪 | 
+DEVICE_GOLD_AQ | 金准+血糖仪 | DEVICE_EA_18 | EA_18系列血糖血尿酸仪 | 
+DEVICE_GOLD_AQ_AIR | 金准+Air血糖仪 | DEVICE_GOLD_AQ_AIR | 金准+Air血糖仪 | 
+DEVICE_ID_CARD | HD-100身份证读卡器 | DEVICE_QIN_ZHI | 亲智血糖仪 | 
+DEVICE_GPRINT | 标签打印机 | DEVICE_WL_TWO | WL-2型蓝牙血糖仪 | 
+DEVICE_TEMP | 医用红外体温计 | DEVICE_BLOOD_PRESSURE_URION | 优瑞血压计 | 
+DEVICE_SLX | 掌越血脂血糖仪 | DEVICE_MEDXING_OXIMETER | 美的心血氧仪 | 
+DEVICE_PABA | 便携式全自动生化分析仪 | DEVICE_YUNKANGBAO_BMI | 云康宝身高体重一体机 | 
+DEVICE_URIT | URIT便携式尿液分析仪 | DEVICE_MEDXING_THERMOMETER | 美的心体温计 | 
 
 ### 3.2.1 连接与数据获取
 
@@ -188,42 +212,26 @@ code | 说明
  * 第一种 默认就是开启扫描设备
  */
     MulticriteriaSDKManager.startConnect(snDevices,new SnCallBack(){
-@Override
-public void onDataComing(SNDevice device,DeviceDetectionData data){
+      @Override
+      public void onDataComing(SNDevice device,BaseDetectionData data){
         //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
-        }
+      }
 
-@Override
-public void onDetectionStateChange(SNDevice device,DeviceDetectionState state){
+      @Override
+      public void onDetectionStateChange(SNDevice device,DeviceDetectionState state){
         //设备数据状态：时间同步成功、历史数据获取成功、清除成功等等
-        }
+      }
 
-@Override
-public void onDeviceStateChange(SNDevice device,BoothDeviceConnectState state){
+      @Override
+      public void onDeviceStateChange(SNDevice device,BoothDeviceConnectState state){
         //连接连接状态 目前只回调连接成功与断开连接
-        }
-        });
+      }
+    });
 
 /**
- * 第二种  isScanningBluetooth  ture 扫描  false不扫描   (注意 此方法在等于大于SDK 1.0.18 才支持)
+ * 第二种 关闭扫描设备，直连设备 isScanningBluetooth 是否扫描蓝牙
  */
-//        MulticriteriaSDKManager.startConnect(snDevices,isScanningBluetooth,new SnCallBack(){
-//          @Override
-//          public void onDataComing(SNDevice device,DeviceDetectionData data){
-//             //设备数据回调，解析见后面数据结构，实时测量数据与历史测量数据均在此处回调；
-//          }
-//
-//          @Override
-//          public void onDetectionStateChange(SNDevice device,DeviceDetectionState state){
-//              //设备数据状态：时间同步成功、历史数据获取成功、清除成功等等
-//          }
-//
-//          @Override
-//          public void onDeviceStateChange(SNDevice device,BoothDeviceConnectState state){
-//           //连接连接状态 目前只回调连接成功与断开连接
-//        
-//          }
-//        });
+        MulticriteriaSDKManager.startConnect(snDevices,boolean isScanningBluetooth，new SnCallBack(){}
 ```
 
 连接状态 BoothDeviceConnectState
@@ -242,17 +250,6 @@ public void onDeviceStateChange(SNDevice device,BoothDeviceConnectState state){
 
 ```
 
-### 3.2.2 断开连接
-
-```java
-   MulticriteriaSDKManager.disConectDevice(snDevices);
-```
-
-退出App
-
-```java
-     MulticriteriaSDKManager.finishAll();
-```
 
 ## 3.3数据结构 DeviceDetectionData
 
@@ -436,7 +433,7 @@ public class SampleType implements Parcelable {
 
 ```
 
-## 4.2 获取仪器历史测量结果；注意：仪器在滴血状态和测量状态可能无法响应此指令；
+## 4.2 获取仪器历史测量结果；注意：仪器在滴血状态和测量状态可能无法响应此指令；碳系列设备不支持
 
 ```java
 
@@ -467,8 +464,90 @@ MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice,String sampleType);
         MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice);
 
 ```
+## 4.4 设置设备时间
+```java
 
-# 5 设备信息说明
+/**
+ * 设置设备时间
+ * @param snDevice
+ * @param millisconds   时间戳
+ */
+MulticriteriaSDKManager.setDeviceTime(SNDevice snDevice, long millisconds);
+
+```
+## 4.5 断开连接
+
+```java
+   MulticriteriaSDKManager.disConectDevice(snDevices);
+```
+## 4.6 退出App
+
+
+```java
+     MulticriteriaSDKManager.finishAll();
+```
+
+# 5 差异设备调用方法
+
+## 5.1 碳系列平台 （2000）
+
+### 5.1.0 获取历史序号
+
+```java
+/**
+ * 获取历史序号
+ * @param snDevice
+ * @param sampleType   样本类型见以上SampleType
+ */
+ 
+ MulticriteriaSDKManager.getHistoryOrderNumber(SNDevice snDevice, String sampleType);
+```
+
+### 5.1.1 通过序号来获取指定历史数据
+
+```java
+
+/**
+ * 获取设备历史数据
+ * @param snDevice
+ * @param SampleType   SampleType.XXX   要获取的样本类型
+  @param orderNumber   历史数据序号
+ */
+ MulticriteriaSDKManager.getHistoryData(SNDevice snDevice, String sampleType, int orderNumber);
+
+```
+
+## 5.2 安诺心诺凡血压计
+
+### 5.2.0 开始测量
+```java
+
+ MulticriteriaSDKManager.startMeasuring();
+
+```
+## 5.3 PHC-50
+
+### 5.3.0 获取版本信息
+```java
+
+MulticriteriaSDKManager.getVersionInfo(SNDevice device)
+
+```
+### 5.3.1 开始升级
+```java
+/**
+  @param file   包路径
+ */
+MulticriteriaSDKManager.startUpgrade(SNDevice device, File file)
+
+```
+### 5.3.2 停止升级
+```java
+
+MulticriteriaSDKManager.stopUpgrade(SNDevice device)
+
+```
+# 6 设备信息说明
 
 设备名称型号 | 设备指标 | 蓝牙名称 | 蓝牙类别 | 设备图片
 ---|--- | --- | --- | ---
@@ -486,13 +565,13 @@ WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://gitee.com/sinocare-iot/Sinocare
 便携式全自动生化分析仪 | 尿微量白蛋白、尿肌酐、ACR | OSTRAN | 经典蓝牙 配对码 0000| ![生化分析仪](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_biochemical.png?)
 糖化血红蛋白分析仪 PCH-100 | 糖化血红蛋白 | BDE_WEIXIN_TTM | BLE | ![PCH-100](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/raw/master/deviceImages/img_device_pch_100.png?)
 
-# 6 常见问题
+# 7 常见问题
 
-## 6.1 蓝牙设备上显示蓝牙已被连接，但SnCallBack没有回调连接状态，和测量结果；
+## 7.1 蓝牙设备上显示蓝牙已被连接，但SnCallBack没有回调连接状态，和测量结果；
 
 首先考虑鉴权是否通过，通过``` AuthUtils.isAuthValid()```查看当时鉴权是否成功，也可以在初始化鉴权过程中监听鉴权状态回调；
 
-## 6.2 SncallBack 会重复回调多次测量结果；
+## 7.2 SncallBack 会重复回调多次测量结果；
 
 考虑多次调用了连接startConnect(List<SNDevice> snDevices, SnCallBack snCallBack)
 ，每次都设置了callback；由于Callback是采用添加模式，会添加到列表回调列表里面，多次设置CallBack，导致回调多次；全局只调用一次带callback的连接，其它地方再次连接时不再传入callback，这样可以保证收到数据全局只回调一次;
