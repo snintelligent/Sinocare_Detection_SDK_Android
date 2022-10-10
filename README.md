@@ -374,25 +374,8 @@ MulticriteriaSDKManager.getHistoryData(SNDevice snDevice,String sampleType);
 
 ```
 
-## 3.5 清除设备历史数据；注意：仪器在滴血状态和测量状态可能无法响应此指令；
 
-```java
-   // 清除成功后，会回调至连接方法设置的回调中sendDeviceDetectionStatus(SNDevice device, DeviceDetectionData data)
-/**
- * 清除设备历史数据
- * @param snDevice
- * @param SampleType   SampleType.XXX   要清除的样本类型
- */
-MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice,String sampleType);
-
-/**
- * 清除所有设备历史数据  (包含血糖,质控液)部分机子有血酮的，尿酸的 一概清除 
- * @param snDevice
- */
- MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice);
-
-```
-## 3.6 设置设备时间
+## 3.5 设置设备时间
 ```java
 
 /**
@@ -404,12 +387,12 @@ MulticriteriaSDKManager.setDeviceTime(SNDevice snDevice, long millisconds);
 
 ```
 
-## 3.7 断开连接
+## 3.6 断开连接
 
 ```java
    MulticriteriaSDKManager.disConectDevice(snDevices);
 ```
-## 3.8 退出App
+## 3.7 退出App
 
 
 ```java
@@ -501,13 +484,7 @@ WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://gitee.com/sinocare-iot/Sinocare
 
 首先考虑鉴权是否通过，通过``` AuthUtils.isAuthValid()```查看当时鉴权是否成功，也可以在初始化鉴权过程中监听鉴权状态回调；
 
-## 6.2 SncallBack 会重复回调多次测量结果；
-
-考虑多次调用了连接startConnect(List<SNDevice> snDevices, SnCallBack snCallBack)
-，每次都设置了callback；由于Callback是采用添加模式，会添加到列表回调列表里面，多次设置CallBack，导致回调多次；全局只调用一次带callback的连接，其它地方再次连接时不再传入callback，这样可以保证收到数据全局只回调一次;
-后续版本会考虑在连接过程中采用单一回调的模式，避免出现多次回调；
-
-## 6.3 测量指标字段；
+## 6.2 测量指标字段；
 result | 指标名称 | result | 指标名称 |result | 指标名称 |
 ---|--- |---|--- |---|--- |
 GLU|血糖|MALB|尿微量白蛋白|Ca|尿钙|
