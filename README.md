@@ -502,7 +502,7 @@ BloodMeasureHigh|收缩压|SG|尿比重|
 BloodMeasureLow|舒张压|BLD|隐血|
 P|脉博|pH|酸碱度|
 SPO2|血氧饱和度|VC|维生素 C|
-T|体温|CR|尿肌酐|
+T|体温|Crea| 血肌酐|
 
 ## 6.4 错误码对照表,请下载到本地；
 
