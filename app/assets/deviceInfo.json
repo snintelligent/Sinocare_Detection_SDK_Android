@@ -660,6 +660,26 @@
 		"supportBuzzer": 0
 	},
 	{
+		"bleNamePrefix": "SH-",
+		"connectProtocolCode": "ble",
+		"dataProtocolCode": "shanghe_height_weight_ble",
+		"description": "",
+		"errorCodeConfigured": null,
+		"id": "1580080220485529602",
+		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20221012/a7654f95a6c00323a9925a708188f929.png",
+		"machineCode": "",
+		"modelName": "",
+		"name": "上禾SH-302超声波身高体重测量仪",
+		"obtHistoryDataOccasion": "6",
+		"productCode": "100245",
+		"productTypeId": "11",
+		"productTypeName": "智能秤",
+		"registerType": 2,
+		"snPrefix": "",
+		"supplierName": "",
+		"supportBuzzer": 0
+	},
+	{
 		"bleNamePrefix": "AW+AIR,BDE_WEIXIN_TTM",
 		"connectProtocolCode": "ble",
 		"dataProtocolCode": "safe_aq_air_ble",
@@ -800,7 +820,7 @@
 		"supportBuzzer": 0
 	},
 	{
-		"bleNamePrefix": "JZ+Air",
+		"bleNamePrefix": "BDE_WEIXIN_TTM,JZ+Air",
 		"connectProtocolCode": "ble",
 		"dataProtocolCode": "jin_wen_air_ble",
 		"description": "",

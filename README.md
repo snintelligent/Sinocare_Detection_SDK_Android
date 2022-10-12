@@ -488,7 +488,7 @@ WL-1 | 血糖 | Sinocare | BLE | ![WL-1](https://gitee.com/sinocare-iot/Sinocare
 result | 指标名称 | result | 指标名称 |result | 指标名称 |
 ---|--- |---|--- |---|--- |
 GLU|血糖|MALB|尿微量白蛋白|Ca|尿钙|
-KET|血酮|UCr|尿肌酐|MA|微白蛋白|
+KET|血酮|UCr|尿微量白蛋白/尿肌酐|MA|微白蛋白|
 UA|血尿酸|ACR|尿微量白蛋白/尿肌酐|PEF|呼气流量峰值，仪器测量原始值|
 HbA1c|糖化血红蛋白|FER|铁蛋白|FEV1|第一秒用力呼气量，仪器测量原始值|
 TG|甘油三脂|WBC|尿白细胞|FVC|用力肺活量，仪器测量原始值|
