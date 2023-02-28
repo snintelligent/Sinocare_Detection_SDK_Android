@@ -69,12 +69,9 @@ public class DeviceScanActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         // 为了确保设备上蓝牙能使用, 如果当前蓝牙设备没启用,弹出对话框向用户要求授予权限来启用
-        String desc = snDevice.getDataProtocolCode();
-        if ( SNDevice.DEVICE_GT2016_BT.equals(desc) ) {
-            scanDevice(false);
-        }else{
+
             scanDevice(true);
-        }
+
     }
 
     protected void scanDevice(boolean isBle) {
@@ -101,7 +98,7 @@ public class DeviceScanActivity extends AppCompatActivity {
                     snDevice.setMac(device.getAddress());
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable("device", snDevice);
+                    bundle.putSerializable("device", snDevice);
                     intent.putExtras(bundle);
                     setResult(RESULT_OK, intent);
                     finish();
@@ -139,11 +136,7 @@ public class DeviceScanActivity extends AppCompatActivity {
     public void startScan(View view) {
         stopScan();
         adapter.clearData();
-        String desc = snDevice.getDataProtocolCode();
-        if ( SNDevice.DEVICE_GT2016_BT.equals(desc) ) {
-            scanDevice(false);
-        } else {
             scanDevice(true);
-        }
+
     }
 }
