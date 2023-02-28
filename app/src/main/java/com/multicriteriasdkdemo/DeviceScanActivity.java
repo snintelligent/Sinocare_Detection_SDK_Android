@@ -70,11 +70,11 @@ public class DeviceScanActivity extends AppCompatActivity {
         super.onResume();
         // 为了确保设备上蓝牙能使用, 如果当前蓝牙设备没启用,弹出对话框向用户要求授予权限来启用
         String desc = snDevice.getDataProtocolCode();
-        if ( SNDevice.DEVICE_GT2016_BT.equals(desc) ) {
-            scanDevice(false);
-        }else{
+//        if ( SNDevice.DEVICE_GT2016_BT.equals(desc) ) {
+//            scanDevice(false);
+//        }else{
             scanDevice(true);
-        }
+//        }
     }
 
     protected void scanDevice(boolean isBle) {
@@ -139,11 +139,11 @@ public class DeviceScanActivity extends AppCompatActivity {
     public void startScan(View view) {
         stopScan();
         adapter.clearData();
-        String desc = snDevice.getDataProtocolCode();
-        if ( SNDevice.DEVICE_GT2016_BT.equals(desc) ) {
-            scanDevice(false);
-        } else {
+//        String desc = snDevice.getDataProtocolCode();
+//        if ( SNDevice.DEVICE_GT2016_BT.equals(desc) ) {
+//            scanDevice(false);
+//        } else {
             scanDevice(true);
-        }
+//        }
     }
 }

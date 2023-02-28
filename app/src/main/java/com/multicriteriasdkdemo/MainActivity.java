@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         tv = findViewById(R.id.tv);
         dataAdapter = new MsgListAdapter(this, new ArrayList<>());
         listViewData.setAdapter(dataAdapter);
-        ArrayList<SNDevice> bleDevices = getIntent().getParcelableArrayListExtra("snDevices");
+        ArrayList<SNDevice> bleDevices = (  ArrayList<SNDevice> )getIntent().getSerializableExtra("snDevices");
         if (bleDevices == null) {
             Toast.makeText(this, "设备选择不正确", Toast.LENGTH_SHORT);
             finish();
