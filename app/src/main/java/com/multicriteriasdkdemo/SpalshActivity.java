@@ -145,7 +145,7 @@ public class SpalshActivity extends AppCompatActivity {
             return;
         }
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putParcelableArrayListExtra("snDevices", deviceAdapter.getDeviceList());
+        intent.putExtra("snDevices", deviceAdapter.getDeviceList());
         startActivity(intent);
     }
 
