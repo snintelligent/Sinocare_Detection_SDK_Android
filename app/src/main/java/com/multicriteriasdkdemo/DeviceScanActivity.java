@@ -101,7 +101,7 @@ public class DeviceScanActivity extends AppCompatActivity {
                     snDevice.setMac(device.getAddress());
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable("device", snDevice);
+                    bundle.putSerializable("device", snDevice);
                     intent.putExtras(bundle);
                     setResult(RESULT_OK, intent);
                     finish();
