@@ -68,7 +68,7 @@ allprojects {
 
 ```powershell
 
-   implementation 'com.sinocare.android_lib:multicriteriasdk:2.0.3_lite'
+   implementation 'com.sinocare.android_lib:multicriteriasdk:2.0.5_lite'
 ```
 
 ## 2.3 配置manifest
