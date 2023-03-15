@@ -153,10 +153,10 @@ public class SpalshActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // User chose not to enable Bluetooth.
         if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 1) {
-            SNDevice snDevice = data.getExtras().getParcelable("device");
+            SNDevice snDevice = (SNDevice)data.getExtras().getSerializable("device");
             goTestActivity(snDevice);
         } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 2) {
-            SNDevice snDevice = data.getExtras().getParcelable("device");
+            SNDevice snDevice = (SNDevice)data.getExtras().getSerializable("device");
             for (SNDevice snDevice1 : deviceAdapter.getDeviceList()) {
                 if (snDevice.getMac().equals(snDevice1.getMac())) {
                     return;
