@@ -56,7 +56,7 @@ public class DeviceScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_test);
-        snDevice = getIntent().getParcelableExtra("snDevice");
+        snDevice = (SNDevice)getIntent().getSerializableExtra("snDevice");
         setTitle(snDevice.getName() == null ? "扫描设备" : snDevice.getName());
 
         deviceLv = (ListView) findViewById(R.id.list);
