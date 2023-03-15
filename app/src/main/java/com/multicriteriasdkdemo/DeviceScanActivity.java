@@ -69,9 +69,7 @@ public class DeviceScanActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         // 为了确保设备上蓝牙能使用, 如果当前蓝牙设备没启用,弹出对话框向用户要求授予权限来启用
-
             scanDevice(true);
-
     }
 
     protected void scanDevice(boolean isBle) {
@@ -137,6 +135,5 @@ public class DeviceScanActivity extends AppCompatActivity {
         stopScan();
         adapter.clearData();
             scanDevice(true);
-
     }
 }
