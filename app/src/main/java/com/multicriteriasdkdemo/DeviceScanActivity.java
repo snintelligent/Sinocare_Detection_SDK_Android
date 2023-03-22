@@ -70,7 +70,7 @@ public class DeviceScanActivity extends AppCompatActivity {
         super.onResume();
         // 为了确保设备上蓝牙能使用, 如果当前蓝牙设备没启用,弹出对话框向用户要求授予权限来启用
         String desc = snDevice.getDataProtocolCode();
-        if (SNDevice.DEVICE_HD_ID_CARD_READER_BT.equals(desc) || SNDevice.DEVICE_GT2016_BT.equals(desc) || SNDevice.DEVICE_ERIT_U31_BT.equals(desc)
+        if (SNDevice.DEVICE_HD_ID_CARD_READER_BT.equals(desc)  || SNDevice.DEVICE_ERIT_U31_BT.equals(desc)
                 || SNDevice.DEVICE_BA_BT.equals(desc)) {
             scanDevice(false);
         }else{
@@ -141,7 +141,7 @@ public class DeviceScanActivity extends AppCompatActivity {
         stopScan();
         adapter.clearData();
         String desc = snDevice.getDataProtocolCode();
-        if (SNDevice.DEVICE_HD_ID_CARD_READER_BT.equals(desc) || SNDevice.DEVICE_GT2016_BT.equals(desc) || SNDevice.DEVICE_ERIT_U31_BT.equals(desc)
+        if (SNDevice.DEVICE_HD_ID_CARD_READER_BT.equals(desc) || SNDevice.DEVICE_ERIT_U31_BT.equals(desc)
                 || SNDevice.DEVICE_BA_BT.equals(desc)) {
             scanDevice(false);
         } else {
