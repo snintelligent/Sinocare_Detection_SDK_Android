@@ -67,7 +67,7 @@ allprojects {
 在App 模块 build.gradle中配置
 
 ```powershell
-  implementation 'com.sinocare.android_lib:multicriteriasdk:2.0.9'
+  implementation 'com.sinocare.android_lib:multicriteriasdk:2.1.4'
 ```
 
 ## 2.3 配置manifest
@@ -512,6 +512,8 @@ PCH-50      | 血红蛋白    | PCH50                     | 100220 | pch_50_ble 
 诺凡BA-806   | 血压、脉搏  | ClinkBlood                | 100208 | one_test_BPG_ble     |     | ![诺凡BA-806](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/ce2b6fc3365905c65a7f91cc66db5ee0.png?)
 诺凡BA-801   | 血压、脉搏  | ClinkBlood                | 100276 | one_test_BPG_ble     |    |![诺凡BA-801](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230630/6cf280841fb360e00e9a4a7903f4cfba.png?)
 诺凡BA-803   | 血压、脉搏  | ClinkBlood                | 100019 | one_test_BPG_ble     |    | ![诺凡BA-803](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220908/cb726a94a76990281b03f95a31b14088.png?)
+AET-R181额温计（新款）    | 体温计  | AET-R               | 100291 | AET_exergen_ble_new     |    | ![AET-R181额温计（新款）](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230906/a439c423242b56a4d8bb48e2d45d5b50.png?)
+AET-R181额温计           | 体温计  | AET               | 100234 | AET_exergen_ble     |    | ![AET-R181额温计](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220801/958a8f0e17e1523698e735fad69ecba7.png?)
 # 6 常见问题
 
 ## 6.1 蓝牙设备上显示蓝牙已被连接，但SnCallBack没有回调连接状态，和测量结果；
