@@ -90,6 +90,16 @@ manifest的配置主要包括添加权限,代码示例如下：
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> //允许程序获取网络信息状态，如当前的网络连接是否有效
 ```
+sdk access key配置，示例代码如下，在application标签下配置meta-data, key值sino_minute_access_key，value为申请的access key
+
+``` xml
+<application ...>
+
+        <meta-data android:name="sino_minute_access_key"
+            android:value="c3ecbb62344af7bbc6271aaabbcccc"/>
+	    
+</application>
+```
 
 ## 2.4 动态权限申请
 
@@ -111,16 +121,7 @@ manifest的配置主要包括添加权限,代码示例如下：
         }
 ```
 
-sdk access key配置，示例代码如下，在application标签下配置meta-data, key值sino_minute_access_key，value为申请的access key
 
-``` xml
-<application ...>
-
-        <meta-data android:name="sino_minute_access_key"
-            android:value="c3ecbb62344af7bbc6271aaabbcccc"/>
-	    
-</application>
-```
 
 ## 2.5 混淆说明
 
