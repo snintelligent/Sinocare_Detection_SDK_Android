@@ -4,13 +4,14 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sinocare.multicriteriasdk.MulticriteriaSDKManager;
 import com.sinocare.multicriteriasdk.auth.AuthStatusListener;
@@ -153,11 +154,9 @@ public class SpalshActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // User chose not to enable Bluetooth.
         if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 1) {
-//            SNDevice snDevice = data.getExtras().getParcelable("device");
             SNDevice snDevice = (SNDevice)data.getExtras().getSerializable("device");
             goTestActivity(snDevice);
         } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 2) {
-//            SNDevice snDevice = data.getExtras().getParcelable("device");
             SNDevice snDevice = (SNDevice)data.getExtras().getSerializable("device");
             for (SNDevice snDevice1 : deviceAdapter.getDeviceList()) {
                 if (snDevice.getMac().equals(snDevice1.getMac())) {

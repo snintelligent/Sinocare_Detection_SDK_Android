@@ -16,7 +16,7 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode 2
         versionName "2.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         ndk {
             // 加了其他的文件夹（比如 armeabi-v7a，x86等）可能会出问题
             abiFilters "armeabi"
@@ -74,8 +74,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation rootProject.ext.dependencies["support-design"]
-    implementation rootProject.ext.dependencies["support-appcompatV7"]
+//    implementation rootProject.ext.dependencies["support-design"]
+//    implementation rootProject.ext.dependencies["support-appcompatV7"]
     implementation rootProject.ext.dependencies["constraint-layout"]
     testImplementation rootProject.ext.dependencies["junit"]
     androidTestImplementation rootProject.ext.dependencies["test-runner"]
@@ -83,6 +83,6 @@ dependencies {
     implementation rootProject.ext.dependencies["rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]
     implementation rootProject.ext.dependencies["rxpermissions"]
-    implementation 'com.sinocare.android_lib:multicriteriasdk:2.0.9_lite'
+    implementation 'com.sinocare.androidx_lib:multicriteriasdk:2.1.0_lite'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
 }

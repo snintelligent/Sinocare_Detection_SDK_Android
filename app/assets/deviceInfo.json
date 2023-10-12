@@ -15,29 +15,33 @@
 		"productTypeId": "2",
 		"productTypeName": "尿酸测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "6T",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "SN-6U",
 		"connectProtocolCode": "ble",
 		"dataProtocolCode": "sino_standard_ble_01",
-		"description": "",
+		"description": "三诺捷巧",
 		"errorCodeConfigured": null,
 		"id": "1504369905793175554",
 		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220826/e079c849bfdf566e619fc1a6e66e35c7.png",
 		"machineCode": "2000",
 		"modelName": "UA-Plus",
-		"name": "UA Plus尿酸测试仪",
+		"name": "三诺捷巧UA Plus尿酸测试仪",
 		"obtHistoryDataOccasion": "1,4",
 		"productCode": "100002",
 		"productTypeId": "2",
 		"productTypeName": "尿酸测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "6U",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "SN-6W",
@@ -55,9 +59,77 @@
 		"productTypeId": "3",
 		"productTypeName": "血糖尿酸测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "6W",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
+	},
+	{
+		"bleNamePrefix": "SN-6X",
+		"connectProtocolCode": "ble",
+		"dataProtocolCode": "sino_standard_ble_01",
+		"description": "",
+		"errorCodeConfigured": null,
+		"id": "1526089271708954626",
+		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220615/21caf0cb294192f4e3960adaf7d0c1fe.png",
+		"machineCode": "2000",
+		"modelName": "EA-19",
+		"name": "EA-19血糖尿酸测试仪",
+		"obtHistoryDataOccasion": "1,4",
+		"productCode": "100202",
+		"productTypeId": "3",
+		"productTypeName": "血糖尿酸测试仪",
+		"registerType": 1,
+		"secretKey": null,
+		"snPrefix": "6X",
+		"supplierName": "",
+		"supportBuzzer": 1,
+		"supportMurphyCode": null
+	},
+	{
+		"bleNamePrefix": "SN-6Y",
+		"connectProtocolCode": "ble",
+		"dataProtocolCode": "sino_standard_ble_01",
+		"description": "",
+		"errorCodeConfigured": null,
+		"id": "1526089532913430529",
+		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220615/abb5a4e5e88c9d346def18bf2fcfdc2e.png",
+		"machineCode": "2000",
+		"modelName": "EA-23",
+		"name": "EA-23血糖尿酸测试仪",
+		"obtHistoryDataOccasion": "1,4",
+		"productCode": "100203",
+		"productTypeId": "3",
+		"productTypeName": "血糖尿酸测试仪",
+		"registerType": 1,
+		"secretKey": null,
+		"snPrefix": "6Y",
+		"supplierName": "",
+		"supportBuzzer": 1,
+		"supportMurphyCode": null
+	},
+	{
+		"bleNamePrefix": "SN-6Z",
+		"connectProtocolCode": "ble",
+		"dataProtocolCode": "sino_standard_ble_01",
+		"description": "",
+		"errorCodeConfigured": null,
+		"id": "1526089802116444161",
+		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220906/a6bc34ea2fa7cbcf87cf5068819dab6f.png",
+		"machineCode": "2000",
+		"modelName": "UG-23",
+		"name": "UG-23血糖尿酸测试仪",
+		"obtHistoryDataOccasion": "1,4",
+		"productCode": "100204",
+		"productTypeId": "3",
+		"productTypeName": "血糖尿酸测试仪",
+		"registerType": 1,
+		"secretKey": null,
+		"snPrefix": "6Z",
+		"supplierName": "",
+		"supportBuzzer": 1,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "HeartRate",
@@ -74,10 +146,12 @@
 		"productCode": "100207",
 		"productTypeId": "11",
 		"productTypeName": "智能秤",
-		"registerType": 2,
+		"registerType": 3,
+		"secretKey": null,
 		"snPrefix": "",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "ClinkBlood",
@@ -95,9 +169,11 @@
 		"productTypeId": "8",
 		"productTypeName": "血压计",
 		"registerType": 2,
+		"secretKey": null,
 		"snPrefix": "",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "Weight",
@@ -114,10 +190,12 @@
 		"productCode": "100209",
 		"productTypeId": "11",
 		"productTypeName": "智能秤",
-		"registerType": 2,
+		"registerType": 3,
+		"secretKey": null,
 		"snPrefix": "",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "HC-05",
@@ -135,9 +213,11 @@
 		"productTypeId": "6",
 		"productTypeName": "POCT仪器",
 		"registerType": 2,
+		"secretKey": null,
 		"snPrefix": "",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "BDE_WEIXIN_TTM,PCH",
@@ -155,9 +235,11 @@
 		"productTypeId": "17",
 		"productTypeName": "糖化血红蛋白分析仪",
 		"registerType": 2,
+		"secretKey": null,
 		"snPrefix": "",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "PCH50",
@@ -175,9 +257,11 @@
 		"productTypeId": "17",
 		"productTypeName": "糖化血红蛋白分析仪",
 		"registerType": 2,
+		"secretKey": null,
 		"snPrefix": "",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "CardioChek",
@@ -195,9 +279,11 @@
 		"productTypeId": "7",
 		"productTypeName": "血脂血糖测试仪",
 		"registerType": 2,
+		"secretKey": null,
 		"snPrefix": "",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "SpO",
@@ -215,9 +301,80 @@
 		"productTypeId": "13",
 		"productTypeName": "血氧仪",
 		"registerType": 2,
+		"secretKey": null,
 		"snPrefix": "",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
+	},
+	{
+		"availableDays": null,
+		"bleNamePrefix": "AET-R",
+		"connectProtocolCode": "ble",
+		"dataProtocolCode": "AET_exergen_ble_new",
+		"description": "",
+		"errorCodeConfigured": null,
+		"id": "1699307713318932481",
+		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230906/a439c423242b56a4d8bb48e2d45d5b50.png",
+		"machineCode": "",
+		"modelId": null,
+		"modelName": "",
+		"name": "诺凡-R181额温计",
+		"obtHistoryDataOccasion": "1",
+		"productCode": "100291",
+		"productTypeCode": null,
+		"productTypeId": "12",
+		"productTypeName": "温度计",
+		"registerType": 2,
+		"secretKey": null,
+		"snPrefix": "",
+		"supplierName": "",
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
+	},
+	{
+		"bleNamePrefix": "GYY-T",
+		"connectProtocolCode": "ble",
+		"dataProtocolCode": "AET_exergen_ble",
+		"description": "爱立康旧款额温计，分钟早期接入，已停产",
+		"errorCodeConfigured": null,
+		"id": "1528649049408446465",
+		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220801/958a8f0e17e1523698e735fad69ecba7.png",
+		"machineCode": "",
+		"modelName": "",
+		"name": "AET-R181额温计",
+		"obtHistoryDataOccasion": "6",
+		"productCode": "100234",
+		"productTypeId": "12",
+		"productTypeName": "温度计",
+		"registerType": 2,
+		"secretKey": null,
+		"snPrefix": "",
+		"supplierName": "",
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
+	},
+	{
+		"bleNamePrefix": "AET",
+		"connectProtocolCode": "ble",
+		"dataProtocolCode": "AET_exergen_ble",
+		"description": "",
+		"errorCodeConfigured": null,
+		"id": "1539787062205001729",
+		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220623/d89254892ff0111932e8f536cecae1ad.png",
+		"machineCode": "",
+		"modelName": "",
+		"name": "AET-R1D2额温计",
+		"obtHistoryDataOccasion": "6",
+		"productCode": "100236",
+		"productTypeId": "12",
+		"productTypeName": "温度计",
+		"registerType": 2,
+		"secretKey": null,
+		"snPrefix": "",
+		"supplierName": "",
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "",
@@ -235,9 +392,11 @@
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "7N",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "Kitchen Scale",
@@ -254,10 +413,12 @@
 		"productCode": "100239",
 		"productTypeId": "11",
 		"productTypeName": "智能秤",
-		"registerType": 2,
+		"registerType": 3,
+		"secretKey": null,
 		"snPrefix": "",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "BodyFat Scale1",
@@ -267,17 +428,19 @@
 		"errorCodeConfigured": null,
 		"id": "1564464558190538753",
 		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220831/28d0056e2795246fa0d1bb59d38167e2.png",
-		"machineCode": "",
+		"machineCode": "CF",
 		"modelName": "",
 		"name": "安诺心CF516智能体脂秤",
 		"obtHistoryDataOccasion": "6",
 		"productCode": "100240",
 		"productTypeId": "11",
 		"productTypeName": "智能秤",
-		"registerType": 2,
+		"registerType": 3,
+		"secretKey": null,
 		"snPrefix": "",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "BodyFat Scale1",
@@ -287,17 +450,129 @@
 		"errorCodeConfigured": null,
 		"id": "1564937156689514498",
 		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220831/12161fca2c18b07c66ce4e24929b2fe6.png",
-		"machineCode": "",
+		"machineCode": "CF",
 		"modelName": "",
 		"name": "安诺心CF530BLE智能体脂秤",
 		"obtHistoryDataOccasion": "6",
 		"productCode": "100242",
 		"productTypeId": "11",
 		"productTypeName": "智能秤",
-		"registerType": 2,
+		"registerType": 3,
+		"secretKey": null,
 		"snPrefix": "",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
+	},
+	{
+		"bleNamePrefix": "SN-7D",
+		"connectProtocolCode": "ble",
+		"dataProtocolCode": "sino_standard_ble_01",
+		"description": "",
+		"errorCodeConfigured": null,
+		"id": "1610099528498229250",
+		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230106/d1128d393eef289ce2bcf8a7cdc22dd9.png",
+		"machineCode": "",
+		"modelName": "H102 Air",
+		"name": "H102 Air血红蛋白分析仪",
+		"obtHistoryDataOccasion": "1,4",
+		"productCode": "100248",
+		"productTypeId": "19",
+		"productTypeName": "血红蛋白分析仪",
+		"registerType": 1,
+		"secretKey": null,
+		"snPrefix": "7D",
+		"supplierName": "",
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
+	},
+	{
+		"bleNamePrefix": "SN-7T",
+		"connectProtocolCode": "ble",
+		"dataProtocolCode": "safe_aq_air_ble",
+		"description": "",
+		"errorCodeConfigured": null,
+		"id": "1611253279663706114",
+		"imageUrl": "",
+		"machineCode": "0012",
+		"modelName": "安稳+Pro",
+		"name": "安稳+Pro血糖仪",
+		"obtHistoryDataOccasion": "1,5",
+		"productCode": "100250",
+		"productTypeId": "1",
+		"productTypeName": "血糖仪",
+		"registerType": 1,
+		"secretKey": null,
+		"snPrefix": "7T",
+		"supplierName": "",
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
+	},
+	{
+		"bleNamePrefix": "SN-7R",
+		"connectProtocolCode": "ble",
+		"dataProtocolCode": "sino_standard_ble_01",
+		"description": "",
+		"errorCodeConfigured": null,
+		"id": "1623511615299727362",
+		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230209/3509d6712c9e23aec025146726266b25.png",
+		"machineCode": "",
+		"modelName": "Cr1 Air",
+		"name": "Cr1 Air肌酐测试仪",
+		"obtHistoryDataOccasion": "1,4",
+		"productCode": "100253",
+		"productTypeId": "20",
+		"productTypeName": "肌酐测试仪",
+		"registerType": 1,
+		"secretKey": null,
+		"snPrefix": "7R",
+		"supplierName": "",
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
+	},
+	{
+		"bleNamePrefix": "SN-7B",
+		"connectProtocolCode": "ble",
+		"dataProtocolCode": "sino_standard_ble_01",
+		"description": "",
+		"errorCodeConfigured": null,
+		"id": "1623512135958466561",
+		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230209/2638bf955884bf30c0b049b944b00b7c.png",
+		"machineCode": "",
+		"modelName": "KUG-11",
+		"name": "KUG-11血糖尿酸血酮测试仪",
+		"obtHistoryDataOccasion": "1,4",
+		"productCode": "100254",
+		"productTypeId": "21",
+		"productTypeName": "血糖尿酸血酮测试仪",
+		"registerType": 1,
+		"secretKey": null,
+		"snPrefix": "7B",
+		"supplierName": "",
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
+	},
+	{
+		"bleNamePrefix": "SN-7A",
+		"connectProtocolCode": "ble",
+		"dataProtocolCode": "sino_standard_ble_01",
+		"description": "",
+		"errorCodeConfigured": null,
+		"id": "1623512636373676033",
+		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230209/807e00267051d165e3e74a9390abfa86.png",
+		"machineCode": "",
+		"modelName": "臻准3000",
+		"name": "三诺臻准3000血糖尿酸血酮测试仪",
+		"obtHistoryDataOccasion": "1,4",
+		"productCode": "100255",
+		"productTypeId": "21",
+		"productTypeName": "血糖尿酸血酮测试仪",
+		"registerType": 1,
+		"secretKey": null,
+		"snPrefix": "7A",
+		"supplierName": "",
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "AW+AIR,BDE_WEIXIN_TTM",
@@ -315,9 +590,11 @@
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "2L",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "AW+AIR,BDE_WEIXIN_TTM",
@@ -335,9 +612,11 @@
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "2Z",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "UG11 Air,BDE_WEIXIN_TTM",
@@ -355,12 +634,14 @@
 		"productTypeId": "3",
 		"productTypeName": "血糖尿酸测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "3Q",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
-		"bleNamePrefix": "UG11 Code,BDE_WEIXIN_TTM",
+		"bleNamePrefix": "UG11 Code,BDE_WEIXIN_TTM,UG11Code",
 		"connectProtocolCode": "ble",
 		"dataProtocolCode": "ug_11_ble",
 		"description": "",
@@ -375,9 +656,11 @@
 		"productTypeId": "3",
 		"productTypeName": "血糖尿酸测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "4C",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "TMX2",
@@ -395,9 +678,11 @@
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "4A",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "JW+AIR,SN-JW+Air",
@@ -415,9 +700,11 @@
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "3S",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "SLX120",
@@ -435,12 +722,14 @@
 		"productTypeId": "7",
 		"productTypeName": "血脂血糖测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "3G",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
-		"bleNamePrefix": "JZ+Air",
+		"bleNamePrefix": "BDE_WEIXIN_TTM,JZ+Air",
 		"connectProtocolCode": "ble",
 		"dataProtocolCode": "jin_wen_air_ble",
 		"description": "",
@@ -455,9 +744,11 @@
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 2,
+		"secretKey": null,
 		"snPrefix": "3Y",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "SN-4Y",
@@ -475,9 +766,11 @@
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "4Y",
 		"supplierName": "",
-		"supportBuzzer": 1
+		"supportBuzzer": 1,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "SN-5J",
@@ -489,15 +782,17 @@
 		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/b6c557d91f8e14392af0a547ba01cc98.png",
 		"machineCode": "2000",
 		"modelName": "GM501 Air",
-		"name": "三诺智惠血糖仪",
+		"name": "三诺智惠GM501 Air血糖仪",
 		"obtHistoryDataOccasion": "1,4",
 		"productCode": "100016",
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "5J",
 		"supplierName": "",
-		"supportBuzzer": 1
+		"supportBuzzer": 1,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "SN-5L",
@@ -509,15 +804,17 @@
 		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/3cea1615c3a5b186ea1e4b95ec289082.png",
 		"machineCode": "2000",
 		"modelName": "SC301 Air",
-		"name": "三诺优智血糖仪",
+		"name": "三诺优智SC301 Air血糖仪",
 		"obtHistoryDataOccasion": "1,4",
 		"productCode": "100017",
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "5L",
 		"supplierName": "",
-		"supportBuzzer": 1
+		"supportBuzzer": 1,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "SN-5M",
@@ -535,9 +832,11 @@
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "5M",
 		"supplierName": "",
-		"supportBuzzer": 1
+		"supportBuzzer": 1,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "ClinkBlood",
@@ -555,9 +854,11 @@
 		"productTypeId": "8",
 		"productTypeName": "血压计",
 		"registerType": 2,
+		"secretKey": null,
 		"snPrefix": "",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "SN-5R",
@@ -575,9 +876,11 @@
 		"productTypeId": "2",
 		"productTypeName": "尿酸测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "5R",
 		"supplierName": "",
-		"supportBuzzer": 1
+		"supportBuzzer": 1,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "",
@@ -595,9 +898,11 @@
 		"productTypeId": "2",
 		"productTypeName": "尿酸测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "5U",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "",
@@ -608,16 +913,18 @@
 		"id": "318",
 		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220719/81ede22b1a5607b83f353e11e0234b7e.png",
 		"machineCode": "2000",
-		"modelName": "Safe AQ UA AirⅡ",
-		"name": "Safe AQ UA AirⅡ",
+		"modelName": "Safe AQ UA Air Ⅱ",
+		"name": "Safe AQ UA Air Ⅱ",
 		"obtHistoryDataOccasion": "6",
 		"productCode": "100022",
 		"productTypeId": "2",
 		"productTypeName": "尿酸测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "5W",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "SN-5N",
@@ -635,9 +942,11 @@
 		"productTypeId": "2",
 		"productTypeName": "尿酸测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "5N",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "Sinocare",
@@ -655,9 +964,11 @@
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "L,1G",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "",
@@ -675,9 +986,11 @@
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "1H",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "",
@@ -695,9 +1008,11 @@
 		"productTypeId": "3",
 		"productTypeName": "血糖尿酸测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "E,1U",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "",
@@ -715,9 +1030,11 @@
 		"productTypeId": "3",
 		"productTypeName": "血糖尿酸测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "R,1V",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "",
@@ -735,9 +1052,11 @@
 		"productTypeId": "5",
 		"productTypeName": "血糖血酮测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "2D",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "",
@@ -747,7 +1066,7 @@
 		"errorCodeConfigured": null,
 		"id": "370",
 		"imageUrl": "https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/eeeb6b4c14aaa0ddf4ded9564e5145eb.png",
-		"machineCode": "",
+		"machineCode": "0009",
 		"modelName": "金准+",
 		"name": "金准+血糖仪",
 		"obtHistoryDataOccasion": "6",
@@ -755,9 +1074,11 @@
 		"productTypeId": "1",
 		"productTypeName": "血糖仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "3I,5F",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	},
 	{
 		"bleNamePrefix": "",
@@ -775,8 +1096,10 @@
 		"productTypeId": "3",
 		"productTypeName": "血糖尿酸测试仪",
 		"registerType": 1,
+		"secretKey": null,
 		"snPrefix": "3M",
 		"supplierName": "",
-		"supportBuzzer": 0
+		"supportBuzzer": 0,
+		"supportMurphyCode": null
 	}
 ]
