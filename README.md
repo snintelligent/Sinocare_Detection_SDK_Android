@@ -69,7 +69,7 @@ allprojects {
 ```powershell
   implementation 'com.sinocare.androidx_lib:multicriteriasdk:2.1.0_lite'
 ```
-### 2.3.2 在App 模块 build.gradle中配置 (如果要使用android support)建议升级Androidx 此sdk后续不再维护
+### 2.3.2 在App 模块 build.gradle中配置 (如果要使用android support) 此sdk后续不再维护
 ```powershell
   implementation 'com.sinocare.android_lib:multicriteriasdk:2.0.9_lite'
 ```
