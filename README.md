@@ -74,7 +74,7 @@ allprojects {
   implementation 'com.sinocare.android_lib:multicriteriasdk:2.0.9_lite'
 ```
 
-## 2.3 配置manifest
+## 2.4 配置manifest
 
 manifest的配置主要包括添加权限,代码示例如下：
 
@@ -104,7 +104,7 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 </application>
 ```
 
-## 2.4 动态权限申请
+## 2.5 动态权限申请
 
 如果targetSdkVersion 小于23，不需要6.0权限处理。如果是targetSdkVersion 大于等于23，需要6.0权限处理，则需要在启获取权限后，再开始连接
 
@@ -126,7 +126,7 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 
 
 
-## 2.5 混淆说明
+## 2.6 混淆说明
 
 如果app进行混淆，请添加如下混淆配置，确保sdk中关键类不被混淆：
 
