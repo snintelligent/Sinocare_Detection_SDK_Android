@@ -67,7 +67,7 @@ allprojects {
 在App 模块 build.gradle中配置
 
 ```powershell
-  implementation 'com.sinocare.android_lib:multicriteriasdk:2.1.5'
+  implementation 'com.sinocare.android_lib:multicriteriasdk:2.1.7'
 ```
 
 ## 2.3 配置manifest
