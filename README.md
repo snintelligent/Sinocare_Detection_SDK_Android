@@ -475,8 +475,8 @@ MulticriteriaSDKManager.stopUpgrade(SNDevice device)
 ```
 # 5 设备信息说明
 
-设备名称型号 | 设备指标 | 蓝牙名称  | 协议类型(dataProtocolCode) | 机器码(协议版本)(machineCode) | 设备图片 |
----|--- | --- | ---| ---| ---| ---| 
+设备名称型号 | 设备指标 | 蓝牙名称  | 协议类型(dataProtocolCode) | 机器码(协议版本)(machineCode) | 设备图片 
+---|--- | --- | ---| ---| ---
 （碳系列）臻准2000     | 血糖     | SN-4Y |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![臻准2000](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/247f818a18cc469b94ab49937e39c93f.png)
 （碳系列）优智SC301    | 血糖     | SN-5L |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![优智SC301](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/3cea1615c3a5b186ea1e4b95ec289082.png?)
 （碳系列）智惠GM501    | 血糖     | SN-5J | sino_standard_ble_01 | 2000 （以项目json文件为准）| ![智惠GM501](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/b6c557d91f8e14392af0a547ba01cc98.png?)
