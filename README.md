@@ -47,19 +47,11 @@ allprojects {
         }
         maven {
             credentials {
-                username 'sEvpvj'
-                password 'yKIOo1lt6V'
+                username '64afa24d86937ebe0c2e4ce8'
+                password 'wiOtEg=Cml2J'
             }
-            url 'https://repo.rdc.aliyun.com/repository/107484-release-klJuvE/'
+            url 'https://packages.aliyun.com/maven/repository/2446577-release-KBjwhA/'
         }
-        maven {
-            credentials {
-                username 'sEvpvj'
-                password 'yKIOo1lt6V'
-            }
-            url 'https://repo.rdc.aliyun.com/repository/107484-snapshot-ZvSq3g/'
-        }
-           maven { url 'https://jitpack.io' }
     }
 }
 ```
@@ -67,7 +59,7 @@ allprojects {
 在App 模块 build.gradle中配置
 
 ```powershell
-  implementation 'com.sinocare.android_lib:multicriteriasdk:1.2.83'
+  implementation 'com.sinocare.android_lib:multicriteriasdk:1.2.89'
 ```
 
 ## 2.3 配置manifest

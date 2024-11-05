@@ -13,7 +13,7 @@ buildscript {
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'com.android.tools.build:gradle:3.6.4'
         
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -29,17 +29,10 @@ allprojects {
         }
         maven {
             credentials {
-                username 'sEvpvj'
-                password 'yKIOo1lt6V'
+                username '64afa24d86937ebe0c2e4ce8'
+                password 'wiOtEg=Cml2J'
             }
-            url 'https://repo.rdc.aliyun.com/repository/107484-release-klJuvE/'
-        }
-        maven {
-            credentials {
-                username 'sEvpvj'
-                password 'yKIOo1lt6V'
-            }
-            url 'https://repo.rdc.aliyun.com/repository/107484-snapshot-ZvSq3g/'
+            url 'https://packages.aliyun.com/maven/repository/2446577-release-KBjwhA/'
         }
 
         google()
