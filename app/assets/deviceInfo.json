@@ -1676,7 +1676,7 @@
 	},
 	{
 		"availableDays": null,
-		"bleNamePrefix": "SN-5J",
+		"bleNamePrefix": "SN-5J,Sinocare",
 		"connectProtocolCode": "ble",
 		"dataProtocolCode": "sino_standard_ble_01",
 		"description": "型号名称：GM501 Air",
@@ -1701,7 +1701,7 @@
 	},
 	{
 		"availableDays": null,
-		"bleNamePrefix": "SN-5L",
+		"bleNamePrefix": "SN-5L,Sinocare",
 		"connectProtocolCode": "ble",
 		"dataProtocolCode": "sino_standard_ble_01",
 		"description": "型号：SC301 Air",
@@ -1726,7 +1726,7 @@
 	},
 	{
 		"availableDays": null,
-		"bleNamePrefix": "SN-5M",
+		"bleNamePrefix": "SN-5M,Sinocare",
 		"connectProtocolCode": "ble",
 		"dataProtocolCode": "sino_standard_ble_01",
 		"description": "碳HPALC血糖测试系统",
