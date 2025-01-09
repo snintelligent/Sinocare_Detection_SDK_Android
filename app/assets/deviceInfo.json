@@ -1878,7 +1878,7 @@
 		"availableDays": null,
 		"bleNamePrefix": "Sinocare",
 		"connectProtocolCode": "ble",
-		"dataProtocolCode": "sino_standard_ble_01",
+		"dataProtocolCode": "wl_one_general_ble",
 		"description": "蓝牙WL-1，旧版本是WL-1是专有协议，机器码是0004，新WL-1改为碳平台标准协议了2002，2023-07-13试产测试中",
 		"errorCodeConfigured": null,
 		"id": "320",
