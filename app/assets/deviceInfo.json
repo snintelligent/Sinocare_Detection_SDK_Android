@@ -663,7 +663,7 @@
 		"supportMurphyCode": null
 	},
 	{
-		"bleNamePrefix": "TMX2",
+		"bleNamePrefix": "TMX2,SN-4A",
 		"connectProtocolCode": "ble",
 		"dataProtocolCode": "true_metrix_air_ble",
 		"description": "",
