@@ -59,7 +59,7 @@ allprojects {
 在App 模块 build.gradle中配置
 
 ```powershell
-  implementation 'com.sinocare.android_lib:multicriteriasdk:1.2.91'
+  implementation 'com.sinocare.android_lib:multicriteriasdk:1.2.93'
 ```
 
 ## 2.3 配置manifest
@@ -421,6 +421,12 @@ public class SampleType implements Parcelable {
     public static final String INDEX_5_URIC_ACID_BLOOD = "0005";
     //尿酸质控液
     public static final String INDEX_6_URIC_ACID_SIMULATED_FLUID = "0006";
+    //尿液
+    public static final String INDEX_9_URINE = "0009";
+    //血红蛋白
+    public static final String INDEX_10_HGB_BLOOD = "0010";
+    //血红蛋白质控液
+    public static final String INDEX_11_HGB_SIMULATED_FLUID = "0011";
 
 }
 
