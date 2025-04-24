@@ -60,7 +60,7 @@ allprojects {
 
 ```powershell
 
-  implementation 'com.sinocare.androidx_lib:multicriteriasdk:2.1.7_lite'
+  implementation 'com.sinocare.androidx_lib:multicriteriasdk:2.2.0_lite'
 
 ```
 
@@ -351,6 +351,17 @@ public class SampleType implements Parcelable {
     public static final String INDEX_5_URIC_ACID_BLOOD = "0005";
     //尿酸质控液
     public static final String INDEX_6_URIC_ACID_SIMULATED_FLUID = "0006";
+    //尿液
+    public static final String INDEX_9_URINE = "0009";
+    //肌酐
+    public static final String INDEX_10_CREATINE_BLOOD = "0010";
+    //肌酐质控液
+    public static final String INDEX_11_CREATINE_SIMULATED_FLUID = "0011";
+    //血红蛋白
+    public static final String INDEX_12_HGB_BLOOD = "0012";
+    //血红蛋白质控液
+    public static final String INDEX_13_HGB_SIMULATED_FLUID = "0013";
+    
 	//其他
 	public static final String INDEX_9999_Other = "9999";
 
