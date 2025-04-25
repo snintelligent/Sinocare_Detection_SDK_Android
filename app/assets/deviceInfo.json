@@ -1501,7 +1501,7 @@
 	},
 	{
 		"availableDays": null,
-		"bleNamePrefix": "UG11 Air,BDE_WEIXIN_TTM,SN-3Q",
+		"bleNamePrefix": "UG11 Air,BDE_WEIXIN_TTM,SN-3Q,Sinocare",
 		"connectProtocolCode": "ble",
 		"dataProtocolCode": "ug_11_ble",
 		"description": "",
@@ -1526,7 +1526,7 @@
 	},
 	{
 		"availableDays": null,
-		"bleNamePrefix": "UG11 Code,BDE_WEIXIN_TTM,UG11Code,SN-4C",
+		"bleNamePrefix": "UG11 Code,BDE_WEIXIN_TTM,UG11Code,SN-4C,Sinocare",
 		"connectProtocolCode": "ble",
 		"dataProtocolCode": "ug_11_ble",
 		"description": "",
