@@ -495,7 +495,8 @@ MulticriteriaSDKManager.startUpgrade(SNDevice device, File file);
 MulticriteriaSDKManager.stopUpgrade(SNDevice device);
 
 ```
-# 5 设备信息说明[详细设备信息请见/app/assets/deviceInfo.json](./app/assets/deviceInfo.json)
+# 5 设备信息说明
+## 5.1 ([详细设备请见项目目录/app/assets/deviceInfo.json文件](./app/assets/deviceInfo.json))
 
 设备名称型号 | 设备指标 | 蓝牙名称            | 协议类型(dataProtocolCode) | 机器码(协议版本)(machineCode) | 设备图片 
 ---|------|-----------------|------------------------|------------------------| ---
