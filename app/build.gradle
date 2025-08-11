@@ -83,7 +83,15 @@ dependencies {
     implementation rootProject.ext.dependencies["rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]
     implementation rootProject.ext.dependencies["rxpermissions"]
-    implementation 'com.sinocare.androidx_lib:multicriteriasdk:2.2.0_lite'
+    implementation 'com.sinocare.androidx_lib:multicriteriasdk:2.2.1_lite'
+
+    // 直接添加 FastBleLib 依赖
+    api 'com.clj.fastble:FastBleLib:2.3.2'
 
     implementation 'com.github.bumptech.glide:glide:4.8.0'
+//    // 如果需要排除其他地方引入的 FastBle，可以使用以下配置
+//    configurations.all {
+//        exclude group: 'com.github.jasonchenlijian', module: 'FastBle'
+//        exclude group: 'com.clj.fastble', module: 'FastBleLib'
+//    }
 }
