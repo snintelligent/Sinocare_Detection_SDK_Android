@@ -60,7 +60,7 @@ allprojects {
 在App 模块 build.gradle中配置
 
 ```powershell
-  implementation 'com.sinocare.android_lib:multicriteriasdk:2.3.0'
+  implementation 'com.sinocare.android_lib:multicriteriasdk:2.3.2'
 ```
 
 ## 2.3 配置manifest
@@ -221,10 +221,16 @@ bloodKetone | 血酮|
 urinalysis | 尿常规| 
 bloodOxygen | 血氧| 
 temperature | 温度| 
-acr | ACR| 
+acr | 生化| 
 ferritin | 铁蛋白| 
 HbA1c | 糖化血红蛋白| 
 IDCard | 身份证| 
+Crea | 肌酐| 
+HGB | 血红蛋白| 
+ruler | 电子尺| 
+multipleTypes | 多类型指标| 
+ecg | 心电| 
+lac | 血乳酸| 
 
 #### 仪器返回格式详细请见 [文件地址](https://gitee.com/sinocare-iot/Sinocare_Detection_SDK_Android/blob/master/SDK%E8%AE%BE%E5%A4%87%E8%BF%94%E5%9B%9E%E6%A0%BC%E5%BC%8F.xlsx)
 ```json
@@ -359,7 +365,10 @@ public class SampleType implements Parcelable {
     public static final String INDEX_12_HGB_BLOOD = "0012";
     //血红蛋白质控液
     public static final String INDEX_13_HGB_SIMULATED_FLUID = "0013";
-
+    //血乳酸
+    public static final String INDEX_14_LAC_BLOOD = "0014";
+    //血乳酸质控液
+    public static final String INDEX_15_LAC_SIMULATED_FLUID = "0015";
     //其他
     public static final String INDEX_9999_Other = "9999";
 
@@ -379,7 +388,16 @@ public class SampleType implements Parcelable {
 MulticriteriaSDKManager.getHistoryData(SNDevice snDevice,String sampleType);
 
 ```
+```java
 
+/**
+ * 清除设备历史数据
+ * @param snDevice
+ * @param SampleType   SampleType.XXX   要获取的样本类型（不传清除所有）
+ */
+MulticriteriaSDKManager.clearHistoryData(SNDevice snDevice,String sampleType);
+
+```
 
 ## 3.5 设置设备时间
 ```java
@@ -460,7 +478,7 @@ MulticriteriaSDKManager.setDeviceTime(SNDevice snDevice, long millisconds);
 ### 4.3.0 获取版本信息
 ```java
 
-MulticriteriaSDKManager.getVersionInfo(SNDevice device)
+MulticriteriaSDKManager.getVersionInfo(SNDevice device);
 
 ```
 ### 4.3.1 开始升级
@@ -468,57 +486,24 @@ MulticriteriaSDKManager.getVersionInfo(SNDevice device)
 /**
   @param file   包路径
  */
-MulticriteriaSDKManager.startUpgrade(SNDevice device, File file)
+MulticriteriaSDKManager.startUpgrade(SNDevice device, File file);
 
 ```
 ### 4.3.2 停止升级
 ```java
 
-MulticriteriaSDKManager.stopUpgrade(SNDevice device)
+MulticriteriaSDKManager.stopUpgrade(SNDevice device);
 
 ```
-# 5 设备信息说明
+# 5 设备信息说明[详细设备信息请见/app/assets/deviceInfo.json](./app/assets/deviceInfo.json)
 
-设备名称型号 | 设备指标 | 蓝牙名称                                             | 协议类型(dataProtocolCode) | 机器码(协议版本)(machineCode) | 设备图片 
----|--- |--------------------------------------------------| ---| ---| ---
-（碳系列）臻准2000     | 血糖     | SN-4Y                                            |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![臻准2000](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/247f818a18cc469b94ab49937e39c93f.png)
-（碳系列）优智SC301    | 血糖     | SN-5L,Sinocare                                   |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![优智SC301](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/3cea1615c3a5b186ea1e4b95ec289082.png?)
-（碳系列）智惠GM501    | 血糖     | SN-5J ,Sinocare                                  | sino_standard_ble_01 | 2000 （以项目json文件为准）| ![智惠GM501](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/b6c557d91f8e14392af0a547ba01cc98.png?)
-（碳系列）UA Pro      | 尿酸     | SN-6T                                            |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![UA Pro](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220826/4d2f73b3c403c4c1a9fcbce652559d24.png?)
-（碳系列）捷巧UA Plus  | 尿酸     | SN-6U                                            |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![UA Plus](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220826/e079c849bfdf566e619fc1a6e66e35c7.png?)
-（碳系列）H102 Air    | 血红蛋白  | SN-7D                                            |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![H102 Air](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230106/d1128d393eef289ce2bcf8a7cdc22dd9.png?)
-（碳系列）Cr1 Air     | 血肌酐    | SN-7R                                            |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![Cr1 Air](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230209/3509d6712c9e23aec025146726266b25.png?)
-（碳系列）UG Plus     | 血糖、尿酸 | SN-6W                                            |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![UG Plus](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220826/d1fda7e4e311787468ee0ec04ec7cd8e.png?)
-（碳系列）EA-19       | 血糖、尿酸 | SN-6X                                            |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![EA-19](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220615/21caf0cb294192f4e3960adaf7d0c1fe.png?)
-（碳系列）EA-23       | 血糖、尿酸 | SN-6Y                                            |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![EA-23](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220615/abb5a4e5e88c9d346def18bf2fcfdc2e.png?)
-（碳系列）UG-23       | 血糖、尿酸 | SN-6Z                                            |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![UG-23](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220906/a6bc34ea2fa7cbcf87cf5068819dab6f.png?)
-（碳系列）三诺优准      | 血糖、尿酸 | SN-7B                                            |  sino_standard_ble_01 | 2002 （以项目json文件为准）| ![三诺优准](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230524/a5ae1fef5d7025886d9a1db961dec1fe.png?)
-（碳系列）臻准3000     | 血糖、尿酸 | SN-7A                                            |  sino_standard_ble_01 | 2000 （以项目json文件为准）| ![臻准3000](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230209/807e00267051d165e3e74a9390abfa86.png?)
-金稳+Air     | 血糖        | JW+AIR,SN-JW+Air                                 |  jin_wen_air_ble      | 001B | ![金稳+Air](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/8ea47e075e34a9ac5c8c3a9a07e51676.png?)
-真睿         | 血糖        | TMX2,SN-4A                                       |  true_metrix_air_ble  | 0022 | ![真睿](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/290bd68b58e257722aaa669cb8f12bc1.png?)
-UG-11 Air   | 血尿酸、血糖  | UG11 Air,BDE_WEIXIN_TTM,SN-3Q,Sinocare           |  ug_11_ble            | 0020 | ![UG-11 Air](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/1dbaefe3e2a6f5600f05a2e08934d04f.png?)
-UG-11 Code  | 血尿酸、血糖  | UG11 Code,BDE_WEIXIN_TTM,UG11Code,SN-4C,Sinocare | ug_11_ble            | 0024 | ![UG-11 Code](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/97a4a32ad2c05c3518a3ae273ed0a567.png?)
-EA-12       | 血尿酸、血糖  | BDE_WEIXIN_TTM                                   | ea_ka_ble            | 000A | ![EA-12](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/1b231e0b9db4133ce35d0cccbbe995c9.png?)
-EA-18       | 血尿酸、血糖  | BDE_WEIXIN_TTM                                   |  ea_ka_ble            | 000A | ![EA-18](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/81e50cbde31c03a075b3319d4c118d96.png?)
-KA-11       | 血酮、血糖   | BDE_WEIXIN_TTM                                   | ea_ka_ble            | 0006 | ![KA-11](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/5630169fdbedfb446fc39963405e78c4.png?)
-卡迪克       | 血脂        | CardioChek                                       |  Cardio_Chek_ble      |      | ![卡迪克](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220908/aabcc387e60b69d2a79b1dfe22058eae.png)
-WL-1        | 血糖        | Sinocare                                         |  wl_one_general_ble   | 0004 | ![WL-1](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/2cdb3e72ded0af8bd9e0ae468b4cef7b.png?)
-金准+        | 血糖       | BDE_WEIXIN_TTM                                   | gold_aq_ble          | 0009 | ![金准+](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/eeeb6b4c14aaa0ddf4ded9564e5145eb.png?)
-金准+Air     | 血糖       | BDE_WEIXIN_TTM,JZ+Air                            |  jin_wen_air_ble      | 001C | ![金准+Air](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/8070a39c43015b9d71a5dbf4114fd5ac.png?)
-掌越SLX120   | 血脂、血糖  | SLX120                                           |  slx_120_ble          | 0018 | ![SXL120](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/0b7079bb7dd0a3dbd947f52feca71817.png?)
-安稳+Air     | 血糖       | AW+AIR,BDE_WEIXIN_TTM ,SN-2L                     |  safe_aq_air_ble      | 0012 | ![安稳+Air](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/0123f469c2f3b2a4eb5af79debc5d5e3.png?)
-PCH-100     | 血红蛋白    | BDE_WEIXIN_TTM ,PCH                              |  pch_100_ble          | 0064 | ![PCH-100](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/a2623aa2dffa49034d0e520b8e5a1d2d.png?)
-PCH-50      | 血红蛋白    | PCH50                                            |  pch_50_ble           | 0029 | ![PCH-50](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/93e407c3f9abf34387c8ebe7b1f335de.png?)
-安诺心CF523  | 体脂秤      | HeartRate                                        |  sino_body_scale_ble  | CF  | ![安诺心CF523](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/5372d14b96653514d34be47f7da5325f.png?)
-安诺心CF516  | 体脂秤      | BodyFat Scale1                                   | sino_body_scale_ble  | CF  | ![安诺心CF516](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220831/28d0056e2795246fa0d1bb59d38167e2.png?)
-安诺心CF530  | 体脂秤      | BodyFat Scale1                                   | sino_body_scale_ble  | CF  | ![安诺心CF530](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220831/12161fca2c18b07c66ce4e24929b2fe6.png?)
-安诺心CW286  | 体重秤      | Weight                                           |  sino_body_scale_ble  | CE  | ![安诺心CW286](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220623/f748a9e1512178d87d46d657642cd6ca.png?)
-安诺心CK793  | 厨房秤      | Kitchen Scale                                    |  sino_body_scale_ble  | CA  | ![安诺心CK793](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220913/224fca38394d76fb77dd472284508344.png?)
-诺凡BA-806   | 血压、脉搏  | ClinkBlood                                       |  one_test_BPG_ble     |     | ![诺凡BA-806](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/ce2b6fc3365905c65a7f91cc66db5ee0.png?)
-诺凡BA-801   | 血压、脉搏  | ClinkBlood                                       |  one_test_BPG_ble     |    |![诺凡BA-801](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230630/6cf280841fb360e00e9a4a7903f4cfba.png?)
-诺凡BA-803   | 血压、脉搏  | ClinkBlood                                       |  one_test_BPG_ble     |    | ![诺凡BA-803](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220908/cb726a94a76990281b03f95a31b14088.png?)
-AET-R181额温计（新款）    | 体温计  | AET-R                                            |  AET_exergen_ble_new     |    | ![AET-R181额温计（新款）](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20230906/a439c423242b56a4d8bb48e2d45d5b50.png?)
-AET-R181额温计           | 体温计  | AET                                              |  AET_exergen_ble     |    | ![AET-R181额温计](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220801/958a8f0e17e1523698e735fad69ecba7.png?)
+设备名称型号 | 设备指标 | 蓝牙名称            | 协议类型(dataProtocolCode) | 机器码(协议版本)(machineCode) | 设备图片 
+---|------|-----------------|------------------------|------------------------| ---
+（碳系列）臻准2000     | 血糖   | SN-4Y           | sino_standard_ble_01   | 2000 （以项目json文件为准）     | ![臻准2000](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220614/247f818a18cc469b94ab49937e39c93f.png)
+（碳系列）优智SC301    | 血糖   | SN-5L,Sinocare  | sino_standard_ble_01   | 2000 （以项目json文件为准）     | ![优智SC301](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/3cea1615c3a5b186ea1e4b95ec289082.png?)
+（碳系列）智惠GM501    | 血糖   | SN-5J ,Sinocare | sino_standard_ble_01   | 2000 （以项目json文件为准）     | ![智惠GM501](https://sino-iot-prd.oss-cn-hangzhou.aliyuncs.com/upload/20220509/b6c557d91f8e14392af0a547ba01cc98.png?)
+...   | ...  | ...             | ...                    | ...                    | ...
+
 # 6 常见问题
 
 ## 6.1 蓝牙设备上显示蓝牙已被连接，但SnCallBack没有回调连接状态，和测量结果；
