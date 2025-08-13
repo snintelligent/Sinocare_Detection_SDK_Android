@@ -149,9 +149,7 @@ sdk access key配置，示例代码如下，在application标签下配置meta-da
 ####   AnthStatus鉴权返回状态码说明：
 
 code | 说明
---- | --- 
-code | 说明
---- | --- 
+--- | ---
 10000 | SDK鉴权成功
 1080031007 | accessKey 不正确
 1080031008 | 包名不正确
