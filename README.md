@@ -60,7 +60,7 @@ allprojects {
 
 ```powershell
 
-  implementation 'com.sinocare.androidx_lib:multicriteriasdk:2.2.8_lite'
+  implementation 'com.sinocare.androidx_lib:multicriteriasdk:2.2.9_lite'
 
 ```
 
